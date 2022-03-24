@@ -2,10 +2,10 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/imvdeme1/public_html/testvb
-    - /bin/cp -R css/ $DEPLOYPATH
-    - /bin/cp -R img/ $DEPLOYPATH
-    - /bin/cp -R js/ $DEPLOYPATH
-    - /bin/cp .htaccess $DEPLOYPATH
-    - /bin/cp favicon.ico $DEPLOYPATH
-    - /bin/cp mix-manifest.json $DEPLOYPATH
-    - /bin/cp robots.txt $DEPLOYPATH
+    - /bin/cp -R public/css/ $DEPLOYPATH
+    - /bin/cp -R public/img/ $DEPLOYPATH
+    - /bin/cp -R public/js/ $DEPLOYPATH
+    - /bin/cp public/.htaccess $DEPLOYPATH
+    - /bin/cp public/favicon.ico $DEPLOYPATH
+    - /bin/cp public/mix-manifest.json $DEPLOYPATH
+    - /bin/cp public/robots.txt $DEPLOYPATH
