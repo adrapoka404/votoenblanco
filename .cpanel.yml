@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/imvdeme1/public_html/testvb
-    - /bin/cp -R --exclude 'index.php' public/ $DEPLOYPATH
+    - /bin/cp -R public/ $DEPLOYPATH
