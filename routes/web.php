@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EditoresController;
+use App\Http\Controllers\NotasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +22,11 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::resource('notas', NotasController::class)
+    ->names('notas');
+
+    Route::resource('editores', EditoresController::class)
+    ->names('editores');
+
+    Route::get('notas.editores.{nota}', [NotasController::class, 'editores'])->name('notas.editores');

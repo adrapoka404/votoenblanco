@@ -1,38 +1,57 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-black border-t-8 border-red-800 pt-10 pb-5 my-10 text-white">
-    <div class="grid grid-cols-2 ml-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-black border-t-8 border-red-800 pt-10 pb-5 mt-10 mb-2 text-white">
+    <div class="md:grid md:grid-cols-2 ml-20">
         <div>
-            <div>
+            <div class="my-5">
                 <x-actionfooter href="{{ route('dashboard') }}" :active="request()->routeIs('#')">
                     {{ __('Nosotros') }}
                 </x-actionfooter>
             </div>
-            <div>
-                <x-actionfooter href="{{ route('dashboard') }}" :active="request()->routeIs('#')">
+            <div class="my-5">
+                <x-actionfooter href="{{ route('editores.show', 'all') }}" :active="request()->routeIs('#')">
                     {{ __('nuestro equipo') }}
                 </x-actionfooter>
             </div>
-            <div>
+            <div class="my-5">
                 <x-actionfooter href="{{ route('dashboard') }}" :active="request()->routeIs('#')">
                     {{ __('aviso de privacidad') }}
                 </x-actionfooter>
             </div>
 
-            <div>Contactanos
-                <div>Whats</div>
-                <div>Insta</div>
-                <div>FB</div>
-                <div>TW</div>
-                <div>TT</div>
-                <div>YT</div>
+            <div class=" mt-20 font-sans font-light tracking-widest">Contáctanos
+                <a href="">
+                    <div class=" bg-whats w-12 h-12 bg-contain"></div>
+                </a>
+                <div class=" inline-flex mt-5">
+                    <a href="">
+                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-insta bg-contain"></div>
+                    </a>
+                    <a href="">
+                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-fb bg-contain"></div>
+                    </a>
+                    <a href="">
+                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-tw bg-contain"></div>
+                    </a>
+                    <a href="">
+                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-tt bg-contain"></div>
+                    </a>
+                    <a href="">
+                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-yt bg-contain"></div>
+                    </a>
+                </div>
+                <br>
+                <a href="">Anúnciate con nosotros</a>
             </div>
         </div>
-        <div>suscribete
-            cetificado
+        <div class="font-sans tracking-widest items-end">
+            <a href="">
+                <div>Suscribete</div>
+            </a>
+            <div class="bg-security bg-no-repeat w-52 h-52"></div> Cetificado de seguridad
         </div>
 
     </div>
-    <div class=" text-center">
-        Metepec estado de mexico
+    <div class=" font-sans tracking-widest text-center mt-20">
+        Metepec. Estado de México
         <br>
         COPYRIGHT todos los derecchos reservados
     </div>

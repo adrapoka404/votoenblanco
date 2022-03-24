@@ -9,6 +9,9 @@ module.exports = {
     ],
 
     theme: {
+        letterSpacing: {
+              widest: '.4em',
+            },
         colors: {
             'blue': '#1fb6ff',
             'pink': '#ff49db',
@@ -38,6 +41,16 @@ module.exports = {
                 sans: ['Exo','serif'],
                 serif: ['Bitter']
             },
+            backgroundImage: {
+                'whats': "url('/img/ico_whats.png')",
+                'fb': "url('/img/ico_whats.png')",
+                'insta': "url('/img/ig_color.png')",
+                'fb': "url('/img/fb_color.png')",
+                'tw': "url('/img/tw_color.png')",
+                'tt': "url('/img/tt_color.png')",
+                'yt': "url('/img/yt_color.png')",
+                'security': "url('/img/security.png')",
+              },
         },
     },
 
