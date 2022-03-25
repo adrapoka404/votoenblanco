@@ -1,1 +1,1 @@
-<img src="{{url('img/logo_vb_.png')}}" alt="" />
+<img src="{{url('img/logo_vb_.png')}}" alt="" class="max-w-sm mx-auto"/>

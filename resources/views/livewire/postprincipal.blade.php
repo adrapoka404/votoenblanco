@@ -4,7 +4,7 @@
         <img src="{{asset('img/nota.png')}}" alt="  " class=" w-96 mx-auto border border-gray-light h-80">
         
     </div>
-    <div class="text-center mt-16">
+    <div class=" text-justify mt-16 my-2">
             <span class="py-2 my-3 ">Voto en blanco (22 de febrero de 2022) ll Redacción</span>
             <p class="sumary my-3">
                 ipsum dolor sit amet consectetur adipisicing elit. Excepturi itaque veniam, assumenda et sint enim nobis
@@ -13,7 +13,7 @@
             </p>
             <a href ="{{route('notas.show', 'adx')}}" class="bg-red-800 px-10 text-white rounded-lg font-semibold">leer más</a>
     </div>
-    <div class="mx-5">
+    <div class="mx-2">
         <div class="ml-5 text-red-800 font-extralight text-3xl">Destacadas:</div>
         <x-link-destacadas />
         <x-link-destacadas />

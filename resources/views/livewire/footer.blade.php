@@ -21,21 +21,24 @@
                 <a href="">
                     <div class=" bg-whats w-12 h-12 bg-contain"></div>
                 </a>
+                <br>
+                Redes Sociales
+                <br>
                 <div class=" inline-flex mt-5">
                     <a href="">
-                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-insta bg-contain"></div>
+                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-insta bg-contain"></div>
                     </a>
                     <a href="">
-                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-fb bg-contain"></div>
+                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-fb bg-contain"></div>
                     </a>
                     <a href="">
-                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-tw bg-contain"></div>
+                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-tw bg-contain"></div>
                     </a>
                     <a href="">
-                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-tt bg-contain"></div>
+                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-tt bg-contain"></div>
                     </a>
                     <a href="">
-                        <div class="w-12 h-12 bg-no-repeat mx-1 bg-yt bg-contain"></div>
+                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-yt bg-contain"></div>
                     </a>
                 </div>
                 <br>
