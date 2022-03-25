@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-die('antes de primer ruta');
+
 Route::get('/', function () {
     return view('welcome');
 });
-
+die('Despues del primer route');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
