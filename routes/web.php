@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-die('Despues del primer route');
+/*
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -30,3 +30,4 @@ Route::resource('notas', NotasController::class)
     ->names('editores');
 
     Route::get('notas.editores.{nota}', [NotasController::class, 'editores'])->name('notas.editores');
+    */
