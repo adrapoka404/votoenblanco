@@ -10,8 +10,10 @@ module.exports = {
 
     theme: {
         letterSpacing: {
-              widest: '.4em',
-            },
+            wide: '.1em',
+            widest: '.4em',
+
+        },
         colors: {
             'blue': '#1fb6ff',
             'pink': '#ff49db',
@@ -20,28 +22,29 @@ module.exports = {
             'gray-dark': '#273444',
             'gray': '#8492a6',
             'gray-light': '#d3dce6',
-            'black':'#000',
-            'white':'#fff',
-            'red':{
-                50:'#fef2f2',
-                100:'#fee2e2',
-                200:'#fecaca',
-                300:'#fca5a5',
-                400:'#f87171',
-                500:'#ef4444',
-                600:'#dc2626',
-                700:'#b91c1c',
-                800:'#991b1b',
-                900:'#7f1d1d',
+            'black': '#000',
+            'white': '#fff',
+            'red': {
+                50: '#fef2f2',
+                100: '#fee2e2',
+                200: '#fecaca',
+                300: '#fca5a5',
+                400: '#f87171',
+                500: '#ef4444',
+                600: '#dc2626',
+                700: '#b91c1c',
+                800: '#991b1b',
+                900: '#7f1d1d',
 
             },
-          },
+        },
         extend: {
             fontFamily: {
-                sans: ['Exo','serif'],
+                sans: ['Exo', 'serif'],
                 serif: ['Bitter']
             },
             backgroundImage: {
+                'logo': "url('/img/logo_vb.png')",
                 'whats': "url('/img/ico_whats.png')",
                 'fb': "url('/img/ico_whats.png')",
                 'insta': "url('/img/ig_color.png')",
@@ -50,7 +53,10 @@ module.exports = {
                 'tt': "url('/img/tt_color.png')",
                 'yt': "url('/img/yt_color.png')",
                 'security': "url('/img/security.png')",
-              },
+            },
+            boxShadow: {
+                '3xl': '10px 10px 20px 0 rgba(0, 0, 0, 0.3)',
+            }
         },
     },
 

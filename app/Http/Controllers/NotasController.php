@@ -11,10 +11,10 @@ class NotasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($who)
     {
 
-        return view('guest.notas', compact('id')); 
+        return view('guest.notas', compact('who')); 
     }
 
     /**
@@ -88,5 +88,9 @@ class NotasController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function admin(){
+        
     }
 }
