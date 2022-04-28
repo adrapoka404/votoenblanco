@@ -1,218 +1,267 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
-                    </a>
-                </div>
+<style>
+    [x-cloak] {
+        display: none;
+    }
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('notas.admin') }}" :active="request()->routeIs(' notas.*')">
-                        {{ __('Notas') }}
-                    </x-jet-nav-link>
-                </div>
-            </div>
+</style>
+<script>
+    document.addEventListener('alpine:init', () => {
+        // Stores variable globally 
+        Alpine.store('sidebar', {
+            full: true,
+            active: 'home',
+            navOpen: false
+        });
+        // Creating component Dropdown
+        Alpine.data('dropdown', () => ({
+            open: false,
+            toggle(tab) {
+                this.open = !this.open;
+                Alpine.store('sidebar').active = tab;
+            },
+            activeClass: 'bg-white text-black',
+            expandedClass: '',
+            shrinkedClass: 'sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-gray sm:rounded-md sm:p-4 border-l sm:border-none border-gray ml-4 pl-4 sm:ml-0 w-28'
+        }));
+        // Creating component Sub Dropdown
+        Alpine.data('sub_dropdown', () => ({
+            sub_open: false,
+            sub_toggle() {
+                this.sub_open = !this.sub_open;
+            },
+            sub_expandedClass: '',
+            sub_shrinkedClass: 'sm:absolute top-0 left-28 sm:shadow-md sm:z-10 sm:bg-gray-dark sm:rounded-md sm:p-4 border-l sm:border-none border-gray-dark ml-4 pl-4 sm:ml-0 w-28'
+        }));
+        // Creating tooltip
+        Alpine.data('tooltip', () => ({
+            show: false,
+            visibleClass: 'block sm:absolute -top-7 sm:border border-black left-5 sm:text-sm sm:bg-black text-white sm:px-2 sm:py-1 sm:rounded-md'
+        }))
 
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <!-- Teams Dropdown -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                    <div class="ml-3 relative">
-                        <x-jet-dropdown align="right" width="60">
-                            <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
-                                        {{ Auth::user()->currentTeam->name }}
+    })
+</script>
+<!-- Mobile Menu Toggle -->
+<button @click="$store.sidebar.navOpen = !$store.sidebar.navOpen"
+    class="sm:hidden absolute top-5 right-5 focus:outline-none">
+    <!-- Menu Icons -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" x-bind:class="$store.sidebar.navOpen ? 'hidden':''"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+    </svg>
 
-                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </x-slot>
+    <!-- Close Menu -->
+    <svg x-cloak xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+        x-bind:class="$store.sidebar.navOpen ? '':'hidden'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+</button>
 
-                            <x-slot name="content">
-                                <div class="w-60">
-                                    <!-- Team Management -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Manage Team') }}
-                                    </div>
+<div class="h-screen bg-black transition-all duration-300 space-y-2 fixed sm:relative"
+    x-bind:class="{'w-64':$store.sidebar.full, 'w-64 sm:w-20':!$store.sidebar.full,'top-0 left-0':$store.sidebar.navOpen,'top-0 -left-64 sm:left-0':!$store.sidebar.navOpen}">
 
-                                    <!-- Team Settings -->
-                                    <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                        {{ __('Team Settings') }}
-                                    </x-jet-dropdown-link>
+    <h1 class="text-white font-black py-4" x-bind:class="$store.sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 xm:px-2'">
+        LOGO</h1>
 
-                                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                        <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                            {{ __('Create New Team') }}
-                                        </x-jet-dropdown-link>
-                                    @endcan
+    <div class="px-4 space-y-2">
 
-                                    <div class="border-t border-gray-100"></div>
+        <!-- SideBar Toggle -->
+        <button @click="$store.sidebar.full = !$store.sidebar.full"
+            class="hidden sm:block focus:outline-none absolute p-1 -right-3 top-10 bg-black rounded-full shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 transition-all duration-300 text-white transform"
+                x-bind:class="$store.sidebar.full ? 'rotate-90':'-rotate-90 '" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
+        <!-- Home -->
+        <div x-data="tooltip" x-on:mouseover="show = true" x-on:mouseleave="show = false"
+            @click="$store.sidebar.active = 'home' "
+            class=" relative flex items-center hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
+            x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-black bg-white':$store.sidebar.active == 'home','text-black bg-white ':$store.sidebar.active != 'home'}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <a href="{{route('dashboard')}}" x-cloak
+                x-bind:class="!$store.sidebar.full && show ? visibleClass :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
+                Dashboard</a>
+        </div>
 
-                                    <!-- Team Switcher -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Switch Teams') }}
-                                    </div>
-
-                                    @foreach (Auth::user()->allTeams() as $team)
-                                        <x-jet-switchable-team :team="$team" />
-                                    @endforeach
-                                </div>
-                            </x-slot>
-                        </x-jet-dropdown>
-                    </div>
-                @endif
-
-                <!-- Settings Dropdown -->
-                <div class="ml-3 relative">
-                    <x-jet-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                </button>
-                            @else
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
-                                        {{ Auth::user()->name }}
-
-                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            @endif
-                        </x-slot>
-
-                        <x-slot name="content">
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
-                            </div>
-
-                            <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
-                            </x-jet-dropdown-link>
-
-                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
-                                    {{ __('API Tokens') }}
-                                </x-jet-dropdown-link>
-                            @endif
-
-                            <div class="border-t border-gray-100"></div>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}" x-data>
-                                @csrf
-
-                                <x-jet-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
-                                </x-jet-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-jet-dropdown>
-                </div>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <!-- Audience -->
+        <div x-data="dropdown" class="relative">
+            <!-- Dropdown head -->
+            <div @click="toggle('audience')" x-data="tooltip" x-on:mouseover="show = true"
+                x-on:mouseleave="show = false"
+                class="flex justify-between text-white hover:text-black hover:bg-white items-center space-x-2 rounded-md p-2 cursor-pointer"
+                x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full, 'text-white bg-black':$store.sidebar.active == 'audience','text-white ':$store.sidebar.active != 'audience'}">
+                <div class="relative flex space-x-2 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="flex items-center px-4">
-                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                    <div class="shrink-0 mr-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                    </div>
-                @endif
-
-                <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <span   x-cloak
+                        x-bind:class="!$store.sidebar.full && show ? visibleClass :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
+                        Post</span>
                 </div>
+                <svg x-cloak x-bind:class="$store.sidebar.full ? '':'sm:hidden'" xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd" />
+                </svg>
             </div>
+            <!-- Dropdown content -->
+            <div x-cloak x-show="open" @click.outside="open =false"
+                x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass" class="text-black bg-gray-dark space-y-3 ">
+                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2" href="{{route('admin.notas.index')}}">
+                    Todas
+                </a>
+                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2" href="{{route('admin.notas.estatus.index')}}">
+                    Catalogo de estados
+                </a>
+                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2" href="{{route('admin.notas.create')}}">
+                    Crear Post
+                </a>
+                <h1 class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2">Item 4</h1>
+            </div>
+        </div>
 
-            <div class="mt-3 space-y-1">
-                <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
-                </x-jet-responsive-nav-link>
+        <!-- Posts -->
+        <div @click="$store.sidebar.active = 'posts' " x-data="tooltip" x-on:mouseover="show = true"
+            x-on:mouseleave="show = false"
+            class=" relative flex justify-between items-center text-white hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
+            x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-white bg-black':$store.sidebar.active == 'posts','text-white ':$store.sidebar.active != 'posts'}">
+            <div class="flex  items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <a x-cloak href="{{route('admin.categorias.index')}}"
+                    x-bind:class="!$store.sidebar.full && show ? visibleClass :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
+                    Categorías
+                </a>
+            </div>
+            <h1 x-cloak x-bind:class="$store.sidebar.full ? '' :'sm:hidden'"
+                class="w-5 h-5 p-1 bg-green rounded-full text-sm leading-3 text-center text-white">8</h1>
+        </div>
 
-                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
-                        {{ __('API Tokens') }}
-                    </x-jet-responsive-nav-link>
-                @endif
+        <!-- Schedules -->
+        <div @click="$store.sidebar.active = 'home' " x-data="tooltip" x-on:mouseover="show = true"
+            x-on:mouseleave="show = false"
+            class=" relative flex justify-between items-center text-white hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
+            x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-white bg-black':$store.sidebar.active == 'schedules','text-white ':$store.sidebar.active != 'schedules'}">
+            <div class="flex  items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <h1 x-cloak
+                    x-bind:class="!$store.sidebar.full && show ? visibleClass :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
+                    Schedules</h1>
+            </div>
+            <div x-cloak x-bind:class="$store.sidebar.full ? '':'sm:hidden'" class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h1 class="w-5 h-5 p-1 bg-pink-400 rounded-sm text-sm leading-3 text-center text-gray">3
+                </h1>
 
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
+            </div>
+        </div>
 
-                    <x-jet-responsive-nav-link href="{{ route('logout') }}"
-                                   @click.prevent="$root.submit();">
-                        {{ __('Log Out') }}
-                    </x-jet-responsive-nav-link>
-                </form>
-
-                <!-- Team Management -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                    <div class="border-t border-gray-200"></div>
-
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Manage Team') }}
+        <!-- Income -->
+        <div x-data="dropdown" class="relative">
+            <!-- Dropdown head -->
+            <div @click="toggle('income')" x-data="tooltip" x-on:mouseover="show = true"
+                x-on:mouseleave="show = false"
+                class="flex justify-between text-white hover:text-black hover:bg-white items-center space-x-2 rounded-md p-2 cursor-pointer"
+                x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-gray-200 bg-gray-800':$store.sidebar.active == 'income','text-white ':$store.sidebar.active != 'income'}">
+                <div class="relative flex space-x-2 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                    </svg>
+                    <h1 x-cloak
+                        x-bind:class="!$store.sidebar.full && show ? visibleClass :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
+                        Income</h1>
+                </div>
+                <svg x-cloak x-bind:class="$store.sidebar.full ? '':'sm:hidden'" xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <!-- Dropdown content -->
+            <div x-cloak x-show="open" @click.outside="open=false"
+                x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass" class="text-black bg-gray-dark space-y-3">
+                <h1 class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2">Item 1</h1>
+                <h1 class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2">Item 2</h1>
+                <!-- Sub Dropdown  -->
+                <div x-data="sub_dropdown" class="relative w-full ">
+                    <div @click="sub_toggle()" class="flex items-center justify-between cursor-pointer">
+                        <h1 class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2">Item 3</h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
                     </div>
-
-                    <!-- Team Settings -->
-                    <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
-                        {{ __('Team Settings') }}
-                    </x-jet-responsive-nav-link>
-
-                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                            {{ __('Create New Team') }}
-                        </x-jet-responsive-nav-link>
-                    @endcan
-
-                    <div class="border-t border-gray-200"></div>
-
-                    <!-- Team Switcher -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Switch Teams') }}
+                    <div x-show="sub_open" @click.outside="sub_open = false"
+                        x-bind:class="$store.sidebar.full ? sub_expandedClass:sub_shrinkedClass">
+                        <h1 class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">Sub Item 1</h1>
+                        <h1 class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">Sub Item 2</h1>
+                        <h1 class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">Sub Item 3</h1>
                     </div>
+                </div>
+                <h1 class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2">Item 4</h1>
+            </div>
+        </div>
 
-                    @foreach (Auth::user()->allTeams() as $team)
-                        <x-jet-switchable-team :team="$team" component="jet-responsive-nav-link" />
-                    @endforeach
-                @endif
+        <!-- Promote -->
+        <div x-data="dropdown" class="relative">
+            <!-- Dropdown head -->
+            <div @click="toggle('promote')" x-data="tooltip" x-on:mouseover="show = true"
+                x-on:mouseleave="show = false"
+                class="flex justify-between text-white hover:text-black hover:bg-white items-center space-x-2 rounded-md p-2 cursor-pointer"
+                x-bind:class="{'justify-start': $store.sidebar.full, 'sm:justify-center':!$store.sidebar.full,'text-black bg-white':$store.sidebar.active == 'promote','text-white ':$store.sidebar.active != 'promote'}">
+                <div class="relative flex space-x-2 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    <h1 x-cloak
+                        x-bind:class="!$store.sidebar.full && show ? visibleClass :'' || !$store.sidebar.full && !show ? 'sm:hidden':''">
+                        Promote</h1>
+                </div>
+                <svg x-cloak x-bind:class="$store.sidebar.full ? '':'sm:hidden'" xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <!-- Dropdown content -->
+            <div x-cloak x-show="open" @click.outside="open=false"
+                x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass" class="text-white bg-gray-dark space-y-3">
+                <h1 class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer">Item 1</h1>
+                <h1 class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer">Item 2</h1>
+                <h1 class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer">Item 3</h1>
+                <h1 class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer">Item 4</h1>
             </div>
         </div>
     </div>
-</nav>
+</div>

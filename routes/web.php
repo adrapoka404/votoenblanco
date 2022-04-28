@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\EstatusNotasController;
+use App\Http\Controllers\Admin\NotasController as AdminNotasController;
 use App\Http\Controllers\EditoresController;
 use App\Http\Controllers\NotasController;
 use Illuminate\Support\Facades\Route;
@@ -36,3 +39,12 @@ Route::resource('notas', NotasController::class)
     Route::get('notas.editores.{nota}', [NotasController::class, 'editores'])->name('notas.editores');
 
     Route::get('notas.admin', [NotasController::class, 'admin'])->name('notas.admin');
+
+    // rutas para administracion de notas 
+    Route::resource('adminnotas', AdminNotasController::class)
+    ->names('admin.notas');
+
+    Route::resource('admincategories', CategoriesController::class)
+    ->names('admin.categorias');
+
+Route::resource('estatusnotas', EstatusNotasController::class)->names('admin.notas.estatus');

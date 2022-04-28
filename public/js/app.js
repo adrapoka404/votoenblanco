@@ -5641,7 +5641,21 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start(); //Funcion para sibir imagenes en categorias
+
+document.getElementById("file").addEventListener("change", cambiarImagen);
+console.log('adx');
+
+function cambiarImagen(event) {
+  var file = event.target.files[0];
+  var reader = new FileReader();
+
+  reader.onload = function (event) {
+    document.getElementById('img_category').setAttribute("src", event.target.result);
+  };
+
+  reader.readAsDataURL(file);
+}
 
 /***/ }),
 

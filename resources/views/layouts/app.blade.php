@@ -17,11 +17,12 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+        
     </head>
-    <body class="font-sans antialiased">
+    <body  x-data class="h-screen mx-auto antialiased flex justify-between">
         <x-jet-banner />
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 flex">
             @livewire('navigation-menu')
             <!-- Page Content -->
             <main>
@@ -32,5 +33,9 @@
         @stack('modals')
 
         @livewireScripts
+        <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+        <script>
+            CKEDITOR.replace('body');
+        </script>
     </body>
 </html>
