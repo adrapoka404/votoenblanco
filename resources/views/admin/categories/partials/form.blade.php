@@ -3,8 +3,17 @@
 
 </div>
 <div class="col-span-6 sm:col-span-4 mt-3">
-    <span class=" text-red-500">Remplazar por categoria padre</span>
-    {!! Form::text('orden', null, ['class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Orden')]) !!}
+    <select name="orden" id="">
+        <option >{{__('Categoría padre')}}</option>
+    @foreach ($categories as $cat)
+    @if (isset($category) && $category->orden == $cat->id)
+    <option value="{{$cat->id}}" selected>{{$cat->nombre}}</option> 
+        
+    @else
+    <option value="{{$cat->id}}">{{$cat->nombre}}</option> 
+    @endif 
+    @endforeach
+</select>
 </div>
 <div class="col-span-6 sm:col-span-4 mt-3 flex">
     <div>

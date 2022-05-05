@@ -29,7 +29,8 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = Category::orderBy('id', 'asc')->get();
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
@@ -76,8 +77,9 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
+        $categories = Category::orderBy('id', 'asc')->get();
 
-        return view('admin.categories.edit', compact('category'));
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
     /**
