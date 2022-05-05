@@ -3,6 +3,7 @@
 
 </div>
 <div class="col-span-6 sm:col-span-4 mt-3">
+    <span class=" text-red-500">Remplazar por categoria padre</span>
     {!! Form::text('orden', null, ['class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Orden')]) !!}
 </div>
 <div class="col-span-6 sm:col-span-4 mt-3 flex">
