@@ -1,5 +1,5 @@
 <div class="w-full text-right">
-    <a href="{{ route('admin.categorias.create') }}" class="bg-file text-white bg-blue rounded-full m-2 py-1 px-2 inlin">Crear nueva categoría</a>
+    <a href="{{ route('admin.categorias.create') }}" class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">Crear nueva categoría</a>
 </div>
 @if ($categories->count() == 0)
     <div class="w-full ">
@@ -31,7 +31,7 @@
                  @can('admin.categorias.destroy')
                  @endcan
                             <a href="{{ route('admin.categorias.edit', $category) }}"
-                                class=" bg-file text-white bg-blue rounded-full m-2 py-1 px-2 inline">{{ __('Editar') }}</a>
+                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Editar') }}</a>
                         
                             <form action="{{ route('admin.categorias.destroy', $category) }}" method="POST"
                                 class="w-full max-w-sm inline">
@@ -39,7 +39,7 @@
                                 @method('delete')
 
                                 <input type="submit" value="{{ __('Quitar') }}"
-                                    class=" bg-red-300 text-white rounded-full m-2 py-1 px-2">
+                                    class=" bg-wine text-white rounded-full m-2 py-1 px-2">
                             </form>
                         
             </td>
