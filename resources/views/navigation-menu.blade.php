@@ -117,16 +117,24 @@
             <!-- Dropdown content -->
             <div x-cloak x-show="open" @click.outside="open =false"
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass" class="text-black bg-gray-dark space-y-3 ">
-                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2" href="{{route('admin.notas.index')}}">
+               <div>
+                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block" href="{{route('admin.notas.index')}}">
                     Todas
                 </a>
-                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2" href="{{route('admin.notas.estatus.index')}}">
+            </div>
+            <div>
+                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block" href="{{route('admin.notas.estatus.index')}}">
                     Catalogo de estados
                 </a>
-                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2" href="{{route('admin.notas.create')}}">
+            </div>
+                <div>
+                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block" href="{{route('admin.notas.create')}}">
                     Crear Post
                 </a>
-                <h1 class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2">Item 4</h1>
+            </div>
+                <div>
+                <h1 class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block">Item 4</h1>
+            </div>
             </div>
         </div>
 

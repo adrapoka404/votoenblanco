@@ -45,10 +45,12 @@ class NotasController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        /*
         echo "<pre>";
         print_r( $request);
         echo "</pre>";
         return;
+        */
         $nurl = Storage::put('posts/'.date('Y_m'),$request->file('image_principal'));
         $post = new Post();
 
