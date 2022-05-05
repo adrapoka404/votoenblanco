@@ -35,7 +35,7 @@
         @livewireScripts
         <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
         <script>
-            CKEDITOR.replace('body').config.width(500);
+            // CKEDITOR.replace('body').config.height(500);
         </script>
     </body>
 </html>

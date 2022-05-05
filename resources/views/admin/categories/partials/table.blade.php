@@ -1,4 +1,4 @@
-<div class="w-full ">
+<div class="w-full text-right">
     <a href="{{ route('admin.categorias.create') }}" class="bg-file text-white bg-blue rounded-full m-2 py-1 px-2 inlin">Crear nueva categoría</a>
 </div>
 @if ($categories->count() == 0)
@@ -10,22 +10,22 @@
     <x-slot name="header">
         <tr>
             @foreach ($headers as $item)
-                <th>{{$item}}</th>
+                <th class=" capitalize border-x-2 border-b-2 border-wine bg-gray font-light py-2">{{$item}}</th>
             @endforeach
         </tr>
     </x-slot>
     <x-slot name="tbody">
         @foreach ($categories as $category)
         <tr>
-            <td>{{$category->nombre}}</td>
-            <td>
+            <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">{{$category->nombre}}</td>
+            <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                 @if ($category->visible == 0 )
                     {{__('Desactivado')}}
                 @else
                     {{__('Activado')}}
                 @endif
             </td>
-            <td>
+            <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                  @can('admin.categorias.edit')
                  @endcan
                  @can('admin.categorias.destroy')

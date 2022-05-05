@@ -89,8 +89,20 @@ class CategoriesController extends Controller
      */
     public function update(StoreCategoriesRequest $request, $id)
     {
+//return $request->file('imagen');        
+        $nurl = Storage::put('categories',$request->file('imagen'));
 
-        return $request;
+        $request->imagen    = $nurl;
+        $request->slug      = str_replace(' ', '-', $request->nombre);
+
+        $ncategory = Category::find($id);
+
+        $ncategory->update($request->all());
+        $ncategory->slug = str_replace(' ', '-', $request->nombre);
+        $ncategory->imagen = $nurl;
+
+        
+        return redirect()->route('admin.categorias.index')->with('info', __('Categoría de post editada'));
     }
 
     /**

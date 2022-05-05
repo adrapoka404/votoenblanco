@@ -26,7 +26,7 @@ class StoreCategoriesRequest extends FormRequest
         return [
             "nombre"      => "required",
             "orden"     => "required|numeric",
-            "imagen"    => "image",
+           // "imagen"    => "image",
             "visible"    => "required|in:0,1",
         ];
     }
