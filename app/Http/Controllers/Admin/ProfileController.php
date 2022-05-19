@@ -61,6 +61,7 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+
         $profile = Profile::where('user_id', $user->id)->first();
         //return $profile;
         return view('admin.editor.edit', compact('user', 'profile'));
@@ -76,16 +77,19 @@ class ProfileController extends Controller
     public function update(StoreProfile $request, $id)
     {
         $request->validate([
-            'user.name' =>'required',
+            'user.name' => 'required',
         ]);
 
         $profile = $request->profile;
 
         $profile['user_id'] = $request->user['user_id'];
-        
+
         $myProfile = Profile::find($id);
-        $myProfile->update($profile);
-        
+        if (!isset($myProfile->id))
+            $myProfile = Profile::create($profile);
+        else
+            $myProfile->update($profile);
+
         return redirect()->route('admin.editor.profile.edit', $id)->with('info', __('Ok.'));
     }
 
