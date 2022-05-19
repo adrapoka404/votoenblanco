@@ -75,7 +75,18 @@ class ProfileController extends Controller
      */
     public function update(StoreProfile $request, $id)
     {
-        return $request;
+        $request->validate([
+            'user.name' =>'required',
+        ]);
+
+        $profile = $request->profile;
+
+        $profile['user_id'] = $request->user['user_id'];
+        
+        $myProfile = Profile::find($id);
+        $myProfile->update($profile);
+        
+        return redirect()->route('admin.editor.profile.edit', $id)->with('info', __('Ok.'));
     }
 
     /**

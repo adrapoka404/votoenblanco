@@ -37,6 +37,8 @@ class StoreProfile extends FormRequest
             "profile.yt"            => "nullable|url",
             "profile.tt"            => "nullable|url",
             "profile.personal"      => "nullable|url",
+            "profile.photo"         => "nullable|mimes:jpg,bmp,png",
+            "profile.cover"         => "nullable|mimes:jpg,bmp,png",
            
         ];
     }
@@ -57,6 +59,8 @@ class StoreProfile extends FormRequest
             "profile.yt"            => "YouTube",
             "profile.tt"            => "TikTok",
             "profile.personal"      => "Página Peronal",
+            "profile.photo"         => "Foto de pérfil",
+            "profile.cover"         => "Foto de portada",
         ];
     }
 
@@ -79,6 +83,8 @@ class StoreProfile extends FormRequest
             "profile.yt.url"                => "El link para YouTube debe ser una URL valida",
             "profile.tt.url"                => "El link para TikTok debe ser una URL valida",
             "profile.personal.url"          => "El link para la URL personal debe ser una URL valida",
+            "profile.photo.mimes"           => "La foto de pérfil debe ser una iamgen valida con alguna de las siguientes extensiones (jpg,bmp,png)",
+            "profile.cover.mimes"           => "La portada debe ser una iamgen valida con alguna de las siguientes extensiones (jpg,bmp,png)",
         ];
     }
 

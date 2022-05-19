@@ -25,6 +25,11 @@ module.exports = {
             'black': '#000',
             'white': '#fff',
             'wine':'#981c3e',
+            'teal':{
+                100:'#e6fffa',
+                500:'#38b2ac',
+                900:'#234e52',
+            },
             'red': {
                 50: '#fef2f2',
                 100: '#fee2e2',
