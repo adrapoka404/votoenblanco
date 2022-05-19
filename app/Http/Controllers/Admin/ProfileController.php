@@ -62,7 +62,7 @@ class ProfileController extends Controller
     {
         $user = User::find($id);
         $profile = Profile::where('user_id', $user->id)->first();
-        
+        //return $profile;
         return view('admin.editor.edit', compact('user', 'profile'));
     }
 
