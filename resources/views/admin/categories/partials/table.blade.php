@@ -1,5 +1,5 @@
 <div class="w-full text-right">
-    <a href="{{ route('admin.categorias.create') }}" class="bg-file text-white bg-wine rounded-full m-2 py-1 px-2 inlin">Crear nueva categoría</a>
+    <a href="{{ route('admin.categorias.create') }}" class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">Crear nueva categoría</a>
 </div>
 @if ($categories->count() == 0)
     <div class="w-full ">

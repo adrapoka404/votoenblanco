@@ -5643,7 +5643,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start(); //Funcion para sibir imagenes en categorias
 
-document.getElementById("file").addEventListener("change", cambiarImagen);
+document.getElementById("file").addEventListener("change", cambiarImagen); //document.getElementById("img_category").addEventListener("click", function(){document.getElementById("file").addEventListener("click")});
+
 console.log('adx');
 
 function cambiarImagen(event) {

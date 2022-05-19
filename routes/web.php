@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\EstatusNotasController;
 use App\Http\Controllers\Admin\NotasController as AdminNotasController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\EditoresController;
 use App\Http\Controllers\NotasController;
 use Illuminate\Support\Facades\Route;
@@ -48,3 +49,4 @@ Route::resource('notas', NotasController::class)
     ->names('admin.categorias');
 
 Route::resource('estatusnotas', EstatusNotasController::class)->names('admin.notas.estatus');
+Route::resource('editorprofile', ProfileController::class)->names('admin.editor.profile');

@@ -4,7 +4,7 @@
             <x-jet-authentication-card-logo />
         </x-slot>
         <x-slot name="txt">
-            <div class=" px-1 pt-4 text-red-800 font-sans font-black tracking-wide text-3xl ">Mantente enterado</div>
+            <div class=" px-1 pt-4 text-red-800 font-sans font-black tracking-wide text-3xl ">Mantente informado</div>
             <div class=" font-sans my-1 whitespace-pre text-2xl">de las noticias más relevantes</div>
             <div class=" font-sans my-1 text-sm">y entérate antes que nadie de giveaways y promociones</div>
         </x-slot>

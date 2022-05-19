@@ -18,26 +18,26 @@
             </div>
 
             <div class=" mt-20 font-sans font-light tracking-widest">Contáctanos
-                <a href="">
+                <a href="https://wa.me/5526593156" target="_blank">
                     <div class=" bg-whats w-12 h-12 bg-contain"></div>
                 </a>
                 <br>
                 Redes Sociales
                 <br>
                 <div class=" inline-flex mt-5">
-                    <a href="">
+                    <a href="https://bit.ly/3hIQPCu" target="_blank">
                         <div class="w-12 h-12 bg-no-repeat mx-2 bg-insta bg-contain"></div>
                     </a>
-                    <a href="">
+                    <a href="https://www.facebook.com/VtenBlanco" target="_blank">
                         <div class="w-12 h-12 bg-no-repeat mx-2 bg-fb bg-contain"></div>
                     </a>
-                    <a href="">
+                    <a href="https://bit.ly/35yOasG" target="_blank">
                         <div class="w-12 h-12 bg-no-repeat mx-2 bg-tw bg-contain"></div>
                     </a>
-                    <a href="">
+                    <a href="https://bit.ly/3hOtXkR" target="_blank">
                         <div class="w-12 h-12 bg-no-repeat mx-2 bg-tt bg-contain"></div>
                     </a>
-                    <a href="">
+                    <a href="https://www.youtube.com/channel/UCGCPi8_DG0nUq_A_E0sN4SQ" target="_blank">
                         <div class="w-12 h-12 bg-no-repeat mx-2 bg-yt bg-contain"></div>
                     </a>
                 </div>
