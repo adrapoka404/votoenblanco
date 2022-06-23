@@ -11,7 +11,7 @@ module.exports = {
     theme: {
         letterSpacing: {
             wide: '.1em',
-            widest: '.4em',
+            widest: '.5em',
 
         },
         colors: {

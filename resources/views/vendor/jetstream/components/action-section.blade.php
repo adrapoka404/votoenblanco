@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8']) }}>
+<div {{ $attributes->merge(['class' => 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-5']) }}>
     
     <x-jet-section-title>
         <x-slot name="title"><span class=" uppercase">{{ $title }}</span></x-slot>

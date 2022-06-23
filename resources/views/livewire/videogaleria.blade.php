@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:flex items-center">
+<div class="max-w-7xl mx-auto px-4 my-5 sm:px-6 lg:px-8 md:flex items-center">
     <div class="w-full md:w-2/3  items-center">
         <span class="text-3xl text-red-800 font-bold">Videogaleria</span>
         <iframe class="py-10 h-96 " width="100%"  src="https://www.youtube.com/watch?v=QAZNxlAtNJg"64

@@ -55,7 +55,7 @@
     <div class="w-1/3">
         <div class="ml-5 text-red-800 font-extralight text-3xl">Relacionadas:</div>
         <livewire:relacionadas/>
-        <div class="h-96 bg-black text-white text-center">Publicidad</div>
+        <div class="ml-5 h-96 bg-black text-white text-center">Publicidad</div>
 
 
     </div>

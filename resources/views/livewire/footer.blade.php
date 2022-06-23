@@ -1,62 +1,78 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-black border-t-8 border-red-800 pt-10 pb-5 mt-10 mb-2 text-white">
-    <div class="md:grid md:grid-cols-2 ml-20">
-        <div>
-            <div class="my-5">
+<div
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-black border-t-8 border-red-800 pt-10 pb-5 mt-10 mb-2 text-white font-sans font-medium">
+    <div class="flex flex-wrap">
+        <div class="w-1/3">
+            <img src="{{ asset('img/vb_footer.png') }}" alt="" class="px-10">
+        </div>
+        <div class="w-1/3 font-sans font-light tracking-widest items-center my-auto ">
+            <div class="flex flex-col-5 flex-row-2">
+                <div>
+                    <a href="https://bit.ly/3hIQPCu" target="_blank">
+                        <div class=" w-8 h-8 bg-no-repeat mx-1 bg-insta bg-contain"></div>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://www.facebook.com/VtenBlanco" target="_blank">
+                        <div class="w-8 h-8 bg-no-repeat mx-2 bg-fb bg-contain"></div>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://bit.ly/35yOasG" target="_blank">
+                        <div class="w-8 h-8 bg-no-repeat mx-2 bg-tw bg-contain"></div>
+                    </a>
+                </div>
+                <div> <a href="https://bit.ly/3hOtXkR" target="_blank">
+                        <div class="w-8 h-8 bg-no-repeat mx-2 bg-tt bg-contain"></div>
+                    </a>
+
+                </div>
+                <div>
+                    <a href="https://www.youtube.com/channel/UCGCPi8_DG0nUq_A_E0sN4SQ" target="_blank">
+                        <div class="w-8 h-8 bg-no-repeat mx-2 bg-yt bg-contain"></div>
+                    </a>
+                </div>
+                <span class="ml-3 h-8">Contáctanos</span>
+            </div>
+            
+            <div class="w-full mt-5 inline-flex">
+                <a href="https://wa.me/5526593156" target="_blank" id="inWhats">
+                    <div class=" bg-whats w-8 h-8 bg-contain"></div>
+                    
+                    <span class="" id="inWhats">Anúnciate con nosotros</span>
+                </a>
+                
+            </div>
+
+            <div class="w-full">
+                <div class="mt-10">Suscríbete</div>
+            </div>
+
+        </div>
+        <div class="w-1/3">
+            <div class="ml-5 my-5">
                 <x-actionfooter href="{{ route('dashboard') }}" :active="request()->routeIs('#')">
                     {{ __('Nosotros') }}
                 </x-actionfooter>
             </div>
-            <div class="my-5">
+            <div class="ml-5 my-5">
                 <x-actionfooter href="{{ route('editores.show', 'all') }}" :active="request()->routeIs('#')">
                     {{ __('nuestro equipo') }}
                 </x-actionfooter>
             </div>
-            <div class="my-5">
+            <div class="ml-5 my-5">
                 <x-actionfooter href="{{ route('dashboard') }}" :active="request()->routeIs('#')">
                     {{ __('aviso de privacidad') }}
                 </x-actionfooter>
             </div>
-
-            <div class=" mt-20 font-sans font-light tracking-widest">Contáctanos
-                <a href="https://wa.me/5526593156" target="_blank">
-                    <div class=" bg-whats w-12 h-12 bg-contain"></div>
-                </a>
-                <br>
-                Redes Sociales
-                <br>
-                <div class=" inline-flex mt-5">
-                    <a href="https://bit.ly/3hIQPCu" target="_blank">
-                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-insta bg-contain"></div>
-                    </a>
-                    <a href="https://www.facebook.com/VtenBlanco" target="_blank">
-                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-fb bg-contain"></div>
-                    </a>
-                    <a href="https://bit.ly/35yOasG" target="_blank">
-                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-tw bg-contain"></div>
-                    </a>
-                    <a href="https://bit.ly/3hOtXkR" target="_blank">
-                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-tt bg-contain"></div>
-                    </a>
-                    <a href="https://www.youtube.com/channel/UCGCPi8_DG0nUq_A_E0sN4SQ" target="_blank">
-                        <div class="w-12 h-12 bg-no-repeat mx-2 bg-yt bg-contain"></div>
-                    </a>
-                </div>
-                <br>
-                <a href="">Anúnciate con nosotros</a>
-            </div>
         </div>
-        <div class="font-sans tracking-widest items-end">
-            <a href="">
-                <div>Suscribete</div>
-            </a>
-            <div class="bg-security bg-no-repeat w-52 h-52"></div> Cetificado de seguridad
+        <div class="w-2/3 font-sans font-light tracking-widest mt-20 pl-10 inline-block align-text-baseline">
+        <p class=" align-bottom">Metepec. Estado de mexico</p>
+        <p>COPIRIGHT todos los derechos Reservados</p>
+        donde va este texto
         </div>
-
+        <div class="w-1/3 flex flex-col-2 items-end mt-20 font-sans font-light tracking-widest place-content-end">
+            <div class="bg-security bg-no-repeat w-20 h-20 bg-contain"></div>
+            <div class="w-1/2 font-serif font-medium">Cetificado de seguridad</div>
+        </div>
     </div>
-    <div class=" font-sans tracking-widest text-center mt-20">
-        Metepec. Estado de México
-        <br>
-        COPYRIGHT todos los derecchos reservados
-    </div>
-
 </div>

@@ -56,12 +56,55 @@
     <div class="text-center"> <a href="#">noticias</a> </div>
 
 </div>
-<div class="grid gridcols-2 md:grid-cols-3 uppercase text-2xl text-white items-center bg-black my-2 h-8">
-    <div class="uppercase text-white text-center font-sans text-lg mx-2">Holi, yo me voy </div>
-    <div class="uppercase text-white text-center font-sans text-lg mx-2">a mover muy seguido</div>
-    <div class="uppercase text-white text-center font-sans text-lg mx-2">
-        
-        <img src="{{ asset('img/sol nube.gif') }}" alt="" class=" h-7">
+<div class="grid gridcols-2 md:grid-cols-2 uppercase text-2xl text-white items-center bg-black my-2">
+    <div class="uppercase text-white text-center font-sans text-lg mx-2 h-full">
+        <style>
+            .tradingview-widget-copyright{
+                display: none;
+            }
+            </style>
+        <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://es.tradingview.com" rel="noopener" target="_blank"><span class="blue-text">Cotizaciones</span></a> por TradingView</div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+    {
+    "symbols": [
+      {
+        "proName": "FOREXCOM:NSXUSD",
+        "title": "US 100"
+      },
+      {
+        "proName": "FX_IDC:EURUSD",
+        "title": "EUR/USD"
+      },
+      {
+        "proName": "BITSTAMP:BTCUSD",
+        "title": "Bitcoin"
+      }
+    ],
+    "colorTheme": "dark",
+    "isTransparent": true,
+    "showSymbolLogo": true,
+    "locale": "es"
+  }
+    </script>
+  </div>
+  <!-- TradingView Widget END -->
+    </div>
+    <div class="uppercase text-white text-center font-sans text-lg mx-2 border-l-wine">
+        <style>
+            #cont_4d1c4f42bfc77fbdf132342d955b8286{
+                border: 0px !important;
+            }
+            .nomP, .slink{
+                display: none !important;
+            }
+            .wlink .fondo tr td .temps span.tempMin{
+                color: white !important;
+            }
+        </style>
+        <div id="cont_4d1c4f42bfc77fbdf132342d955b8286"><script type="text/javascript" async src="https://www.meteored.mx/wid_loader/4d1c4f42bfc77fbdf132342d955b8286"></script></div>
         
     </div>
 </div>
