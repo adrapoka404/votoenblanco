@@ -1,5 +1,5 @@
 <div
-    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-black border-t-8 border-red-800 pt-10 pb-5 mt-10 mb-2 text-white font-sans font-medium">
+    class=" bg-black border-t-8 border-red-800 pt-10 pb-5 mt-10 mb-2 text-white font-sans font-medium">
     <div class="flex flex-wrap">
         <div class="w-1/3">
             <img src="{{ asset('img/vb_footer.png') }}" alt="" class="px-10">

@@ -3,7 +3,7 @@
         <img src="{{ asset('img/ig_wine.png') }}" alt="" class="mx-5 w-5 h-5 inline-flex">
     </a>
     <a href="https://www.facebook.com/VtenBlanco" class="inline-flex" target="_blank">
-        <img src="{{ asset('img/fb_wine.png') }}" alt="" class="mx-5 w-5 h-5 inline-flex">
+        <img src="{{ asset('img/fb_wine.png') }}" alt="" class="mx-5 w-5 inline-flex">
     </a>
     <a href="https://bit.ly/35yOasG" class="inline-flex" target="_blank">
         <img src="{{ asset('img/tw_wine.png') }}" alt="" class="mx-5 w-5 h-5 inline-flex">
