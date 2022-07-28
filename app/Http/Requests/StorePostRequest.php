@@ -24,7 +24,7 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'             => 'required|min:15|max:50',
+            'title'             => 'required|min:15|max:250',
             'body'              => 'required|min:100',
             'description'       => 'required|min:120|max:160',
             'tags'              => 'required',
@@ -58,7 +58,7 @@ class StorePostRequest extends FormRequest
         return [
             'title.required'         => 'El encabezado de la nota es un campo obligatorio',
             'title.min'       => 'El encabezado debe tener al menos 15 caracteres',
-            'title.max' => 'El encabezado debe tener máximo 50 caracteres',
+            'title.max' => 'El encabezado debe tener máximo 250 caracteres',
             'body.required'=> 'El cuerpo de la nota es obligatorio',
             'body.min' => 'El cuerpo de la nota debe tener al menos cien caracteres',
             'description.required' => 'El campo de meta descripción es obligatorio',

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EditoresController extends Controller
@@ -45,7 +47,9 @@ class EditoresController extends Controller
      */
     public function show($id)
     {
-        return view('guest.editores'); 
+        $editores = User::all();
+        
+        return view('guest.editores', compact('editores')); 
     }
 
     /**

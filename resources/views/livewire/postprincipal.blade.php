@@ -1,7 +1,7 @@
 <div class="mx-auto flex  my-10 ">
     <div class=" text-center w-1/3  flex-1 pl-10">
         <div class="text-red-800 text-3xl font-bold mb-5 w-full">Cabeza de nota</div>
-        <div class="w-full h-80 bg-gray pb-2 bg-cover bg-fixed bg-no-repeat " style="background-image: url('{{asset('img/nota.png')}}')">
+        <div class="w-full h-80 bg-gray pb-2 bg-contain bg-fixed bg-no-repeat " style="background-image: url('{{asset('img/nota.png')}}')">
             
         </div>
     </div>

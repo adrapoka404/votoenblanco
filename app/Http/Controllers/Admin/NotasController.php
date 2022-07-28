@@ -7,8 +7,13 @@ use App\Http\Livewire\Statusposts;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Postcategory;
 use App\Models\PostDetails;
+use App\Models\Postrelated;
+use App\Models\PostStatus;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class NotasController extends Controller
@@ -20,9 +25,17 @@ class NotasController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('title', 'asc')->paginate(10);
+        $posts = Post::where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(5);
+
+        foreach($posts as &$post) {
+            $status = PostStatus::find($post->status);
+            $post->status = $status;
+
+            $user = User::find($post->user_create);
+            $post->user = $user;
+        }
         
-        return view('admin.posts.index');
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -45,12 +58,8 @@ class NotasController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        /*
-        echo "<pre>";
-        print_r( $request);
-        echo "</pre>";
-        return;
-        */
+        
+        
         $nurl = Storage::put('posts/'.date('Y_m'),$request->file('image_principal'));
         $post = new Post();
 
@@ -74,6 +83,28 @@ class NotasController extends Controller
             $post_details->posted = $request->date .' ' . $request->time;
         
         $post_details->save();
+
+        foreach($request->all()['categories'] as $category){
+            $postCategory = new Postcategory();
+
+            $postCategory->post_id = $post->id;
+            $postCategory->category_id = $category;
+
+            $postCategory->save();
+        }
+
+        if($request->all()['related']) {
+            foreach($request->all()['related'] as $related ){
+                
+                    $postRelated = new Postrelated();
+        
+                    $postRelated->post_id = $post->id;
+                    $postRelated->related_id = $related;
+        
+                    $postRelated->save();
+                
+            }
+        }
 
         return redirect()->route('admin.notas.create')->with('info', __('Post creado con éxito'));
     }

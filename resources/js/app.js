@@ -6,6 +6,12 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+
+//import 'jquery-ui/ui/widgets/datepicker.js';
+
+
 //Funcion para sibir imagenes en categorias
 document.getElementById("file").addEventListener("change", cambiarImagen);
 //document.getElementById("img_category").addEventListener("click", function(){document.getElementById("file").addEventListener("click")});

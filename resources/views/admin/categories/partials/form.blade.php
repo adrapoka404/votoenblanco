@@ -3,7 +3,8 @@
 
 </div>
 <div class="col-span-6 sm:col-span-4 mt-3">
-    <select name="orden" id="" class="border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto ring-wine">
+    <input type="hidden" name="orden" value="1">
+    <select name="patern_id" id="" class="border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto ring-wine">
         <option >{{__('Categoría padre')}}</option>
     @foreach ($categories as $cat)
     @if (isset($category) && $category->orden == $cat->id)

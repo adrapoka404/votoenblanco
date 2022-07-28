@@ -47,29 +47,48 @@
     </nav>
 
 </div>
-<div class="grid grid-cols-5 uppercase text-2xl text-white items-center bg-red-800 my-2 py-2">
-    <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-<!-- Dropdown menu -->
-<div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-      <li>
-        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-      </li>
-    </ul>
-</div>  
-    <div class="text-center md:border-r-2 border-white"> <a href="#">Reportajes</a> </div>
-    <div class="text-center md:border-r-2 border-white"> <a href="#">entrevistas</a> </div>
-    <div class="text-center md:border-r-2 border-white"> <a href="#">nuestras letras</a> </div>
-    <div class="text-center md:border-r-2 border-white"> <a href="#">noticias</a> </div>
+
+
+
+<div class="grid grid-col-1 md:grid-cols-5 uppercase text-2xl text-white items-center bg-red-800 my-2 py-2">
+
+    <div class="text-center md:border-r-2 border-white text-black">
+        <a href="{{ route('web.reportajes') }}" class="text-white menuGral">Reportajes</a>
+        <x-submenu>
+            <x-submenu-link where="{{ route('notas.categorias', 7) }}" text="{{ __('Vagabundario') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 6) }}" text="{{ __('Común unidad') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 8) }}" text="{{ __('Sensaciones') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 9) }}" text="{{ __('Haciendo Ecos') }}" />
+        </x-submenu>
+    </div>
+    <div class="text-center md:border-r-2 border-white text-black ">
+        <a href="{{ route('web.entrevistas') }}" class="text-white menuGral">entrevistas</a>
+        <x-submenu>
+            <x-submenu-link where="{{ route('notas.categorias', 10) }}" text="{{ __('conociendo a') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 11) }}" text="{{ __('más humanos más chingones') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 12) }}" text="{{ __('mujeres en acción') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 13) }}" text="{{ __('victoriosos') }}" />
+        </x-submenu>
+    </div>
+    <div class="text-center md:border-r-2 border-white text-black">
+        <a href="{{route('editores.show', 'all')}}" class="text-white menuGral">nuestras letras</a>
+        <x-submenu>
+            <x-submenu-link where="{{ route('notas.editores', 1) }}" text="{{ __('Raymundo Rivera') }}" />
+        </x-submenu>
+    </div>
+    <div class="text-center md:border-r-2 border-white text-black">
+        <a href="{{ route('web.noticias') }}" class="text-white  menuGral">noticias</a>
+        <x-submenu>
+            <x-submenu-link where="{{ route('notas.categorias', 14) }}" text="{{ __('Local') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 16) }}" text="{{ __('Nacional') }}" />
+            <x-submenu-link where="{{ route('notas.categorias',15) }}" text="{{ __('Internacional') }}" />
+            <x-submenu-link where="{{ route('notas.categorias',17) }}" text="{{ __('Deportes') }}" />
+            <x-submenu-link where="{{ route('notas.categorias',18) }}" text="{{ __('Ciencia') }}" />
+            <x-submenu-link where="{{ route('notas.categorias',19) }}" text="{{ __('Economía y Finanzas') }}" />
+            <x-submenu-link where="{{ route('notas.categorias',20) }}" text="{{ __('Cultura') }}" />
+            <x-submenu-link where="{{ route('notas.categorias',21) }}" text="{{ __('Entretenimiento') }}" />
+        </x-submenu>
+    </div>
     <div class="text-center">
         <div class="items-center cursor-pointer" id='buscadortxt'>
             <img src="{{ asset('img/lupita.png') }}" alt="" class=" w-6 my-auto inline">
@@ -78,15 +97,56 @@
                 id="search">
         </div>
     </div>
-    <div class=" fixed bg-gray w-full max-h-max z-50 hidden " id="chismesito">
-        <div class="bg-gray text-black font-bold text-center h-80 mx-auto  pt-56 ">
-            <div class=" text-right h-10 text-black  pt-56" id="nochisme">no lo quiero ver</div>
 
-            Aqui algo dinamico como la revista
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="relative z-10  hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="modalRevista">
+        <!--
+      Background backdrop, show/hide based on modal state.
+  
+      Entering: "ease-out duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "ease-in duration-200"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-95 transition-opacity"></div>
+
+        <div class="fixed z-10 inset-0 overflow-y-auto">
+            <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+                <!--
+          Modal panel, show/hide based on modal state.
+  
+          Entering: "ease-out duration-300"
+            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            To: "opacity-100 translate-y-0 sm:scale-100"
+          Leaving: "ease-in duration-200"
+            From: "opacity-100 translate-y-0 sm:scale-100"
+            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        -->
+                <div
+                    class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 w-1/2">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class=" sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <div class="mt-2">
+                                    @livewire('revistadigital')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="button"
+                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            id="nochisme">Cerrar</button>
+                        <!--button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cerrar</button-->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="grid gridcols-2 md:grid-cols-2 uppercase text-2xl text-white items-center bg-black my-2">
+<div class="grid gridcols-3 md:grid-cols-3 uppercase text-2xl text-white items-center bg-black my-2">
     <div class="uppercase text-white text-center font-sans text-lg mx-2 h-full">
         <style>
             .tradingview-widget-copyright {
@@ -122,9 +182,13 @@
         </div>
         <!-- TradingView Widget END -->
     </div>
-    <div class="uppercase text-white text-center font-sans text-lg mx-2 border-l-wine">
+    <div class="text-center font-light ">
+        <div id="date" class="tracking-widest"></div>
+        <div id="time" class="tracking-wide">La hora</div>
+    </div>
+    <div class="uppercase text-white text-center font-sans text-lg mx-2 border-l-wine items-center content-center">
         <style>
-            #cont_4d1c4f42bfc77fbdf132342d955b8286 {
+            #cont_6c9fd17992756724a13952cac98d9872 {
                 border: 0px !important;
             }
 
@@ -137,40 +201,96 @@
                 color: white !important;
             }
         </style>
-        <div id="cont_4d1c4f42bfc77fbdf132342d955b8286">
-            <script type="text/javascript" async src="https://www.meteored.mx/wid_loader/4d1c4f42bfc77fbdf132342d955b8286"></script>
+        <div id="cont_6c9fd17992756724a13952cac98d9872">
+            <script type="text/javascript" async src="https://www.meteored.mx/wid_loader/6c9fd17992756724a13952cac98d9872"></script>
         </div>
-
     </div>
 </div>
 @section('jquery')
     <script>
         $(document).ready(function() {
-            console.log('jelou madre foca');
+            mueveReloj()
+            date = new Date();
+
+            $("#date").html(date.toDateString());
+
             $("#buscadortxt").on('click', function() {
                 $("#search").show();
                 $("#search").focus();
                 $("#nosearch").hide();
             })
-/*
-            $("#nochisme").on('click', function(){
-                $("#chismesito").hide();
+
+            $(".menuGral").on('mouseover', function() {
+                $(".submenu").hide();
+                $(this).siblings().show();
             })
 
-            setTimeout(function() { 
-                $("#chismesito").show();
+            $(".submenu").on('mouseleave', function() {
+                $(this).hide();
+            })
+
+            $("#nochisme").on('click', function() {
+                console.log('Cerrar la revista');
+                $("#modalRevista").hide();
+            })
+/*
+            setTimeout(function() {
+                $("#modalRevista").show();
             }, 5000);
 */
-            $( "#search" ).autocomplete({ });
+            /*
+                        $( "#search" ).autocomplete({ });
 
-            $("#search").on('keyup', function(){
-                palabra = $(this).val();
-                if(palabra.length > 3 ){
-                    console.log('Me conecto por ajax al servidoro a buscar todo lo que contenga la palabra' + palabra )
-                }else   
-                console.log('aun no hago nada');
-            })
-            
+                        $("#search").on('keyup', function(){
+                            palabra = $(this).val();
+                            if(palabra.length > 3 ){
+                                console.log('Me conecto por ajax al servidoro a buscar todo lo que contenga la palabra' + palabra )
+                            }else   
+                            console.log('aun no hago nada');
+                        })
+                        */
+
         })
+
+
+        $("#search").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('services.posts') }}",
+                    type: 'GET',
+                    dataType: 'JSON',
+                    delay: 250,
+                    data: {
+                        search: request.term
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        response($.map(data, function(item) {
+                            return {
+                                label: item.title,
+                                value: item.id
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function(event, ui) {
+                window.location.href = "{{ route('notas.show', '') }}" + '/' + ui.item.value;
+            }
+        })
+
+        function mueveReloj() {
+            momentoActual = new Date()
+            hora = momentoActual.getHours()
+            minuto = momentoActual.getMinutes()
+            segundo = momentoActual.getSeconds()
+
+            horaImprimible = hora + " : " + (minuto < 10 ? 0 + minuto : minuto) + " : " + (segundo < 10 ? '0' + segundo :
+                segundo)
+
+            $("#time").html(horaImprimible)
+
+            setTimeout("mueveReloj()", 1000)
+        }
     </script>
 @endsection

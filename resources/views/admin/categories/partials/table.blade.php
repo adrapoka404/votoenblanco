@@ -45,6 +45,9 @@
             </td>
         </tr>    
         @endforeach
+        <tfoot>
+            <tr><td colspan="3">{{$categories->links()}}</td></tr>
+        </tfoot>
     </x-slot>
 </x-table>
 @endif
