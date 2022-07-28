@@ -233,11 +233,11 @@
                 console.log('Cerrar la revista');
                 $("#modalRevista").hide();
             })
-/*
+
             setTimeout(function() {
                 $("#modalRevista").show();
             }, 5000);
-*/
+
             /*
                         $( "#search" ).autocomplete({ });
 

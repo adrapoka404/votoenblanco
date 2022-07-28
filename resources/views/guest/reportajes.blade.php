@@ -6,7 +6,7 @@
         <div class="col-span-3">
             <div class=" grid grid-cols-2">
                 <div class="mx-auto">
-                    <a href="{{ route('web.entrevistas') }}">
+                    <a href="{{ route('notas.categorias', 7) }}">
                         <img class=" w-86 h-52 object-cover object-center mb-4 "
                             src="{{ asset('img/vagabundarioent.png') }}" alt="Image Size 720x400" />
                     </a>
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div>
-                            <a href="{{ route('web.entrevistas') }}"
+                            <a href="{{ route('notas.categorias', 7) }}"
                                 class="bg-red-800 px-10 text-white rounded-lg font-semibold">Ver más</a>
                         </div>
                     </div>
@@ -53,13 +53,13 @@
                             </div>
                         </div>
                         <div>
-                            <a href="{{ route('web.entrevistas') }}"
+                            <a href="{{ route('notas.categorias', 8) }}"
                                 class="bg-red-800 px-10 text-white rounded-lg font-semibold">Ver más</a>
                         </div>
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <a href="{{ route('web.entrevistas') }}">
+                    <a href="{{ route('notas.categorias', 8) }}">
                         <img class=" w-86 h-52 object-cover object-center mb-4 "
                             src="{{ asset('img/sensaciones.png') }}" alt="Image Size 720x400" />
                     </a>
@@ -70,7 +70,7 @@
         <div class="col-span-3">
             <div class=" grid grid-cols-2">
                 <div class="mx-auto">
-                    <a href="{{ route('web.entrevistas') }}">
+                    <a href="{{ route('notas.categorias', 9) }}">
                         <img class=" w-86 h-52 object-cover object-center mb-4 "
                             src="{{ asset('img/haciendoecos.png') }}" alt="Image Size 720x400" />
                     </a>
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div>
-                            <a href="{{ route('web.entrevistas') }}"
+                            <a href="{{ route('notas.categorias', 9) }}"
                                 class="bg-red-800 px-10 text-white rounded-lg font-semibold">Ver más</a>
                         </div>
                     </div>
@@ -121,13 +121,13 @@
                             </div>
                         </div>
                         <div>
-                            <a href="{{ route('web.entrevistas') }}"
+                            <a href="{{ route('notas.categorias', 6) }}"
                                 class="bg-red-800 px-10 text-white rounded-lg font-semibold">Ver más</a>
                         </div>
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <a href="{{ route('web.entrevistas') }}">
+                    <a href="{{ route('notas.categorias', 6) }}">
                         <img class=" w-86 h-52 object-cover object-center mb-4 "
                             src="{{ asset('img/comununidad.png') }}" alt="Image Size 720x400" />
                     </a>

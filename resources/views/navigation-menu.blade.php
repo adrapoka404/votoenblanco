@@ -61,7 +61,7 @@
         .navOpen, 'top-0 -left-64 sm:left-0': !$store.sidebar.navOpen }">
 
     <h1 class="text-white font-black py-4" x-bind:class="$store.sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 xm:px-2'">
-        LOGO</h1>
+        <a href="/">LOGO</a> </h1>
 
     <div class="px-4 space-y-2">
 
@@ -134,6 +134,11 @@
                         href="{{ route('admin.editor.profile.edit', auth()->user()->id) }}">
                         Editar perfil
                     </a>
+                </div>
+                <div><form method="POST" action="{{ route('logout') }}" x-data>
+                    @csrf
+                    {!! Form::submit('Cerrar sesión', ["class"=>"bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"]) !!}
+                </form>
                 </div>
             </div>
         </div>
