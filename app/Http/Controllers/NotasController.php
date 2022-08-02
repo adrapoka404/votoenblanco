@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Livewire\Posts;
+use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Postcategory;
+use App\Models\PostDetails;
+use App\Models\Postrelated;
 use App\Models\User;
+use App\View\Components\coment;
 use Illuminate\Http\Request;
 
 class NotasController extends Controller
@@ -51,8 +55,36 @@ class NotasController extends Controller
      */
     public function show($id)
     {
+        $post = Post::find($id);
+        $post->views = $post->views + 1;
+        $post->save();
         
-        return view('guest.nota'); 
+        $post->details  = PostDetails::where('post_id', $id)->first();
+        $relateds       = Postrelated::where('post_id', $id)->get();
+        $categories     = Postcategory::where('post_id', $id)->get();
+        $redactor       = User::find($post->user_create);
+    
+        if(!empty($relateds)){
+    
+            foreach($relateds as &$related) {
+                $r = Post::find($related->related_id);
+                $related->title = $r->title;
+            }
+        }
+
+        if(!empty($categories)){
+            foreach($categories as &$category) {
+                $cat = Category::find($category->category_id);
+                
+                $category->name = $cat->nombre;
+            }
+        }
+
+        $post->relateds     = $relateds;
+        $post->categories   = $categories;
+        $post->editor       = $redactor;
+        
+        return view('guest.nota', compact('post')); 
     }
 
     public function editores($id)
@@ -127,4 +159,59 @@ class NotasController extends Controller
     public function admin(){
         
     }
+
+    public function like($id){
+       return $id;
+        $post = Post::find($id);
+        
+        $post->like = $post->like + 1;
+
+        $post->save();
+
+        return redirect()->route('nota.show', $id);
+    }
+
+    public function slike($id){
+        return $id;
+         $post = Post::find($id);
+         
+         $post->like = $post->like + 1;
+ 
+         $post->save();
+ 
+         return redirect()->route('nota.show', $id);
+     }
+
+     public function nolike($id){
+        return $id;
+         $post = Post::find($id);
+         
+         $post->like = $post->like + 1;
+ 
+         $post->save();
+ 
+         return redirect()->route('nota.show', $id);
+     }
+
+     public function share($id){
+        return $id;
+         $post = Post::find($id);
+         
+         $post->like = $post->like + 1;
+ 
+         $post->save();
+ 
+         return redirect()->route('nota.show', $id);
+     }
+
+     public function save($id){
+        return $id;
+         $post = Post::find($id);
+         
+         $post->like = $post->like + 1;
+ 
+         $post->save();
+ 
+         return redirect()->route('nota.show', $id);
+     }
 }

@@ -50,23 +50,23 @@
         </div>
         <div class="w-1/3">
             <div class="ml-5 my-5">
-                <x-actionfooter href="{{ route('dashboard') }}" :active="request()->routeIs('#')">
+                <x-actionfooter href="{{ route('web.aboutus') }}" :active="request()->routeIs('#')">
                     {{ __('Nosotros') }}
                 </x-actionfooter>
             </div>
             <div class="ml-5 my-5">
-                <x-actionfooter href="{{ route('editores.show', 'all') }}" :active="request()->routeIs('#')">
+                <x-actionfooter href="{{ route('web.team') }}" :active="request()->routeIs('#')">
                     {{ __('nuestro equipo') }}
                 </x-actionfooter>
             </div>
             <div class="ml-5 my-5">
-                <x-actionfooter href="{{ route('dashboard') }}" :active="request()->routeIs('#')">
+                <x-actionfooter href="{{ route('web.privacy') }}" :active="request()->routeIs('#')">
                     {{ __('aviso de privacidad') }}
                 </x-actionfooter>
             </div>
         </div>
         <div class="w-2/3 font-sans font-light tracking-widest mt-20 pl-10 inline-block align-text-baseline">
-        <p class=" align-bottom">Metepec. Estado de mexico</p>
+        <p class=" align-bottom">Metepec. Estado de México</p>
         <p>COPIRIGHT todos los derechos Reservados</p>
         donde va este texto
         </div>

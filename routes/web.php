@@ -41,6 +41,11 @@ Route::resource('notas', NotasController::class)
 
     Route::get('notas.editores.{nota}', [NotasController::class, 'editores'])->name('notas.editores');
     Route::get('notas.category.{category}', [NotasController::class, 'categorias'])->name('notas.categorias');
+    Route::post('notas.like', [NotasController::class, 'like'])->name('notas.like');
+    Route::post('notas.slike', [NotasController::class, 'slike'])->name('notas.slike');
+    Route::post('notas.nolike', [NotasController::class, 'nolike'])->name('notas.nolike');
+    Route::post('notas.share', [NotasController::class, 'share'])->name('notas.share');
+    Route::post('notas.save', [NotasController::class, 'save'])->name('notas.save');
 
 
     Route::get('notas.admin', [NotasController::class, 'admin'])->name('notas.admin');
@@ -65,3 +70,7 @@ Route::get('entrevistas', [WebviewController::class, 'entrevistas'])->name('web.
 Route::get('reportajes', [WebviewController::class, 'reportajes'])->name('web.reportajes');
 Route::get('noticias', [WebviewController::class, 'noticias'])->name('web.noticias');
 //Route::get('entrevistas.{section}', [WebviewController::class, 'entrevista'])->name('web.entrevistas');
+
+Route::get("web.aboutus", [WebviewController::class, 'aboutus'])->name('web.aboutus');
+Route::get("web.privacy", [WebviewController::class, 'privacy'])->name('web.privacy');
+Route::get("web.team", [WebviewController::class, 'team'])->name('web.team');

@@ -200,6 +200,14 @@
             .wlink .fondo tr td .temps span.tempMin {
                 color: white !important;
             }
+
+            #ui-id-1{
+                background: white;
+            }
+
+            #ui-id-1>li:hover{
+                background: gray;
+            }
         </style>
         <div id="cont_6c9fd17992756724a13952cac98d9872">
             <script type="text/javascript" async src="https://www.meteored.mx/wid_loader/6c9fd17992756724a13952cac98d9872"></script>
@@ -208,6 +216,7 @@
 </div>
 @section('jquery')
     <script>
+        var theurl = "{{request()->path()}}";
         $(document).ready(function() {
             mueveReloj()
             date = new Date();
@@ -234,10 +243,14 @@
                 $("#modalRevista").hide();
             })
 
-            setTimeout(function() {
-                $("#modalRevista").show();
-            }, 5000);
+            //console.log('que es '+ request()->routeIs('employees.*'));
 
+            //console.log(theurl);
+            if (theurl == '/') {
+                setTimeout(function() {
+                    $("#modalRevista").show();
+                }, 5000);
+            }
             /*
                         $( "#search" ).autocomplete({ });
 
@@ -285,7 +298,7 @@
             minuto = momentoActual.getMinutes()
             segundo = momentoActual.getSeconds()
 
-            horaImprimible = hora + " : " + (minuto < 10 ? 0 + minuto : minuto) + " : " + (segundo < 10 ? '0' + segundo :
+            horaImprimible = hora + " : " + (minuto < 10 ? '0' + minuto : minuto) + " : " + (segundo < 10 ? '0' + segundo :
                 segundo)
 
             $("#time").html(horaImprimible)

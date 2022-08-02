@@ -1016,6 +1016,9 @@ select {
 .m-5 {
   margin: 1.25rem;
 }
+.m-10 {
+  margin: 2.5rem;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1250,6 +1253,9 @@ select {
 }
 .h-80 {
   height: 20rem;
+}
+.h-1\/2 {
+  height: 50%;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -1668,6 +1674,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
+.bg-red-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 27 27 / var(--tw-bg-opacity));
+}
 .bg-wine {
   --tw-bg-opacity: 1;
   background-color: rgb(152 28 62 / var(--tw-bg-opacity));
@@ -1687,10 +1697,6 @@ select {
 .bg-green {
   --tw-bg-opacity: 1;
   background-color: rgb(19 206 102 / var(--tw-bg-opacity));
-}
-.bg-red-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(153 27 27 / var(--tw-bg-opacity));
 }
 .bg-teal-100 {
   --tw-bg-opacity: 1;
@@ -1757,6 +1763,9 @@ select {
 }
 .p-4 {
   padding: 1rem;
+}
+.p-10 {
+  padding: 2.5rem;
 }
 .px-4 {
   padding-left: 1rem;
@@ -1955,6 +1964,14 @@ select {
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+.text-9xl {
+  font-size: 8rem;
+  line-height: 1;
+}
+.text-8xl {
+  font-size: 6rem;
+  line-height: 1;
 }
 .font-medium {
   font-weight: 500;
