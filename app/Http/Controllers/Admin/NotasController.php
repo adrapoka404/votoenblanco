@@ -93,7 +93,7 @@ class NotasController extends Controller
             $postCategory->save();
         }
 
-        if($request->all()['related']) {
+        if(isset($request->all()['related'])) {
             foreach($request->all()['related'] as $related ){
                 
                     $postRelated = new Postrelated();

@@ -68,7 +68,9 @@
                 <option value="{{ $category->id }}">{{ $category->nombre }}</option>
             @endforeach
         </select>
-        <div class="shadow rounded px-3 pt-3 pb-0" id="categories"></div>
+        <div class="shadow rounded px-3 pt-3 pb-0" id="categories">
+            
+        </div>
     </div>
     <div class="w-full">
 

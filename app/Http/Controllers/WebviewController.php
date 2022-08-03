@@ -6,6 +6,15 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Postcategory;
 use Illuminate\Http\Request;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\TwitterCard;
+use Artesaos\SEOTools\Facades\JsonLd;
+// OR with multi
+use Artesaos\SEOTools\Facades\JsonLdMulti;
+
+// OR use only single facades
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class WebviewController extends Controller
 {
@@ -74,6 +83,8 @@ class WebviewController extends Controller
         //return $local;
         //return $nacional;
         //return $destacada;
+        //SEOMeta::setTitle('Un chingado titulo nuevo desde controller web');
+        
         return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes'));
     }
 }
