@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Livewire\Posts;
+use App\Http\Requests\StoreComentsRequest;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Postcategory;
+use App\Models\PostComent;
 use App\Models\PostDetails;
 use App\Models\Postrelated;
 use App\Models\User;
@@ -63,6 +65,7 @@ class NotasController extends Controller
         $relateds       = Postrelated::where('post_id', $id)->get();
         $categories     = Postcategory::where('post_id', $id)->get();
         $redactor       = User::find($post->user_create);
+        $comments       = PostComent::where('post_id', $id)->where('status', 1)->get();
     
         if(!empty($relateds)){
     
@@ -83,6 +86,9 @@ class NotasController extends Controller
         $post->relateds     = $relateds;
         $post->categories   = $categories;
         $post->editor       = $redactor;
+        $post->comments     = $comments;
+
+        //return $post;
         
         return view('guest.nota', compact('post')); 
     }
@@ -213,5 +219,18 @@ class NotasController extends Controller
          $post->save();
  
          return redirect()->route('nota.show', $id);
+     }
+
+     public function coments(StoreComentsRequest $request){
+        $coment = $request->all()['coment'];
+
+        $user = User::where('email', $coment['email'])->first();
+
+        if($user) 
+            $coment['user_id'] = $user->id;        
+
+        PostComent::create($coment);
+
+        return ['success'=> true, 'msg' => '¡Exito! Gracias por darnos tu opinion'];
      }
 }

@@ -16,8 +16,11 @@ return new class extends Migration
         Schema::create('post_coments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('post_id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->nullable();
+            $table->string('name');
+            $table->string('email');
             $table->string('comment');
+            $table->string('status')->default(0);
             $table->timestamps();
         });
     }

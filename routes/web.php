@@ -21,9 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 Route::get('guest', function () {
     return view('welcome');
 });
@@ -46,6 +44,7 @@ Route::resource('notas', NotasController::class)
     Route::post('notas.nolike', [NotasController::class, 'nolike'])->name('notas.nolike');
     Route::post('notas.share', [NotasController::class, 'share'])->name('notas.share');
     Route::post('notas.save', [NotasController::class, 'save'])->name('notas.save');
+    Route::post('notas.coments', [NotasController::class, 'coments'])->name('notas.coments');
 
 
     Route::get('notas.admin', [NotasController::class, 'admin'])->name('notas.admin');
