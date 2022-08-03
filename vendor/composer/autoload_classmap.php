@@ -66,6 +66,7 @@ return array(
     'App\\Models\\Post' => $baseDir . '/app/Models/Post.php',
     'App\\Models\\PostComent' => $baseDir . '/app/Models/PostComent.php',
     'App\\Models\\PostDetails' => $baseDir . '/app/Models/PostDetails.php',
+    'App\\Models\\PostSaved' => $baseDir . '/app/Models/PostSaved.php',
     'App\\Models\\PostStatus' => $baseDir . '/app/Models/PostStatus.php',
     'App\\Models\\Postcategory' => $baseDir . '/app/Models/Postcategory.php',
     'App\\Models\\Postrelated' => $baseDir . '/app/Models/Postrelated.php',

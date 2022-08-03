@@ -44,6 +44,7 @@ Route::resource('notas', NotasController::class)
     Route::post('notas.nolike', [NotasController::class, 'nolike'])->name('notas.nolike');
     Route::post('notas.share', [NotasController::class, 'share'])->name('notas.share');
     Route::post('notas.save', [NotasController::class, 'save'])->name('notas.save');
+    Route::post('notas.nosave', [NotasController::class, 'nosave'])->name('notas.nosave');
     Route::post('notas.coments', [NotasController::class, 'coments'])->name('notas.coments');
 
 

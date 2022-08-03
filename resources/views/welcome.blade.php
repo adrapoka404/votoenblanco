@@ -12,7 +12,7 @@
                 <div class=" pl-2 pr-5 text-justify">
                     <span class="py-2 my-3 ">Voto en blanco ({{ $destacada->created_at }}) ll Redacción</span>
                     <p class="sumary my-3">
-                        {{ $destacada->description }}
+                        {{ htmlspecialchars_decode($destacada->description, ENT_HTML5) }}
                     </p>
                     <a href="{{ route('notas.show', $destacada->id) }}"
                         class="bg-red-800 px-10 text-white rounded-lg font-semibold">leer más</a>

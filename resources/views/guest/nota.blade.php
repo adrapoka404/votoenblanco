@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mx-5 px-4 sm:px-6 lg:px-8">
         <div class="my-10 inline-flex">
-            <div class="w-2/3 text-center items-center">
+            <div class="w-2/3  items-center">
                 <div class="Header nota my-5">
                     <div class="text-red-800 text-3xl font-bold mb-5 w-full">{{ $post->title }}</div>
                     <div class=" left-0 text-left my-5">{{ $post->editor->name }}</div>
@@ -10,9 +10,9 @@
                     </div>
                 </div>
 
-                <div class="nota body text2xl">
-                    <div class="py-2 my-3 text-justify">Voto en blanco ({{ $post->created_at }}) ll Redacción</div>
-                    {{ html_entity_decode($post->details->body) }}
+                <div class="nota body text2xl text-justify">
+                    <div class="py-2 my-3">Voto en blanco ({{ $post->created_at }}) ll Redacción</div>
+                    {!! $post->details->body !!}
                 </div>
             </div>
 
@@ -34,7 +34,9 @@
         </div>
         <div class="py-10">
             <x-title-dark>Comentarios</x-title-dark>
-
+            @if (count($post->comments) == 0)
+                Esta nota aun no tiene comentarios
+            @endif
             @foreach ($post->comments as $comment)
                 <x-coment-post>
                     <x-slot name="imagen">{{ asset('img/nuevo_perfil.png') }}</x-slot>
@@ -47,11 +49,28 @@
             <x-title-dark>¿Te ha gustado esta nota?</x-title-dark>
             <div class="flex text-center mx-10 my-16">
                 <div class="w-1/2 cursor-pointer my-10 text-center ">
-                    <div class="cursor-pointer" id="btnSave">
-                        <img src="{{ asset('img/guardar.png') }}" alt="" id="guarda"
-                            class="inline w-20 h-20">
-                        <label for="guarda" class="ml-5 font-bold text-3xl">Guarda</label>
-                    </div>
+                    @if ($post->saveme)
+                    {!! Form::open(['route' => 'notas.nosave', 'id' => 'formNoSave']) !!}
+                        {!! Form::hidden('post_id', $post->id, []) !!}    
+                    <div class="cursor-pointer" id="btnNoSave">
+
+                            <img src="{{ asset('img/img_save.png') }}" alt="" class="inline w-20 h-20" id='imgNoSave'>
+                            <label for="imgNoSave" class="ml-5 font-bold text-3xl">Quitar de guardados</label>
+                        </div>
+                        {!! Form::close() !!}
+                    @else
+                        {!! Form::open(['route' => 'notas.save', 'id' => 'formSave']) !!}
+                        {!! Form::hidden('save[post_id]', $post->id, []) !!}
+                        <div class="cursor-pointer" id="btnSave">
+
+                            <img src="{{ asset('img/guardar.png') }}" alt="" id="imgSave"
+                                class="inline w-20 h-20">
+                            <label for="imgSave" class="ml-5 font-bold text-3xl">Guarda</label>
+                        </div>
+                        {!! Form::close() !!}
+                    @endif
+
+
                 </div>
                 <div class="w-1/2 cursor-pointer my-10 text-center">
                     <div class="cursor-pointer" id="btnShare">
@@ -67,23 +86,34 @@
             <x-title-dark>¿Cúal es tu reacción?</x-title-dark>
             <div class="flex">
                 <div class="w-1/2 cursor-pointer my10 text-right">
+                    {!! Form::open(['route'=>'notas.slike', 'id' => 'formSlike']) !!}
+                    {!! Form::hidden('post_id', $post->id, []) !!}
+                    {!! Form::hidden('reaction', 1, []) !!}
                     <div class="cursor-pointer" id="btnSuperLike">
                         <img src="{{ asset('img/slike.png') }}" alt="" id="slike" class="inline w-20 h-20">
-                        <label for="slike" class=" ml-5 font-bold text-3xl">1{{ $post->slikes }}</label>
+                        <label for="slike" id="labelSlike" class=" ml-5 font-bold text-3xl">{{ $post->slikes }}</label>
                     </div>
+                    {!! Form::close() !!}
                 </div>
                 <div class="w-1/2 cursor-pointer my10 text-center">
+                    {!! Form::open(['route'=>'notas.like', 'id' => 'formLike']) !!}
+                    {!! Form::hidden('post_id', $post->id, []) !!}
+                    {!! Form::hidden('reaction', 2, []) !!}
                     <div class="cursor-pointer" id="btnLike">
                         <img src="{{ asset('img/like.png') }}" alt="" id="like" class="inline w-20 h-20">
-                        <label for="like" class=" ml-5 font-bold text-3xl">2{{ $post->likes }}</label>
+                        <label for="like" id="labelLike" class=" ml-5 font-bold text-3xl">{{ $post->likes }}</label>
                     </div>
+                    {!! Form::close() !!}
                 </div>
                 <div class="w-1/2 cursor-pointer my10 text-left">
+                    {!! Form::open(['route'=>'notas.nolike', 'id' => 'formNoLike']) !!}
+                    {!! Form::hidden('post_id', $post->id, []) !!}
+                    {!! Form::hidden('reaction', 3, []) !!}
                     <div class="cursor-pointer" id="btnNoLike">
-                        <img src="{{ asset('img/nolike.png') }}" alt="" id="nolike"
-                            class="inline w-20 h-20">
-                        <label for="nolike" class=" ml-5 font-bold text-3xl">3{{ $post->nolikes }}</label>
+                        <img src="{{ asset('img/nolike.png') }}" alt="" id="nolike" class="inline w-20 h-20">
+                        <label for="nolike" id="labelNoLike" class=" ml-5 font-bold text-3xl">{{ $post->nlikes }}</label>
                     </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -159,12 +189,15 @@
                             }
 
                         },
-                        //$("#formComents").submit();
                     })
                 })
 
                 $("#btnSave").on('click', function() {
-                    reaction(id, "{{ route('notas.save') }}")
+                    reaction('Save')
+                })
+
+                $("#btnNoSave").on('click', function() {
+                    reaction('NoSave')
                 })
 
                 $("#btnShare").on('click', function() {
@@ -172,40 +205,40 @@
                 })
 
                 $("#btnSuperLike").on('click', function() {
-                    reaction(id, "{{ route('notas.slike') }}")
+                    reaction('Slike')
                 })
 
                 $("#btnLike").on('click', function() {
-                    reaction(id, "{{ route('notas.like') }}")
+                    reaction("Like")
                 })
 
                 $("#btnNoLike").on('click', function() {
-                    reaction(id, "{{ route('notas.nolike') }}")
+                    reaction("NoLike")
                 })
 
 
             })
 
-            /*function reaction(what, where) {
+            function reaction(what) {
                 $.ajax({
-                    url: where,
+                    url: $("#form" + what).attr('action'),
                     type: 'POST',
                     dataType: 'JSON',
-                    data: {
-                        id: what,
-                        _token: document.getElementsByName("_token")
-                    },
+                    data: $("#form" + what).serialize(),
                     success: function(data) {
-                        console.log(data);
-                        /*response($.map(data, function(item) {
-                            return {
-                                label: item.title,
-                                value: item.id
+                        if (data.error) {
+                            if (what == 'Save') {
+                                alert('Pop de suscripcion, que aun no hago');
                             }
-                        }))
+                        }
+                        if (data.success && what == 'Save')
+                            $("#img" + what).attr('src', '{{ asset('img/') }}/img_' + what + '.png')
+
+                        if (data.success && (what == 'Slike' || what == "NoLike" || what == "Like"))
+                            $("#label"+what).html(data.slikes);
                     }
                 })
-            }*/
+            }
         </script>
     @endsection
 </x-guest-layout>

@@ -10,10 +10,13 @@ use App\Models\Post;
 use App\Models\Postcategory;
 use App\Models\PostComent;
 use App\Models\PostDetails;
+use App\Models\PostReaction;
 use App\Models\Postrelated;
+use App\Models\PostSaved;
 use App\Models\User;
 use App\View\Components\coment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotasController extends Controller
 {
@@ -66,6 +69,8 @@ class NotasController extends Controller
         $categories     = Postcategory::where('post_id', $id)->get();
         $redactor       = User::find($post->user_create);
         $comments       = PostComent::where('post_id', $id)->where('status', 1)->get();
+
+
     
         if(!empty($relateds)){
     
@@ -88,8 +93,27 @@ class NotasController extends Controller
         $post->editor       = $redactor;
         $post->comments     = $comments;
 
-        //return $post;
+        $post->saveme = false;
         
+        $slikes = PostReaction::where('reaction', 1)->where('post_id', $post->id)->get();
+
+        $post->slikes = $slikes->count();
+
+        $likes = PostReaction::where('reaction', 2)->where('post_id', $post->id)->get();
+
+        $post->likes = $likes->count();
+
+        $nlikes = PostReaction::where('reaction', 3)->where('post_id', $post->id)->get();
+
+        $post->nlikes = $nlikes->count();
+
+
+        if(Auth::user()) {
+            if(PostSaved::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first())
+                $post->saveme = true;
+        }
+        
+
         return view('guest.nota', compact('post')); 
     }
 
@@ -166,37 +190,71 @@ class NotasController extends Controller
         
     }
 
-    public function like($id){
-       return $id;
-        $post = Post::find($id);
+    public function like(Request $request){
+        $post       = $request->all()['post_id'];
+        $reaction   = $request->all()['reaction'];
         
-        $post->like = $post->like + 1;
+        if(!Auth::user())
+            $user = Auth::user()->id;
+        else
+            $user = $request->ip();
+        
+        $exist = PostReaction::where('post_id', $post)->where('user_id', $user)->first();
 
-        $post->save();
+        $likes = PostReaction::where('post_id', $post)->where('reaction', $reaction)->get();
 
-        return redirect()->route('nota.show', $id);
+        if(!$exist){
+            if(PostReaction::create(['user_id'=>$user, 'post_id'=>$post, 'reaction' => $reaction]))
+                return ['success' => true, 'likes' => count($likes)];    
+            else
+            return ['error' => true];    
+        } else
+            return ['success' => true, 'likes' => count($likes)];
     }
 
-    public function slike($id){
-        return $id;
-         $post = Post::find($id);
-         
-         $post->like = $post->like + 1;
- 
-         $post->save();
- 
-         return redirect()->route('nota.show', $id);
+    public function slike(Request $request){
+        
+        $post       = $request->all()['post_id'];
+        $reaction   = $request->all()['reaction'];
+        
+        if(!Auth::user())
+            $user = Auth::user()->id;
+        else
+            $user = $request->ip();
+        
+        $exist = PostReaction::where('post_id', $post)->where('user_id', $user)->first();
+
+        $slikes = PostReaction::where('post_id', $post)->where('reaction', $reaction)->get();
+
+        if(!$exist){
+            if(PostReaction::create(['user_id'=>$user, 'post_id'=>$post, 'reaction' => $reaction]))
+                return ['success' => true, 'slikes' => count($slikes)];    
+            else
+            return ['error' => true];    
+        } else
+            return ['success' => true, 'slikes' => count($slikes)];
      }
 
-     public function nolike($id){
-        return $id;
-         $post = Post::find($id);
-         
-         $post->like = $post->like + 1;
- 
-         $post->save();
- 
-         return redirect()->route('nota.show', $id);
+     public function nolike(Request $request){
+        $post       = $request->all()['post_id'];
+        $reaction   = $request->all()['reaction'];
+        
+        if(!Auth::user())
+            $user = Auth::user()->id;
+        else
+            $user = $request->ip();
+        
+        $exist = PostReaction::where('post_id', $post)->where('user_id', $user)->first();
+
+        $nolikes = PostReaction::where('post_id', $post)->where('reaction', $reaction)->get();
+
+        if(!$exist){
+            if(PostReaction::create(['user_id'=>$user, 'post_id'=>$post, 'reaction' => $reaction]))
+                return ['success' => true, 'nolikes' => count($nolikes)];    
+            else
+            return ['error' => true];    
+        } else
+            return ['success' => true, 'nolikes' => count($nolikes)];
      }
 
      public function share($id){
@@ -210,15 +268,31 @@ class NotasController extends Controller
          return redirect()->route('nota.show', $id);
      }
 
-     public function save($id){
-        return $id;
-         $post = Post::find($id);
-         
-         $post->like = $post->like + 1;
- 
-         $post->save();
- 
-         return redirect()->route('nota.show', $id);
+    public function save(Request $request){
+        if(Auth::user()){
+            $post = $request->all()['save']['post_id'];
+            $user = Auth::user()->id;
+
+            $exist = PostSaved::where('post_id', $post)->where('user_id', $user)->first();
+            
+            if(!$exist)
+                PostSaved::create(["user_id" => $user, "post_id" => $post]);
+            
+            return ['success'=>true];
+        } else
+            return ['error'=>true];
+    }
+
+    public function nosave(Request $request){
+        $post = $request->all()['post_id'];
+        $user = Auth::user()->id;
+        
+        $exist = PostSaved::where('post_id', $post)->where('user_id', $user)->delete();
+
+        if($exist)
+            return ['success'=>true];
+        else
+            return ['error'=>true];
      }
 
      public function coments(StoreComentsRequest $request){

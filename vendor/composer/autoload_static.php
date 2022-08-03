@@ -631,6 +631,7 @@ class ComposerStaticInit16eb1cb6cf59c7698b4676332c04ceb9
         'App\\Models\\Post' => __DIR__ . '/../..' . '/app/Models/Post.php',
         'App\\Models\\PostComent' => __DIR__ . '/../..' . '/app/Models/PostComent.php',
         'App\\Models\\PostDetails' => __DIR__ . '/../..' . '/app/Models/PostDetails.php',
+        'App\\Models\\PostSaved' => __DIR__ . '/../..' . '/app/Models/PostSaved.php',
         'App\\Models\\PostStatus' => __DIR__ . '/../..' . '/app/Models/PostStatus.php',
         'App\\Models\\Postcategory' => __DIR__ . '/../..' . '/app/Models/Postcategory.php',
         'App\\Models\\Postrelated' => __DIR__ . '/../..' . '/app/Models/Postrelated.php',
