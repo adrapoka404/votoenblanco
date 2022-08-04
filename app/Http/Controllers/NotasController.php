@@ -58,7 +58,7 @@ class NotasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $post = Post::find($id);
         $post->views = $post->views + 1;
@@ -94,6 +94,7 @@ class NotasController extends Controller
         $post->comments     = $comments;
 
         $post->saveme = false;
+        $post->likeme = false;
         
         $slikes = PostReaction::where('reaction', 1)->where('post_id', $post->id)->get();
 
@@ -107,11 +108,18 @@ class NotasController extends Controller
 
         $post->nlikes = $nlikes->count();
 
+        if(PostReaction::where('post_id', $post->id)->where('user_id', $request->ip())->first())
+                $post->likeme =true;
 
         if(Auth::user()) {
             if(PostSaved::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first())
                 $post->saveme = true;
+
+            if(PostReaction::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first())
+                $post->likeme =true;
         }
+
+        
         
 
         return view('guest.nota', compact('post')); 
@@ -194,7 +202,7 @@ class NotasController extends Controller
         $post       = $request->all()['post_id'];
         $reaction   = $request->all()['reaction'];
         
-        if(!Auth::user())
+        if(Auth::user())
             $user = Auth::user()->id;
         else
             $user = $request->ip();
@@ -208,8 +216,11 @@ class NotasController extends Controller
                 return ['success' => true, 'likes' => count($likes)];    
             else
             return ['error' => true];    
-        } else
-            return ['success' => true, 'likes' => count($likes)];
+        } else {
+            $exist->delete();
+            return ['success' => true, 'likes' => count($likes) - 1];    
+        }
+            
     }
 
     public function slike(Request $request){
@@ -217,7 +228,7 @@ class NotasController extends Controller
         $post       = $request->all()['post_id'];
         $reaction   = $request->all()['reaction'];
         
-        if(!Auth::user())
+        if(Auth::user())
             $user = Auth::user()->id;
         else
             $user = $request->ip();
@@ -231,15 +242,18 @@ class NotasController extends Controller
                 return ['success' => true, 'slikes' => count($slikes)];    
             else
             return ['error' => true];    
-        } else
-            return ['success' => true, 'slikes' => count($slikes)];
+        } else{
+            $exist->delete();
+            return ['success' => true, 'slikes' => count($slikes)-1];
+        }
+            
      }
 
      public function nolike(Request $request){
         $post       = $request->all()['post_id'];
         $reaction   = $request->all()['reaction'];
         
-        if(!Auth::user())
+        if(Auth::user())
             $user = Auth::user()->id;
         else
             $user = $request->ip();
@@ -253,8 +267,10 @@ class NotasController extends Controller
                 return ['success' => true, 'nolikes' => count($nolikes)];    
             else
             return ['error' => true];    
-        } else
-            return ['success' => true, 'nolikes' => count($nolikes)];
+        } else {
+            $exist->delete();
+            return ['success' => true, 'nolikes' => count($nolikes)-1];
+        }
      }
 
      public function share($id){
@@ -277,6 +293,8 @@ class NotasController extends Controller
             
             if(!$exist)
                 PostSaved::create(["user_id" => $user, "post_id" => $post]);
+            else
+                $exist->delete();
             
             return ['success'=>true];
         } else
@@ -301,7 +319,10 @@ class NotasController extends Controller
         $user = User::where('email', $coment['email'])->first();
 
         if($user) 
-            $coment['user_id'] = $user->id;        
+            $coment['user_id'] = $user->id;
+        
+        //demomento
+        $coment['status'] = 1;
 
         PostComent::create($coment);
 

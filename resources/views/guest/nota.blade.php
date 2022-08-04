@@ -18,14 +18,20 @@
 
             <div class="w-1/3">
                 <div class="ml-5 text-red-800 font-extralight text-3xl">Relacionadas:</div>
-                @foreach ($post->relateds as $related)
-                    <div class="m-5 inline-flex w-full">
-                        <a href="{{ route('notas.show', $related->post_id) }}" class="inline-flex font-bold text-sm">
-                            <img src="{{ asset('img/bullet.png') }}" alt="" class="w-10 mr-1 inline-flex">
-                            <small class="w-25 my-auto break-words">{{ $related->title }}</small>
-                        </a>
-                    </div>
-                @endforeach
+                @if ($post->relateds->count() > 0)
+                    @foreach ($post->relateds as $related)
+                        <div class="m-5 inline-flex w-full">
+                            <a href="{{ route('notas.show', $related->post_id) }}"
+                                class="inline-flex font-bold text-sm">
+                                <img src="{{ asset('img/bullet.png') }}" alt="" class="w-10 mr-1 inline-flex">
+                                <small class="w-25 my-auto break-words">{{ $related->title }}</small>
+                            </a>
+                        </div>
+                    @endforeach
+                @else
+                    <div>Sin notas relacionadas</div>
+                @endif
+
                 <div class="ml-5 h-96 bg-black text-white text-center">Publicidad</div>
             </div>
         </div>
@@ -50,11 +56,12 @@
             <div class="flex text-center mx-10 my-16">
                 <div class="w-1/2 cursor-pointer my-10 text-center ">
                     @if ($post->saveme)
-                    {!! Form::open(['route' => 'notas.nosave', 'id' => 'formNoSave']) !!}
-                        {!! Form::hidden('post_id', $post->id, []) !!}    
-                    <div class="cursor-pointer" id="btnNoSave">
+                        {!! Form::open(['route' => 'notas.nosave', 'id' => 'formNoSave']) !!}
+                        {!! Form::hidden('post_id', $post->id, []) !!}
+                        <div class="cursor-pointer" id="btnNoSave">
 
-                            <img src="{{ asset('img/img_save.png') }}" alt="" class="inline w-20 h-20" id='imgNoSave'>
+                            <img src="{{ asset('img/img_save.png') }}" alt="" class="inline w-20 h-20"
+                                id='imgNoSave'>
                             <label for="imgNoSave" class="ml-5 font-bold text-3xl">Quitar de guardados</label>
                         </div>
                         {!! Form::close() !!}
@@ -85,36 +92,46 @@
         <div class="py-10">
             <x-title-dark>¿Cúal es tu reacción?</x-title-dark>
             <div class="flex">
-                <div class="w-1/2 cursor-pointer my10 text-right">
-                    {!! Form::open(['route'=>'notas.slike', 'id' => 'formSlike']) !!}
-                    {!! Form::hidden('post_id', $post->id, []) !!}
-                    {!! Form::hidden('reaction', 1, []) !!}
-                    <div class="cursor-pointer" id="btnSuperLike">
-                        <img src="{{ asset('img/slike.png') }}" alt="" id="slike" class="inline w-20 h-20">
-                        <label for="slike" id="labelSlike" class=" ml-5 font-bold text-3xl">{{ $post->slikes }}</label>
+                @if ($post->likeme)
+                    <div>Ya reaccioné, ¿qué pasa ahi?</div>
+                @else
+                    <div class="w-1/2 cursor-pointer my10 text-right">
+                        {!! Form::open(['route' => 'notas.slike', 'id' => 'formSlike']) !!}
+                        {!! Form::hidden('post_id', $post->id, []) !!}
+                        {!! Form::hidden('reaction', 1, []) !!}
+                        <div class="cursor-pointer" id="btnSuperLike">
+                            <img src="{{ asset('img/slike.png') }}" alt="" id="slike"
+                                class="inline w-20 h-20">
+                            <label for="slike" id="labelSlike"
+                                class=" ml-5 font-bold text-3xl">{{ $post->slikes }}</label>
+                        </div>
+                        {!! Form::close() !!}
                     </div>
-                    {!! Form::close() !!}
-                </div>
-                <div class="w-1/2 cursor-pointer my10 text-center">
-                    {!! Form::open(['route'=>'notas.like', 'id' => 'formLike']) !!}
-                    {!! Form::hidden('post_id', $post->id, []) !!}
-                    {!! Form::hidden('reaction', 2, []) !!}
-                    <div class="cursor-pointer" id="btnLike">
-                        <img src="{{ asset('img/like.png') }}" alt="" id="like" class="inline w-20 h-20">
-                        <label for="like" id="labelLike" class=" ml-5 font-bold text-3xl">{{ $post->likes }}</label>
+                    <div class="w-1/2 cursor-pointer my10 text-center">
+                        {!! Form::open(['route' => 'notas.like', 'id' => 'formLike']) !!}
+                        {!! Form::hidden('post_id', $post->id, []) !!}
+                        {!! Form::hidden('reaction', 2, []) !!}
+                        <div class="cursor-pointer" id="btnLike">
+                            <img src="{{ asset('img/like.png') }}" alt="" id="like"
+                                class="inline w-20 h-20">
+                            <label for="like" id="labelLike"
+                                class=" ml-5 font-bold text-3xl">{{ $post->likes }}</label>
+                        </div>
+                        {!! Form::close() !!}
                     </div>
-                    {!! Form::close() !!}
-                </div>
-                <div class="w-1/2 cursor-pointer my10 text-left">
-                    {!! Form::open(['route'=>'notas.nolike', 'id' => 'formNoLike']) !!}
-                    {!! Form::hidden('post_id', $post->id, []) !!}
-                    {!! Form::hidden('reaction', 3, []) !!}
-                    <div class="cursor-pointer" id="btnNoLike">
-                        <img src="{{ asset('img/nolike.png') }}" alt="" id="nolike" class="inline w-20 h-20">
-                        <label for="nolike" id="labelNoLike" class=" ml-5 font-bold text-3xl">{{ $post->nlikes }}</label>
+                    <div class="w-1/2 cursor-pointer my10 text-left">
+                        {!! Form::open(['route' => 'notas.nolike', 'id' => 'formNoLike']) !!}
+                        {!! Form::hidden('post_id', $post->id, []) !!}
+                        {!! Form::hidden('reaction', 3, []) !!}
+                        <div class="cursor-pointer" id="btnNoLike">
+                            <img src="{{ asset('img/nolike.png') }}" alt="" id="nolike"
+                                class="inline w-20 h-20">
+                            <label for="nolike" id="labelNoLike"
+                                class=" ml-5 font-bold text-3xl">{{ $post->nlikes }}</label>
+                        </div>
+                        {!! Form::close() !!}
                     </div>
-                    {!! Form::close() !!}
-                </div>
+                @endif
             </div>
         </div>
 
@@ -235,7 +252,7 @@
                             $("#img" + what).attr('src', '{{ asset('img/') }}/img_' + what + '.png')
 
                         if (data.success && (what == 'Slike' || what == "NoLike" || what == "Like"))
-                            $("#label"+what).html(data.slikes);
+                            $("#label" + what).html(data.slikes);
                     }
                 })
             }

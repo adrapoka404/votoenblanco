@@ -2052,6 +2052,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(152 28 62 / var(--tw-text-opacity));
 }
+.text-green {
+  --tw-text-opacity: 1;
+  color: rgb(19 206 102 / var(--tw-text-opacity));
+}
 .text-teal-900 {
   --tw-text-opacity: 1;
   color: rgb(35 78 82 / var(--tw-text-opacity));
@@ -2060,9 +2064,9 @@ select {
   --tw-text-opacity: 1;
   color: rgb(56 178 172 / var(--tw-text-opacity));
 }
-.text-green {
+.text-blue {
   --tw-text-opacity: 1;
-  color: rgb(19 206 102 / var(--tw-text-opacity));
+  color: rgb(31 182 255 / var(--tw-text-opacity));
 }
 .underline {
   -webkit-text-decoration-line: underline;

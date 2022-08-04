@@ -135,10 +135,11 @@
                         Editar perfil
                     </a>
                 </div>
-                <div><form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
-                    {!! Form::submit('Cerrar sesión', ["class"=>"bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"]) !!}
-                </form>
+                <div>
+                    <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+                        {!! Form::submit('Cerrar sesión', ["class"=>"bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"]) !!}
+                    </form>
                 </div>
             </div>
         </div>
@@ -181,16 +182,17 @@
                 </div>
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
-                        href="{{ route('admin.notas.estatus.index') }}">
-                        Catalogo de estados
-                    </a>
-                </div>
-                <div>
-                    <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.create') }}">
                         Crear Post
                     </a>
                 </div>
+                <div>
+                    <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
+                        href="{{ route('admin.notas.estatus.index') }}">
+                        Catalogo de estados
+                    </a>
+                </div>
+                
                 <div>
                     <h1
                         class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block">

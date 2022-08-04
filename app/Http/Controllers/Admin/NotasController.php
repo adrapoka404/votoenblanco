@@ -58,8 +58,6 @@ class NotasController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        
-        
         $nurl = Storage::put('posts/'.date('Y_m'),$request->file('image_principal'));
         $post = new Post();
 
@@ -84,7 +82,7 @@ class NotasController extends Controller
         
         $post_details->save();
 
-        foreach($request->all()['categories'] as $category){
+        foreach($request->all()['categories'] as $category => $label){
             $postCategory = new Postcategory();
 
             $postCategory->post_id = $post->id;
@@ -94,7 +92,7 @@ class NotasController extends Controller
         }
 
         if(isset($request->all()['related'])) {
-            foreach($request->all()['related'] as $related ){
+            foreach($request->all()['related'] as $related => $label){
                 
                     $postRelated = new Postrelated();
         
@@ -117,7 +115,7 @@ class NotasController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('admin.posts.preview');
     }
 
     /**
