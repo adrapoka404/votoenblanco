@@ -61,7 +61,7 @@ class NotasController extends Controller
         $nurl = Storage::put('posts/'.date('Y_m'),$request->file('image_principal'));
         $post = new Post();
 
-        $post->user_create          = $request->user()->id;
+        $post->user_create          = Auth::user()->id;
         $post->title                = $request->title;
         $post->slug                 = str_replace(' ', '-', $request->title);
         $post->description          = $request->description;
