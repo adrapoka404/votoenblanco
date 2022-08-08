@@ -4,14 +4,13 @@
             <div class="w-2/3  items-center">
                 <div class="Header nota my-5">
                     <div class="text-red-800 text-3xl font-bold mb-5 w-full">{{ $post->title }}</div>
-                    <div class=" left-0 text-left my-5">{{ $post->editor->name }}</div>
                     <div class=" w-4/5 mx-auto border bg-gray border-gray-light text-center">
                         <img src="{{ asset('img/nota.png') }}" alt="  " class=" ">
                     </div>
                 </div>
 
                 <div class="nota body text2xl text-justify">
-                    <div class="py-2 my-3">Voto en blanco ({{ $post->created_at }}) ll Redacción</div>
+                    <div class="py-2 my-3"><x-link-fb /> ({{ $post->created_at }}) <x-link-redactor userto="{{route('notas.editores', $post->editor->id)}}" user="{{$post->editor->name}}"/></div>
                     {!! $post->details->body !!}
                 </div>
             </div>
@@ -20,11 +19,17 @@
                 <div class="ml-5 text-red-800 font-extralight text-3xl">Relacionadas:</div>
                 @if ($post->relateds->count() > 0)
                     @foreach ($post->relateds as $related)
-                        <div class="m-5 inline-flex w-full">
-                            <a href="{{ route('notas.show', $related->post_id) }}"
-                                class="inline-flex font-bold text-sm">
-                                <img src="{{ asset('img/bullet.png') }}" alt="" class="w-10 mr-1 inline-flex">
-                                <small class="w-25 my-auto break-words">{{ $related->title }}</small>
+                        <div class="ml-5 my-3  inline-flex w-7/8">
+                            <a href="{{ route('notas.show', $related->related_id) }}"
+                                class="inline-flex font-bold text-lg tracking-wide ">
+                                <img src="{{ asset('img/bullet.png') }}" alt="" class="w-10 h-10 mr-1 inline-flex">
+                                <small class="w-25 my-auto break-words">
+                                    @if (strlen($related->title) > 75)
+                                        {{substr($related->title,0,75).'...'}}
+                                    @else
+                                        {{$related->title}}
+                                    @endif
+                                </small>
                             </a>
                         </div>
                     @endforeach

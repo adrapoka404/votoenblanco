@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Livewire\Statusposts;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
+use App\Models\Editor;
 use App\Models\Post;
 use App\Models\Postcategory;
 use App\Models\PostDetails;
@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+use function PHPUnit\Framework\returnSelf;
+
 class NotasController extends Controller
 {
     /**
@@ -25,7 +27,9 @@ class NotasController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(5);
+        //$posts      = Post::where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(5);
+        $posts      = Post::where('user_create', 1)->orderBy('title', 'asc')->paginate(5);
+        $statuses   = PostStatus::all();
 
         foreach($posts as &$post) {
             $status = PostStatus::find($post->status);
@@ -33,9 +37,13 @@ class NotasController extends Controller
 
             $user = User::find($post->user_create);
             $post->user = $user;
+
+            $post->editor = Editor::where('user_id', $user->id)->first();
         }
         
-        return view('admin.posts.index', compact('posts'));
+        $headers = ['Título', 'Editor', 'Estado', 'Acciones'];
+//return $post;
+        return view('admin.posts.index', compact('posts', 'headers', 'statuses'));
     }
 
     /**
@@ -58,16 +66,18 @@ class NotasController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $nurl = Storage::put('posts/'.date('Y_m'),$request->file('image_principal'));
+        //$nurl = Storage::put('public/posts/'.date('Y_m'),$request->file('image_principal'));
         $post = new Post();
 
         $post->user_create          = Auth::user()->id;
         $post->title                = $request->title;
-        $post->slug                 = str_replace(' ', '-', $request->title);
+        $post->slug                 = strtolower(str_replace(' ', '-', $request->title));
         $post->description          = $request->description;
-        $post->slug_description     = str_replace(' ', '-', $request->description);
-        $post->image_principal      = $nurl;
-
+        $post->featured             = $request->featured;
+        $post->social_text          = $request->social_text;
+        $post->slug_description     = strtolower(str_replace(' ', '-', $request->description));
+        $post->image_principal      = $request->image_principal;
+        
         $post->save();
 
         $post_details = new PostDetails();
@@ -76,10 +86,21 @@ class NotasController extends Controller
         $post_details->body     = $request->body;
         $post_details->tags     = $request->tags;
         $post_details->keywords = $request->keywords;
-         
-        if($request->date)
-            $post_details->posted = $request->date .' ' . $request->time;
         
+        if($request->date) {
+            $post_details->posted       = $request->date;
+            $post_details->posted_time  = $request->time;
+        }
+
+        if($request->posted_now)
+            $post_details->posted_now = $request->posted_now;
+
+        if($request->redfb)
+            $post_details->redfb = $request->redfb;
+
+        if($request->redtw)
+            $post_details->redtw = $request->redtw;
+
         $post_details->save();
 
         foreach($request->all()['categories'] as $category => $label){
@@ -98,6 +119,13 @@ class NotasController extends Controller
         
                     $postRelated->post_id = $post->id;
                     $postRelated->related_id = $related;
+        
+                    $postRelated->save();
+
+                    $postRelated = new Postrelated();
+        
+                    $postRelated->post_id = $related;
+                    $postRelated->related_id = $post->id;
         
                     $postRelated->save();
                 
@@ -126,7 +154,27 @@ class NotasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        $post->details = PostDetails::where('post_id',$post->id)->first();
+
+        $postcategories = Postcategory::where('post_id', $post->id)->get();
+        $postrelated = Postrelated::where('post_id', $post->id)->get();
+        
+        $cats = [];
+        foreach($postcategories as $category) 
+            $cats[] = Category::find($category->category_id);
+        
+        $post->categories = $cats;
+
+        $relateds = [];
+        foreach($postrelated as $related) 
+            $relateds[] = Post::find($related->post_id);
+        
+        $post->related = $relateds;
+
+        $categories = Category::orderBy('nombre', 'asc')->get();
+        //return $post;
+        return view('admin.posts.edit', compact('categories', 'post'));
     }
 
     /**
@@ -138,7 +186,79 @@ class NotasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->user_edit            = Auth::user()->id;
+        $post->title                = $request->title;
+        $post->slug                 = strtolower(str_replace(' ', '-', $request->title));
+        $post->description          = $request->description;
+        $post->featured             = $request->featured;
+        $post->social_text          = $request->social_text;
+        $post->slug_description     = strtolower(str_replace(' ', '-', $request->description));
+        $post->image_principal      = $request->image_principal;
+        
+        $post->save();
+
+        PostDetails::where('post_id', $id)->delete();
+
+        $post_details = new PostDetails();
+
+        $post_details->post_id  = $post->id;
+        $post_details->body     = $request->body;
+        $post_details->tags     = $request->tags;
+        $post_details->keywords = $request->keywords;
+        
+        if($request->date) {
+            $post_details->posted       = $request->date;
+            $post_details->posted_time  = $request->time;
+        }
+
+        if($request->posted_now)
+            $post_details->posted_now = $request->posted_now;
+
+        if($request->redfb)
+            $post_details->redfb = $request->redfb;
+
+        if($request->redtw)
+            $post_details->redtw = $request->redtw;
+
+        $post_details->save();
+
+        Postcategory::where('post_id', $id)->delete();
+
+        foreach($request->all()['categories'] as $category => $label){
+            $postCategory = new Postcategory();
+
+            $postCategory->post_id = $post->id;
+            $postCategory->category_id = $category;
+
+            $postCategory->save();
+        }
+
+        Postrelated::where('post_id', $id)->delete();
+        Postrelated::where('related_id', $id)->delete();
+
+        if(isset($request->all()['related'])) {
+            foreach($request->all()['related'] as $related => $label){
+                
+                    $postRelated = new Postrelated();
+        
+                    $postRelated->post_id = $post->id;
+                    $postRelated->related_id = $related;
+        
+                    $postRelated->save();
+
+                    $postRelated = new Postrelated();
+        
+                    $postRelated->post_id = $related;
+                    $postRelated->related_id = $post->id;
+        
+                    $postRelated->save();
+                
+            }
+        }
+
+        return redirect()->route('admin.notas.create')->with('info', __('Post editado con éxito'));
     }
 
     /**

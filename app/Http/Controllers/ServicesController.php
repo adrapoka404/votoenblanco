@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Postcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ServicesController extends Controller
 {
@@ -43,5 +44,66 @@ class ServicesController extends Controller
 
 
         return $posts_response;
+    }
+
+    public function data(Request $request){
+        $data_images    = [];
+        $directory      = 'public';
+
+        $url_images     = isset($request->directory) ? $request->directory : $directory.'/posts/' . date('Y_m');
+        $carpetas       = Storage::directories($directory, true);
+        $images         = Storage::allFiles($url_images);
+        /*collect(Storage::allFiles($url_images))
+                            ->filter(function ($file) {
+                                return in_array($file->getExtension(), ['png', 'gif', 'jpg', 'jpeg', 'avg', 'gif']);
+                            })
+                            ->sortBy(function ($file) {
+                                return $file->getCTime();
+                            })
+                            ->map(function ($file) {
+                                return $file->getBaseName();
+                            });
+*/
+        
+        foreach($images as &$image){
+            $i = str_replace('public/','', $image);
+            $data_images[] = ['img_to'=> asset('storage/'.$i), 'img' => $i];
+        }
+        return ["success"=>true, "directories" => $carpetas, "images" => $data_images, 'in' => $url_images];
+    }
+
+    public function imagen_upload(Request $request){
+        $this->validate(
+            $request,
+            [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ],
+            [
+                "image.required"    => "El archivo de imagen es requerido",
+                "image.image"       => "El archivo no es una imagen",
+                "image.mimes"       => "El archivo de imagen no tiene una extension valida. Extensiones permitidas: (jpeg,png,jpg,gif,svg)",
+                "image.max"         => "La imagen no debe superar los 2MB",
+            ]
+        );
+        
+        Storage::put($request->uploadIn.'/',$request->file('image'));
+        
+        return ["success"=>true, 'in' => $request->uploadIn];
+    }
+
+    public function sub_data($directory){
+        $carpetas = Storage::directories('public/'.$directory);
+        return $carpetas;
+        return ["success"=>true];
+    }
+
+    public function data_imgs($directory){
+        $carpetas = Storage::directories('public');
+        return $carpetas;
+        return ["success"=>true];
+    }
+
+    public function popup_images(){
+        return view('admin.services.popup');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\EditorsController;
 use App\Http\Controllers\Admin\EstatusNotasController;
 use App\Http\Controllers\Admin\NotasController as AdminNotasController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -53,16 +54,23 @@ Route::resource('notas', NotasController::class)
     // rutas para administracion de notas 
     Route::resource('adminnotas', AdminNotasController::class)
     ->names('admin.notas');
-
+//Administracion de categorias
     Route::resource('admincategories', CategoriesController::class)
     ->names('admin.categorias');
+
+    //Administracion de editores
+    Route::resource('admineditors', EditorsController::class)
+    ->names('admin.editors');
 
 Route::resource('estatusnotas', EstatusNotasController::class)->names('admin.notas.estatus');
 Route::resource('editorprofile', ProfileController::class)->names('admin.editor.profile');
 //Rutas de servicios para autocompletes
 Route::get('services/related', [ServicesController::class, 'related'])->name('services.related');
 Route::get('services/search', [ServicesController::class, 'posts'])->name('services.posts');
+Route::get('services/data', [ServicesController::class, 'data'])->name('services.data');
+Route::get('services/popup_images', [ServicesController::class, 'popup_images'])->name('services.popup_images');
 
+Route::post('services/imagen_upload', [ServicesController::class, 'imagen_upload'])->name('services.imagen_upload');
 //vistas publicas
 Route::resource('web.view', WebviewController::class)->only('vagabundario')->names('web');
 Route::get('vagabundario', [WebviewController::class, 'vagabundario'])->name('web.vagabundario');

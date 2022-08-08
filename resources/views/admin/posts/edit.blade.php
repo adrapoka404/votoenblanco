@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-info />
-    {!! Form::open([
-        'route' => 'admin.notas.store',
+    {!! Form::model($post, [
+        'route' => ['admin.notas.update', $post],
+        'method' => 'put',
         'atocomplete' => 'off',
         'files' => true,
         'class' => 'px-5 mx-5',
@@ -15,7 +16,7 @@
             <a href="{{ route('admin.notas.show', 0) }}" target="_blank">{{ __('Vista previa') }}</a>
         </x-jet-danger-button>
         <x-jet-button class="ml-4">
-            {{ __('Crear') }}
+            {{ __('Editar') }}
         </x-jet-button>
     </div>
     {!! Form::close() !!}

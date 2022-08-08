@@ -33,7 +33,7 @@ class StorePostRequest extends FormRequest
             'social_text'       => 'requiredif:redfb,on|requiredif:redtw,on',
             'date'              => 'requiredif:post_now,null&after_or_equal:yesterday',
             'time'              => 'requiredif:post_now,null&requiredunless:date,null',
-            'image_principal'   => 'required|image',
+            'image_principal'   => 'required',
         ];
     }
 
@@ -73,7 +73,6 @@ class StorePostRequest extends FormRequest
             'date.after_or_equal'  => 'El campo de fecha debe ser mayor a la fecha actual',
             'time.requiredunless'  => 'El campo hora es obligatorio si requiere programar la publicacion de la nota',
             'image_principal.required' => 'Es necesario agregar una imagen principal al post',
-            'image_principal.image' => 'El formato de archivo en el campo imagen no es valido',
         ];
     }
 }

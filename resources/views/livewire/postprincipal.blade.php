@@ -7,7 +7,7 @@
     </div>
     <div class="w-1/3 flex-1 items-center content-center ">
         <div class=" pl-2 pr-5 text-justify"> 
-            <span class="py-2 my-3 ">Voto en blanco (22 de febrero de 2022) ll Redacción</span>
+            <span class="py-2 my-3 "><x-link-fb /> (22 de febrero de 2022) ll Redacción</span>
             <p class="sumary my-3">
                 ipsum dolor sit amet consectetur adipisicing elit. Excepturi itaque veniam, assumenda et sint enim nobis
                 ab voluptates tenetur ad optio eligendi. Natus quo mollitia dignissimos at ab, laborum fugiat.

@@ -2,7 +2,13 @@
     <div class="">
         <div class="mx-auto flex  my-10 ">
             <div class=" text-center w-1/3  flex-1 pl-10">
-                <div class="text-red-800 text-3xl font-bold mb-5 w-full">{{ $destacada->title }}</div>
+                <div class="text-red-800 text-3xl font-bold mb-5 w-full">
+                @if (strlen($destacada->title) > 75)
+                    {{ $destacada->title }}
+                @else
+                    {{ substr($destacada->title, 0, 75).'...' }}
+                @endif
+                </div>
                 <div class="w-full h-80 bg-gray pb-2 bg-contain bg-fixed bg-no-repeat "
                     style="background-image: url('{{ asset('img/nota.png') }}')">
 
@@ -10,7 +16,7 @@
             </div>
             <div class="w-1/3 flex-1 items-center content-center ">
                 <div class=" pl-2 pr-5 text-justify">
-                    <span class="py-2 my-3 ">Voto en blanco ({{ $destacada->created_at }}) ll Redacción</span>
+                    <span class="py-2 my-3 "><x-link-fb /> ({{ $destacada->created_at }}) <x-link-redactor userto="{{route('notas.editores', $destacada->redactor->id)}}" user="{{$destacada->redactor->name}}"/></span>
                     <p class="sumary my-3">
                         {{ htmlspecialchars_decode($destacada->description, ENT_HTML5) }}
                     </p>
@@ -20,13 +26,19 @@
 
             </div>
             <div class="w-1/3 flex-1 pl-10">
-                <div class="pl-5 text-red-800 font-extralight text-3xl">Destacadas:</div>
+                <div class="ml-5 text-red-800 font-extralight text-3xl">Destacadas:</div>
                 @foreach ($destacadas as $dest)
-                    <div class="ml-8 pl-5 inline-flex w-full">
+                    <div class="ml-5 my-3  inline-flex w-7/8">
                         <a href="{{ route('notas.show', $dest->id) }}"
-                            class="inline-flex font-bold text-lg -tracking-wide ">
-                            <img src="{{ asset('img/bullet.png') }}" alt="" class="w-10 mr-1 inline-flex">
-                            <small class="w-25 my-auto break-words">{{ $dest->title }}</small>
+                            class="inline-flex font-bold text-lg tracking-wide ">
+                            <img src="{{ asset('img/bullet.png') }}" alt="" class="w-10 h-10 mr-1 inline-flex">
+                            <small class="w-25 my-auto break-words">
+                                @if (strlen($dest->title) > 75 )
+                                    {{ substr($dest->title, 0, 75).'...' }}    
+                                @else
+                                    {{ $dest->title }}
+                                @endif
+                            </small>
                         </a>
                     </div>
                 @endforeach

@@ -1,0 +1,1 @@
+<a href="{{$userto}}" class=" text-blue cursor-pointer hover:text-teal-900 hover:font-medium">{{$user}}</a>

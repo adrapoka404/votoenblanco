@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Postcategory;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
@@ -52,13 +53,16 @@ class WebviewController extends Controller
         $nacionales   = [];
         $deportes     = [];
 
-        $destacada  = Post::where('featured', 1)->orderBy('id', 'desc')->first();
-        
+        $destacada  = Post::where('featured', 1)->orderBy('created_at', 'desc')->first();
         $destacadas = Post::where('featured', 1)->orderBy('id', 'desc')->offset(1)->limit(4)->get();
-
         $categorias = Category::where('orden', 1)->whereIn('nombre', ['Deportes','Local','Nacional'])->get();
         
-        
+        $destacada->redactor = User::find($destacada->user_create);
+
+        foreach($destacadas as &$desta){
+            $desta->redactor = User::find($desta->user_create);
+        }
+        //return $destacadas;
 
         foreach($categorias as $category) {
             $postCat = Postcategory::where('category_id', $category->id)->orderBy('created_at', 'desc')->limit(2)->get();
@@ -79,11 +83,6 @@ class WebviewController extends Controller
             }
 
         }   
-        //return $deportes;
-        //return $local;
-        //return $nacional;
-        //return $destacada;
-        //SEOMeta::setTitle('Un chingado titulo nuevo desde controller web');
         
         return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes'));
     }

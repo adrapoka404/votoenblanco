@@ -5,7 +5,7 @@
         
     </div>
     <div class="text-center mt-16">
-            <span class="py-2 my-3 ">Voto en blanco ({{$date}})) <a href="{{$userto}}">{{$user}}</a></span>
+            <span class="py-2 my-3 "> <x-link-fb /> ({{$date}})) <x-link-redactor userto="{{$userto}}" user="{{$user}}"/></span>
             <p class="sumary my-3">
                 {{$sumary}}
             </p>
