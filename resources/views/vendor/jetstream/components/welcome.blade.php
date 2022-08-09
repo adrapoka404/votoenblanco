@@ -28,7 +28,7 @@
         
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
-                <a href="#" class="flex text-center text-4xl items-center">
+                <a href="{{ route('admin.notas.index') }}" class="flex text-center text-4xl items-center">
                     <img src="{{asset('img/aprobar_notas.png')}}" alt="{{__('Crear nota')}}"  class=" w-24">
                     {{__('Validar y/o Editar Notas')}}
                 </a>
@@ -54,6 +54,17 @@
                 <a href="{{route('admin.editors.create')}}" class="flex text-center text-4xl items-center">
                     <img src="{{asset('img/nuevo_perfil.png')}}" alt="{{__('Crear nota')}}"  class=" w-24">
                     {{__('Crear nuevo perfil de redactor')}}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-6 ">
+        <div class="ml-12">
+            <div class="mt-2 text-sm text-gray-500">
+                <a href="{{route('admin.editors.index')}}" class="flex text-center text-4xl items-center">
+                    <img src="{{asset('img/panel_redactores.png')}}" alt="{{__('Crear nota')}}"  class=" w-24">
+                    {{__('Panel de control de redactores')}}
                 </a>
             </div>
         </div>
