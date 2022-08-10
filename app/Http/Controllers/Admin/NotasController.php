@@ -28,7 +28,7 @@ class NotasController extends Controller
     public function index()
     {
         //$posts      = Post::where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(5);
-        $posts      = Post::where('user_create', 1)->orderBy('title', 'asc')->paginate(5);
+        $posts      = Post::orderBy('title', 'asc')->paginate(5);
         $statuses   = PostStatus::all();
 
         foreach($posts as &$post) {
