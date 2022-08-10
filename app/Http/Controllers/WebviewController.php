@@ -48,7 +48,7 @@ class WebviewController extends Controller
     }
 
     public function welcome(){
-        
+        /*
         $target =  base_path().'\storage\app\public';
         $link   =  base_path().'\public\storage';
         echo "Target: ".$target."<br>";
@@ -59,6 +59,7 @@ class WebviewController extends Controller
             else
             echo "now";
         //symlink();
+        */
         $locales      = [];
         $nacionales   = [];
         $deportes     = [];
