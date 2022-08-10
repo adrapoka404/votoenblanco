@@ -12,6 +12,7 @@ use App\Http\Controllers\SUDO\AsignPermissionsController;
 use App\Http\Controllers\SUDO\PermissionsController;
 use App\Http\Controllers\SUDO\RolesController;
 use App\Http\Controllers\WebviewController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +26,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 Route::get('guest', function () {
     return view('welcome');
+});
+
+Route::get('storage-link', function(){
+    Artisan::call('storage:link');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
