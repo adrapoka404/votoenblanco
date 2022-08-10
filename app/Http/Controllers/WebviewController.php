@@ -51,6 +51,9 @@ class WebviewController extends Controller
         
         $target =  base_path().'\storage\app\public';
         $link   =  base_path().'\public\storage';
+        echo "Target: ".$target."<br>";
+        echo "Link: ". $link."<br>";
+
         if(readlink($link))
             echo "yes";
             else
