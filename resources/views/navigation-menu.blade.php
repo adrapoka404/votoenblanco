@@ -2,7 +2,6 @@
     [x-cloak] {
         display: none;
     }
-
 </style>
 <script>
     document.addEventListener('alpine:init', () => {
@@ -57,11 +56,18 @@
 </button>
 
 <div class="h-screen bg-black transition-all duration-300 space-y-2 fixed sm:relative"
-    x-bind:class="{ 'w-64': $store.sidebar.full, 'w-64 sm:w-20': !$store.sidebar.full, 'top-0 left-0': $store.sidebar
-        .navOpen, 'top-0 -left-64 sm:left-0': !$store.sidebar.navOpen }">
+    x-bind:class="{
+        'w-64': $store.sidebar.full,
+        'w-64 sm:w-20': !$store.sidebar.full,
+        'top-0 left-0': $store.sidebar
+            .navOpen,
+        'top-0 -left-64 sm:left-0': !$store.sidebar.navOpen
+    }">
 
-    <h1 class="text-white font-black py-4" x-bind:class="$store.sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 xm:px-2'">
-        <a href="/">LOGO</a> </h1>
+    <h1 class="text-white font-black py-4"
+        x-bind:class="$store.sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 xm:px-2'">
+        <a href="/">LOGO</a>
+    </h1>
 
     <div class="px-4 space-y-2">
 
@@ -69,7 +75,8 @@
         <button @click="$store.sidebar.full = !$store.sidebar.full"
             class="hidden sm:block focus:outline-none absolute p-1 -right-3 top-10 bg-black rounded-full shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-all duration-300 text-white transform"
-                x-bind:class="$store.sidebar.full ? 'rotate-90' : '-rotate-90 '" viewBox="0 0 20 20" fill="currentColor">
+                x-bind:class="$store.sidebar.full ? 'rotate-90' : '-rotate-90 '" viewBox="0 0 20 20"
+                fill="currentColor">
                 <path fill-rule="evenodd"
                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                     clip-rule="evenodd" />
@@ -80,9 +87,14 @@
         <div x-data="tooltip" x-on:mouseover="show = true" x-on:mouseleave="show = false"
             @click="$store.sidebar.active = 'home' "
             class=" relative flex items-center hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
-            x-bind:class="{ 'justify-start': $store.sidebar.full, 'sm:justify-center': !$store.sidebar
-                .full, 'text-black bg-white': $store.sidebar.active == 'home', 'text-black bg-white ': $store.sidebar
-                    .active != 'home' }">
+            x-bind:class="{
+                'justify-start': $store.sidebar.full,
+                'sm:justify-center': !$store.sidebar
+                    .full,
+                'text-black bg-white': $store.sidebar.active == 'home',
+                'text-black bg-white ': $store.sidebar
+                    .active != 'home'
+            }">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -98,9 +110,14 @@
             <div @click="toggle('profile')" x-data="tooltip" x-on:mouseover="show = true"
                 x-on:mouseleave="show = false"
                 class="flex justify-between text-white hover:text-black hover:bg-white items-center space-x-2 rounded-md p-2 cursor-pointer"
-                x-bind:class="{ 'justify-start': $store.sidebar.full, 'sm:justify-center': !$store.sidebar
-                    .full, 'text-white bg-black': $store.sidebar.active == 'profile', 'text-white ': $store.sidebar
-                        .active != 'profile' }">
+                x-bind:class="{
+                    'justify-start': $store.sidebar.full,
+                    'sm:justify-center': !$store.sidebar
+                        .full,
+                    'text-white bg-black': $store.sidebar.active == 'profile',
+                    'text-white ': $store.sidebar
+                        .active != 'profile'
+                }">
                 <div class="relative flex space-x-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -125,7 +142,7 @@
                 class="text-black bg-gray-dark space-y-3 ">
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
-                        href="{{ route('admin.editor.profile.show', auth()->user()->id) }}">
+                        href="{{route('profile.show')}}">
                         Mi perfil
                     </a>
                 </div>
@@ -138,7 +155,10 @@
                 <div>
                     <form method="POST" action="{{ route('logout') }}" x-data>
                         @csrf
-                        {!! Form::submit('Cerrar sesión', ["class"=>"bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"]) !!}
+                        {!! Form::submit('Cerrar sesión', [
+                            'class' =>
+                                'bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block',
+                        ]) !!}
                     </form>
                 </div>
             </div>
@@ -149,9 +169,14 @@
             <div @click="toggle('audience')" x-data="tooltip" x-on:mouseover="show = true"
                 x-on:mouseleave="show = false"
                 class="flex justify-between text-white hover:text-black hover:bg-white items-center space-x-2 rounded-md p-2 cursor-pointer"
-                x-bind:class="{ 'justify-start': $store.sidebar.full, 'sm:justify-center': !$store.sidebar
-                    .full, 'text-white bg-black': $store.sidebar.active == 'audience', 'text-white ': $store.sidebar
-                        .active != 'audience' }">
+                x-bind:class="{
+                    'justify-start': $store.sidebar.full,
+                    'sm:justify-center': !$store.sidebar
+                        .full,
+                    'text-white bg-black': $store.sidebar.active == 'audience',
+                    'text-white ': $store.sidebar
+                        .active != 'audience'
+                }">
                 <div class="relative flex space-x-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -187,13 +212,6 @@
                     </a>
                 </div>
                 <div>
-                    <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
-                        href="{{ route('admin.notas.estatus.index') }}">
-                        Catalogo de estados
-                    </a>
-                </div>
-                
-                <div>
                     <h1
                         class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block">
                         Item 4</h1>
@@ -205,18 +223,23 @@
         <div @click="$store.sidebar.active = 'posts' " x-data="tooltip" x-on:mouseover="show = true"
             x-on:mouseleave="show = false"
             class=" relative flex justify-between items-center text-white hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
-            x-bind:class="{ 'justify-start': $store.sidebar.full, 'sm:justify-center': !$store.sidebar
-                .full, 'text-white bg-black': $store.sidebar.active == 'posts', 'text-white ': $store.sidebar.active !=
-                    'posts' }">
+            x-bind:class="{
+                'justify-start': $store.sidebar.full,
+                'sm:justify-center': !$store.sidebar
+                    .full,
+                'text-white bg-black': $store.sidebar.active == 'posts',
+                'text-white ': $store.sidebar.active !=
+                    'posts'
+            }">
             <div class="flex  items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <a x-cloak href="{{ route('admin.categorias.index') }}"
+                <a x-cloak href="#"
                     x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ? 'sm:hidden' : ''">
-                    Categorías
+                    Disponible
                 </a>
             </div>
             <h1 x-cloak x-bind:class="$store.sidebar.full ? '' : 'sm:hidden'"
@@ -227,9 +250,14 @@
         <div @click="$store.sidebar.active = 'home' " x-data="tooltip" x-on:mouseover="show = true"
             x-on:mouseleave="show = false"
             class=" relative flex justify-between items-center text-white hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
-            x-bind:class="{ 'justify-start': $store.sidebar.full, 'sm:justify-center': !$store.sidebar
-                .full, 'text-white bg-black': $store.sidebar.active == 'schedules', 'text-white ': $store.sidebar
-                    .active != 'schedules' }">
+            x-bind:class="{
+                'justify-start': $store.sidebar.full,
+                'sm:justify-center': !$store.sidebar
+                    .full,
+                'text-white bg-black': $store.sidebar.active == 'schedules',
+                'text-white ': $store.sidebar
+                    .active != 'schedules'
+            }">
             <div class="flex  items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -258,9 +286,14 @@
             <div @click="toggle('income')" x-data="tooltip" x-on:mouseover="show = true"
                 x-on:mouseleave="show = false"
                 class="flex justify-between text-white hover:text-black hover:bg-white items-center space-x-2 rounded-md p-2 cursor-pointer"
-                x-bind:class="{ 'justify-start': $store.sidebar.full, 'sm:justify-center': !$store.sidebar
-                    .full, 'text-gray-200 bg-gray-800': $store.sidebar.active == 'income', 'text-white ': $store.sidebar
-                        .active != 'income' }">
+                x-bind:class="{
+                    'justify-start': $store.sidebar.full,
+                    'sm:justify-center': !$store.sidebar
+                        .full,
+                    'text-gray-200 bg-gray-800': $store.sidebar.active == 'income',
+                    'text-white ': $store.sidebar
+                        .active != 'income'
+                }">
                 <div class="relative flex space-x-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -272,7 +305,7 @@
                     <h1 x-cloak
                         x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ?
                             'sm:hidden' : ''">
-                        Income</h1>
+                        Admin Editores</h1>
                 </div>
                 <svg x-cloak x-bind:class="$store.sidebar.full ? '' : 'sm:hidden'" xmlns="http://www.w3.org/2000/svg"
                     class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -285,14 +318,14 @@
             <div x-cloak x-show="open" @click.outside="open=false"
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3">
-                
-                    <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
+
+                <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                     href="{{ route('admin.editors.index') }}">
-                    Editores
-                    </a>
-                <h1
-                    class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2">
-                    Item 2</h1>
+                    Todos
+                </a>
+                <a href="{{ route('admin.editors.create') }}"
+                    class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2 block">
+                    Crear editor</a>
                 <!-- Sub Dropdown  -->
                 <div x-data="sub_dropdown" class="relative w-full ">
                     <div @click="sub_toggle()" class="flex items-center justify-between cursor-pointer">
@@ -331,9 +364,14 @@
             <div @click="toggle('promote')" x-data="tooltip" x-on:mouseover="show = true"
                 x-on:mouseleave="show = false"
                 class="flex justify-between text-white hover:text-black hover:bg-white items-center space-x-2 rounded-md p-2 cursor-pointer"
-                x-bind:class="{ 'justify-start': $store.sidebar.full, 'sm:justify-center': !$store.sidebar
-                    .full, 'text-black bg-white': $store.sidebar.active == 'promote', 'text-white ': $store.sidebar
-                        .active != 'promote' }">
+                x-bind:class="{
+                    'justify-start': $store.sidebar.full,
+                    'sm:justify-center': !$store.sidebar
+                        .full,
+                    'text-black bg-white': $store.sidebar.active == 'promote',
+                    'text-white ': $store.sidebar
+                        .active != 'promote'
+                }">
                 <div class="relative flex space-x-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -343,7 +381,7 @@
                     <h1 x-cloak
                         x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ?
                             'sm:hidden' : ''">
-                        Promote</h1>
+                        Super Do</h1>
                 </div>
                 <svg x-cloak x-bind:class="$store.sidebar.full ? '' : 'sm:hidden'" xmlns="http://www.w3.org/2000/svg"
                     class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -356,18 +394,33 @@
             <div x-cloak x-show="open" @click.outside="open=false"
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-white bg-gray-dark space-y-3">
-                <h1
-                    class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer">
-                    Item 1</h1>
-                <h1
-                    class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer">
-                    Item 2</h1>
-                <h1
-                    class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer">
-                    Item 3</h1>
-                <h1
-                    class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer">
-                    Item 4</h1>
+                <div>
+                    <a href="{{ route('sudo.roles.index') }}"
+                        class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
+                        Roles</a>
+                </div>
+                <div>
+                    <a href="{{ route('sudo.permissions.index') }}"
+                        class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
+                        Permisos</a>
+                </div>
+                <div>
+                    <a href="{{ route('sudo.asign.permissions.index') }}"
+                        class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
+                        Asignar Roles</a>
+                </div>
+                <div>
+                    <a href="{{ route('admin.categorias.index') }}"
+                        class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
+                        Categorías
+                    </a>
+                </div>
+                <div>
+                    <a class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block"
+                        href="{{ route('admin.notas.estatus.index') }}">
+                        Catalogo de estados
+                    </a>
+                </div>
             </div>
         </div>
     </div>

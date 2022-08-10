@@ -58,9 +58,9 @@
                             <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
                                 style="background-image: url('https://picsum.photos/720/400')">
                                 <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                    <span class="mr-5 my-auto ">
+                                    <a href="{{route('notas.show', $local->id)}}" class="mr-5 my-auto ">
                                         {{ $local->title }}
-                                    </span>
+                                    </a>
                                 </div>
                             </div>
                         @endforeach
@@ -81,9 +81,9 @@
                         <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
                             style="background-image: url('https://picsum.photos/720/400')">
                             <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                <span class="mr-5 my-auto ">
+                                <a href="{{route('notas.show', $nacional->id)}}" class="mr-5 my-auto ">
                                     {{ $nacional->title }}
-                                </span>
+                                </a>
                             </div>
                         </div>
                     @endforeach
@@ -101,9 +101,9 @@
                         <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
                             style="background-image: url('https://picsum.photos/720/400')">
                             <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                <span class="mr-5 my-auto ">
+                                <a href="{{route('notas.show', $deporte->id)}}" class="mr-5 my-auto ">
                                     {{ $deporte->title }}
-                                </span>
+                                </a>
                             </div>
                         </div>
                     @endforeach

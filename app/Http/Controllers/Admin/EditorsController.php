@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class EditorsController extends Controller
 {
@@ -57,10 +58,13 @@ class EditorsController extends Controller
 
           $user->name       = $editor['name'];
           $user->email      = $editor['email'];
-          $user->password   = Hash::make($editor['name'].'_VotoEnBlanco');
+          $user->password   = Hash::make('3d1t0r.VB');
           $user->save();
         } 
 
+        //$role = Role::where('name', 'Creador de Contenido')->first();
+        //$user->roles()->sync($role->id);
+        
         $editor['user_id'] = $user->id;
 
         $editor = Editor::create($editor);
@@ -120,7 +124,7 @@ class EditorsController extends Controller
           $user = new User();
           $user->name       = $upEditor['name'];
           $user->email      = $upEditor['email'];
-          $user->password   = Hash::make($upEditor['name'].'_VotoEnBlanco');
+          $user->password   = Hash::make('3d1t0r.VB');
           $user->save();
         } else {
             $user->name  = $upEditor['name'];
@@ -129,6 +133,8 @@ class EditorsController extends Controller
             $user->update();
         }
         
+        //$role = Role::where('name', 'Creador de Contenido')->first();
+        //$user->roles()->sync($role->id);
         $upEditor['user_id'] = $user->id;
 
         $editor->update($upEditor);

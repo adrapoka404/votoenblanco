@@ -46,21 +46,6 @@
     <script src="{{ asset('vendor/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     @yield('jqueryui')
-    <script>
-       /*
-       $(document).ready(function() {
-            console.log('jelou madre foca');
-            
-        })
-
-        var posts = ['post1', 'post2', 'post3', 'post4', 'post5', 'post6'];
-            $("#related_autocomplete").autocomplete({
-                source: function(request, response){
-
-                }
-            })*/
-    </script>
-
 </body>
 
 </html>

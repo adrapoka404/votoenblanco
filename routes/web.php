@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\EditoresController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SUDO\AsignPermissionsController;
+use App\Http\Controllers\SUDO\PermissionsController;
+use App\Http\Controllers\SUDO\RolesController;
 use App\Http\Controllers\WebviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -82,3 +85,8 @@ Route::get('noticias', [WebviewController::class, 'noticias'])->name('web.notici
 Route::get("web.aboutus", [WebviewController::class, 'aboutus'])->name('web.aboutus');
 Route::get("web.privacy", [WebviewController::class, 'privacy'])->name('web.privacy');
 Route::get("web.team", [WebviewController::class, 'team'])->name('web.team');
+
+//Rutas para el sudo
+Route::resource('sudoroles', RolesController::class)->names("sudo.roles");
+Route::resource('sudopermissions', PermissionsController::class)->names("sudo.permissions");
+Route::resource('sudoasignpermissions', AsignPermissionsController::class)->names('sudo.asign.permissions');

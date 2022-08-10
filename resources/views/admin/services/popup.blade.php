@@ -18,7 +18,7 @@
 
     </div>
     <div id="popup_images"
-        class="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-2 lg:grid-cols-4 lg:gap-4 overflow-y-auto h-96 overflow-x-hidden">
+        class="grid grid-cols-1 gap-1 lg:grid-cols-3 lg:gap-3 overflow-y-auto h-96 overflow-x-hidden">
 
     </div>
 </div>
