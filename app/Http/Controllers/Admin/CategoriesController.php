@@ -41,7 +41,7 @@ class CategoriesController extends Controller
      */
     public function store(StoreCategoriesRequest $request)
     {
-        $nurl = Storage::put('/public/categories',$request->file('imagen'));
+        $nurl = Storage::put('public/categories',$request->file('imagen'));
 
         $request->imagen    = $nurl;
         $request->slug      = str_replace(' ', '-', $request->nombre);
@@ -91,8 +91,7 @@ class CategoriesController extends Controller
      */
     public function update(StoreCategoriesRequest $request, $id)
     {
-//return $request->file('imagen');        
-        $nurl = Storage::put('categories',$request->file('imagen'));
+        $nurl = Storage::put('public/categories',$request->file('imagen'));
 
         $request->imagen    = $nurl;
         $request->slug      = str_replace(' ', '-', $request->nombre);
