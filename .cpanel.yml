@@ -7,6 +7,7 @@ deployment:
     - /bin/cp -R public/vendor/ $DEPLOYPATH
     - /bin/cp -R public/img/ $DEPLOYPATH
     - /bin/cp -R public/js/ $DEPLOYPATH
+    - /bin/cp -R public/storage/ $DEPLOYPATH
     - /bin/cp public/.htaccess $DEPLOYPATH
     - /bin/cp public/favicon.ico $DEPLOYPATH
     - /bin/cp public/mix-manifest.json $DEPLOYPATH
