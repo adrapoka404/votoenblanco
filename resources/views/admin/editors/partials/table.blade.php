@@ -1,9 +1,11 @@
 <div class=" py-8 px-5">
     <div class="w-full text-right">
+        @can('admin.editors.create')
         <a href="{{ route('admin.editors.create') }}"
             class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
             Crear nuevo editor
         </a>
+        @endcan
     </div>
     @if ($editors->count() == 0)
         <div class="w-full ">
@@ -36,12 +38,13 @@
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">{{ $editor->specialty }}</td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            @can('admin.categorias.edit')
-                            @endcan
-                            @can('admin.categorias.destroy')
+                            
+                            @can('admin.editors.edit')
                             @endcan
                             <a href="{{ route('admin.editors.edit', $editor) }}"
-                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Editar') }}</a>
+                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
+                                {{ __('Editar') }}
+                            </a>
                             @if ($editor->status == 0)
                                 <form action="{{ route('admin.editors.show', $editor) }}"
                                     class="w-full max-w-sm inline">
@@ -50,6 +53,7 @@
                                         class=" bg-wine text-white rounded-full m-2 py-1 px-2 cursor-pointer">
                                 </form>
                             @else
+                                @can('admin.editors.destroy')
                                 <form action="{{ route('admin.editors.destroy', $editor) }}" method="POST"
                                     class="w-full max-w-sm inline">
                                     @csrf
@@ -58,6 +62,7 @@
                                     <input type="submit" value="{{ __('Deshabilitar') }}"
                                         class=" bg-wine text-white rounded-full m-2 py-1 px-2 cursor-pointer">
                                 </form>
+                                @endcan
                             @endif
 
 

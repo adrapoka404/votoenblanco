@@ -10,7 +10,7 @@
                 @endif
                 </div>
                 <div class="w-full h-80 bg-gray pb-2 bg-contain bg-fixed bg-no-repeat "
-                    style="background-image: url('{{ asset('img/nota.png') }}')">
+                    style="background-image: url('{{ asset('storage/'.$destacada->image_principal) }}')">
 
                 </div>
             </div>
@@ -20,7 +20,7 @@
                     <p class="sumary my-3">
                         {{ htmlspecialchars_decode($destacada->description, ENT_HTML5) }}
                     </p>
-                    <a href="{{ route('notas.show', $destacada->id) }}"
+                    <a href="{{ route('notas.show', $destacada->slug) }}"
                         class="bg-red-800 px-10 text-white rounded-lg font-semibold">leer más</a>
                 </div>
 
@@ -29,7 +29,7 @@
                 <div class="ml-5 text-red-800 font-extralight text-3xl">Destacadas:</div>
                 @foreach ($destacadas as $dest)
                     <div class="ml-5 my-3  inline-flex w-7/8">
-                        <a href="{{ route('notas.show', $dest->id) }}"
+                        <a href="{{ route('notas.show', $dest->slug) }}"
                             class="inline-flex font-bold text-lg tracking-wide ">
                             <img src="{{ asset('img/bullet.png') }}" alt="" class="w-10 h-10 mr-1 inline-flex">
                             <small class="w-25 my-auto break-words">
@@ -56,9 +56,9 @@
                     <div class="px-4 py-5 sm:p-6 bg-white grid md:grid-cols-2 items-center">
                         @foreach ($locales as $local)
                             <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
-                                style="background-image: url('https://picsum.photos/720/400')">
+                                style="background-image: url({{asset('storage/'.$local->image_principal)}})">
                                 <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                    <a href="{{route('notas.show', $local->id)}}" class="mr-5 my-auto ">
+                                    <a class="mr-5 my-auto cursor-pointer" href="{{ route('notas.show', $local->slug) }}">
                                         {{ $local->title }}
                                     </a>
                                 </div>
@@ -79,9 +79,9 @@
                 <div class=" grid md:grid-cols-2 items-center mx-auto   ">
                     @foreach ($nacionales as $nacional)
                         <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
-                            style="background-image: url('https://picsum.photos/720/400')">
+                            style="background-image: url({{asset('storage/'.$nacional->image_principal)}})">
                             <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                <a href="{{route('notas.show', $nacional->id)}}" class="mr-5 my-auto ">
+                                <a class="mr-5 my-auto cursor-pointer " href="{{ route('notas.show', $nacional->slug) }}">
                                     {{ $nacional->title }}
                                 </a>
                             </div>
@@ -99,9 +99,9 @@
                 <div class=" grid md:grid-cols-2 items-center mx-auto   ">
                     @foreach ($deportes as $deporte)
                         <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
-                            style="background-image: url('https://picsum.photos/720/400')">
+                            style="background-image: url({{asset('storage/'.$deporte->image_principal)}})">
                             <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                <a href="{{route('notas.show', $deporte->id)}}" class="mr-5 my-auto ">
+                                <a class="mr-5 my-auto cursor-pointer" href="{{ route('notas.show', $deporte->slug) }}">
                                     {{ $deporte->title }}
                                 </a>
                             </div>

@@ -21,7 +21,7 @@
     @livewireStyles
     {!! SEO::generate() !!}
 </head>
-
+{!! SEO::generate() !!}
 <body>
 
     <body>

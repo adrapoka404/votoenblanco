@@ -14,7 +14,7 @@
                         <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Admin</a>
                         <form method="POST" action="{{ route('logout') }}" x-data>
                             @csrf
-                            {!! Form::submit('Cerrar sesión', ["class"=>"ml-4 text-sm text-gray-700 dark:text-gray-500 underline"]) !!}
+                            {!! Form::submit('Cerrar sesión', ['class' => 'ml-4 text-sm text-gray-700 dark:text-gray-500 underline']) !!}
                         </form>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Cuenta</a>
@@ -69,15 +69,19 @@
         <a href="{{ route('web.entrevistas') }}" class="text-white menuGral">entrevistas</a>
         <x-submenu>
             <x-submenu-link where="{{ route('notas.categorias', 10) }}" text="{{ __('conociendo a') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 11) }}" text="{{ __('más humanos más chingones') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 11) }}"
+                text="{{ __('más humanos más chingones') }}" />
             <x-submenu-link where="{{ route('notas.categorias', 12) }}" text="{{ __('mujeres en acción') }}" />
             <x-submenu-link where="{{ route('notas.categorias', 13) }}" text="{{ __('victoriosos') }}" />
         </x-submenu>
     </div>
     <div class="text-center md:border-r-2 border-white text-black">
-        <a href="{{route('editores.show', 'all')}}" class="text-white menuGral">nuestras letras</a>
+        <a href="{{ route('editores.show', 'all') }}" class="text-white menuGral">nuestras letras</a>
         <x-submenu>
-            <x-submenu-link where="{{ route('notas.editores', 1) }}" text="{{ __('Raymundo Rivera') }}" />
+            @foreach ($editors as $editor)
+                <x-submenu-link where="{{ route('notas.editores', $editor->user->slug) }}"
+                    text="{{ $editor->user->name }}" />
+            @endforeach
         </x-submenu>
     </div>
     <div class="text-center md:border-r-2 border-white text-black">
@@ -85,12 +89,12 @@
         <x-submenu>
             <x-submenu-link where="{{ route('notas.categorias', 14) }}" text="{{ __('Local') }}" />
             <x-submenu-link where="{{ route('notas.categorias', 16) }}" text="{{ __('Nacional') }}" />
-            <x-submenu-link where="{{ route('notas.categorias',15) }}" text="{{ __('Internacional') }}" />
-            <x-submenu-link where="{{ route('notas.categorias',17) }}" text="{{ __('Deportes') }}" />
-            <x-submenu-link where="{{ route('notas.categorias',18) }}" text="{{ __('Ciencia') }}" />
-            <x-submenu-link where="{{ route('notas.categorias',19) }}" text="{{ __('Economía y Finanzas') }}" />
-            <x-submenu-link where="{{ route('notas.categorias',20) }}" text="{{ __('Cultura') }}" />
-            <x-submenu-link where="{{ route('notas.categorias',21) }}" text="{{ __('Entretenimiento') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 15) }}" text="{{ __('Internacional') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 17) }}" text="{{ __('Deportes') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 18) }}" text="{{ __('Ciencia') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 19) }}" text="{{ __('Economía y Finanzas') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 20) }}" text="{{ __('Cultura') }}" />
+            <x-submenu-link where="{{ route('notas.categorias', 21) }}" text="{{ __('Entretenimiento') }}" />
         </x-submenu>
     </div>
     <div class="text-center">
@@ -205,11 +209,11 @@
                 color: white !important;
             }
 
-            #ui-id-1{
+            #ui-id-1 {
                 background: white;
             }
 
-            #ui-id-1>li:hover{
+            #ui-id-1>li:hover {
                 background: gray;
             }
         </style>
@@ -220,8 +224,9 @@
 </div>
 @section('jquery')
     <script>
-        var theurl = "{{request()->path()}}";
+        var theurl = "{{ request()->path() }}";
         $(document).ready(function() {
+            console.log('llega el jquery');
             mueveReloj()
             date = new Date();
 
@@ -243,57 +248,94 @@
             })
 
             $("#nochisme").on('click', function() {
-                console.log('Cerrar la revista');
                 $("#modalRevista").hide();
             })
 
-            //console.log('que es '+ request()->routeIs('employees.*'));
-
-            //console.log(theurl);
             if (theurl == '/') {
                 setTimeout(function() {
                     $("#modalRevista").show();
                 }, 5000);
             }
-            /*
-                        $( "#search" ).autocomplete({ });
 
-                        $("#search").on('keyup', function(){
-                            palabra = $(this).val();
-                            if(palabra.length > 3 ){
-                                console.log('Me conecto por ajax al servidoro a buscar todo lo que contenga la palabra' + palabra )
-                            }else   
-                            console.log('aun no hago nada');
-                        })
-                        */
-
-        })
-
-
-        $("#search").autocomplete({
-            source: function(request, response) {
+            $("#btnComents").on('click', function() {
+                $(".clear").html('');
                 $.ajax({
-                    url: "{{ route('services.posts') }}",
-                    type: 'GET',
+                    url: $("#formComents").attr('action'),
+                    type: 'POST',
                     dataType: 'JSON',
-                    delay: 250,
-                    data: {
-                        search: request.term
-                    },
+                    data: $("#formComents").serialize(),
                     success: function(data) {
-                        console.log(data);
-                        response($.map(data, function(item) {
-                            return {
-                                label: item.title,
-                                value: item.id
-                            }
-                        }))
-                    }
+                        $("#successComment").html(data.msg)
+                        $("#formComents").get(0).reset()
+
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        if (xhr.responseJSON.errors) {
+                            errores = xhr.responseJSON.errors;
+
+                            if (errores['coment.name'])
+                                $("#errorCommentName").html(errores['coment.name'][0]);
+
+                            if (errores['coment.email'])
+                                $("#errorCommentEmail").html(errores['coment.email'][0]);
+
+                            if (errores['coment.comment'])
+                                $("#errorCommentComment").html(errores['coment.comment'][0]);
+                        }
+
+                    },
                 })
-            },
-            select: function(event, ui) {
-                window.location.href = "{{ route('notas.show', '') }}" + '/' + ui.item.value;
-            }
+            })
+
+            $("#btnSave").on('click', function() {
+                reaction('Save')
+            })
+
+            $("#btnNoSave").on('click', function() {
+                reaction('NoSave')
+            })
+
+            $("#btnShare").on('click', function() {
+                reaction(id, "{{ route('notas.share') }}")
+            })
+
+            $("#btnSuperLike").on('click', function() {
+                reaction('Slike')
+            })
+
+            $("#btnLike").on('click', function() {
+                reaction("Like")
+            })
+
+            $("#btnNoLike").on('click', function() {
+                reaction("NoLike")
+            })
+
+            $("#search").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "{{ route('services.posts') }}",
+                        type: 'GET',
+                        dataType: 'JSON',
+                        delay: 250,
+                        data: {
+                            search: request.term
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.title,
+                                    value: item.id
+                                }
+                            }))
+                        }
+                    })
+                },
+                select: function(event, ui) {
+                    window.location.href = "{{ route('notas.show', '') }}" + '/' + ui.item.value;
+                }
+            })
         })
 
         function mueveReloj() {
@@ -302,12 +344,42 @@
             minuto = momentoActual.getMinutes()
             segundo = momentoActual.getSeconds()
 
-            horaImprimible = hora + " : " + (minuto < 10 ? '0' + minuto : minuto) + " : " + (segundo < 10 ? '0' + segundo :
+            horaImprimible = hora + " : " + (minuto < 10 ? '0' + minuto : minuto) + " : " + (segundo < 10 ?
+                '0' + segundo :
                 segundo)
 
             $("#time").html(horaImprimible)
 
             setTimeout("mueveReloj()", 1000)
+        }
+
+        function reaction(what) {
+            $.ajax({
+                url: $("#form" + what).attr('action'),
+                type: 'POST',
+                dataType: 'JSON',
+                data: $("#form" + what).serialize(),
+                success: function(data) {
+                    if (data.error) {
+                        if (what == 'Save') {
+                            alert('Pop de suscripcion, que aun no hago');
+                        }
+                    }
+                    if (data.success && what == 'Save')
+                        $("#img" + what).attr('src', '{{ asset('img/') }}/img_' + what + 'On.png')
+
+                    if (data.success && (what == 'Slike' || what == "NoLike" || what == "Like")) {
+                        $("#labelSlike").html(data.reactions.slikes);
+                        $("#labelLike").html(data.reactions.likes);
+                        $("#labelNoLike").html(data.reactions.nlikes);
+                        
+                        $("#slike").attr("src", data.imgs.slike)
+                        $("#like").attr("src", data.imgs.like)
+                        $("#nolike").attr("src", data.imgs.nlike)
+                    }
+                        
+                }
+            })
         }
     </script>
 @endsection

@@ -6,9 +6,10 @@
             @if (fmod($i, 2) == 0)
                 <div class="col-span-2">
                     <x-opinion-full>
-                        <x-slot name="href">{{ route('notas.editores', $editor->id) }}</x-slot>
-                        <x-slot name="name">{{ $editor->name }}</x-slot>
-                        <x-slot name="src">{{ $editor->profile_photo_path }}</x-slot>
+                        <x-slot name="href">{{ route('notas.editores', $editor->user->slug) }}</x-slot>
+                        <x-slot name="name">{{ $editor->user->name }}</x-slot>
+                        <x-slot name="specialty">{{ $editor->specialty }}</x-slot>
+                        <x-slot name="src">{{ $editor->user->profile_photo_url }}</x-slot>
                     </x-opinion-full>
                 </div>
                 <div></div>
@@ -16,9 +17,10 @@
                 <div></div>
                 <div class=" col-span-2">
                     <x-opinion-full>
-                        <x-slot name="href">{{ route('notas.editores', $editor->id) }}</x-slot>
-                        <x-slot name="name">{{ $editor->name }}</x-slot>
-                        <x-slot name="src">{{ $editor->profile_photo_path }}</x-slot>
+                        <x-slot name="href">{{ route('notas.editores', $editor->user->slug) }}</x-slot>
+                        <x-slot name="name">{{ $editor->user->name }}</x-slot>
+                        <x-slot name="specialty">{{ $editor->specialty }}</x-slot>
+                        <x-slot name="src">{{ $editor->user->profile_photo_url }}</x-slot>
                     </x-opinion-full>
                 </div>
             @endif

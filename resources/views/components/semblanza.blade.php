@@ -1,7 +1,7 @@
 <div class="bg-gray flex">
     <div class="w-1/3">
-        <img class=" h-52 w-52 mx-auto object-cover object-center mb-4 " src="{{$src}}"
-            alt="Image Size 720x400" />
+        <img class=" h-52 w-52 mx-auto object-content object-center mb-4 " src="{{$src}}"
+            alt="{{$nombre}}" />
     </div>
     <div class=" w-2/3 text-left">
         <div class="ml-5 my-auto">

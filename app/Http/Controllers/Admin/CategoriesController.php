@@ -43,13 +43,13 @@ class CategoriesController extends Controller
     {
         $nurl = Storage::put('public/categories',$request->file('imagen'));
 
-        $request->imagen    = $nurl;
+        $request->imagen    = str_replace('public/','',$nurl);
         $request->slug      = str_replace(' ', '-', $request->nombre);
 
         $ncategory = Category::create($request->all());
 
         $ncategory->slug = str_replace(' ', '-', $request->nombre);
-        $ncategory->imagen = $nurl;
+        $ncategory->imagen = str_replace('public/','',$nurl);
 
         $ncategory->update();
         
@@ -93,15 +93,15 @@ class CategoriesController extends Controller
     {
         $nurl = Storage::put('public/categories',$request->file('imagen'));
 
-        $request->imagen    = $nurl;
+        $request->imagen    = str_replace('public/','',$nurl);
         $request->slug      = str_replace(' ', '-', $request->nombre);
 
         $ncategory = Category::find($id);
 
         $ncategory->update($request->all());
         $ncategory->slug = str_replace(' ', '-', $request->nombre);
-        $ncategory->imagen = $nurl;
-
+        $ncategory->imagen = str_replace('public/','',$nurl);
+        $ncategory->save();
         
         return redirect()->route('admin.categorias.index')->with('info', __('Categoría de post editada'));
     }

@@ -10,20 +10,17 @@
                 @endif
 
                 <x-slot name="description">
-                    {{ __('Recomendación de sitios para turistear, comer, comprar, etc. Formato de reportaje, puede incluir entrevistas.') }}
+
                 </x-slot>
                 <x-slot name="src">
                     @if (isset($category))
-                        {{ asset('public/storage/' . $category->imagen) }}
+                        {{ asset('storage/'. $category->imagen) }}
                     @endif
                     @if (isset($editor))
-                        {{ asset('public/storage/' . $editor->profile_photo_url) }}
+                        {{ $editor->profile_photo_url }}
                     @endif
                 </x-slot>
                 <x-slot name="especialidad">
-                    @if (isset($category))
-                        {{ $category->nombre }}
-                    @endif
                     @if (isset($editor))
                         {{ $editor->name }}
                     @endif
@@ -33,14 +30,14 @@
             @if (count($posts) > 0)
                 @foreach ($posts as $post)
                     <x-posts>
-                        <x-slot name="src">{{ asset($post->imagen_principal) }}</x-slot>
+                        <x-slot name="src">{{ asset('storage/'.$post->image_principal) }}</x-slot>
                         <x-slot name="title">{{ $post->title }}</x-slot>
                         <x-slot name="alt">{{ $post->title }}</x-slot>
                         <x-slot name="date">{{ $post->created_at }}</x-slot>
                         <x-slot name="user">{{ $post->user->name }}</x-slot>
-                        <x-slot name="userto">{{ route('notas.editores', $post->user->id) }}</x-slot>
+                        <x-slot name="userto">{{ route('notas.editores', $post->user->slug) }}</x-slot>
                         <x-slot name="sumary">{{ $post->description }}</x-slot>
-                        <x-slot name="where">{{ route('notas.show', $post->id) }}</x-slot>
+                        <x-slot name="where">{{ route('notas.show', $post) }}</x-slot>
 
                     </x-posts>
                 @endforeach

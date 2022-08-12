@@ -25,37 +25,39 @@
                 @foreach ($posts as $post)
                     <tr>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            <x-link-table href="{{ route('admin.notas.edit', $post->id) }}" txt="{{ $post->title }}" />
+                            @can('admin.notas.edit')
+                                <x-link-table href="{{ route('admin.notas.edit', $post->id) }}" txt="{{ $post->title }}" />
+                            @endcan
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             <x-link-table href="{{ route('admin.editors.edit', $post->editor->id) }}"
                                 txt="{{ $post->user->name }}" />
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            <select name="post[{{$post->id}}][status]" id="">
-                            @foreach ($statuses as $status)
-                                @if ($status->id == $post->status->id)
-                                    <option value="{{ $status->id }}" selected>{{ $status->name }}</option>
-                                @else
-                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                            <select name="post[{{ $post->id }}][status]" id="">
+                                @foreach ($statuses as $status)
+                                    @if ($status->id == $post->status->id)
+                                        <option value="{{ $status->id }}" selected>{{ $status->name }}</option>
+                                    @else
+                                        <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            @can('admin.posts.edit')
+
+                            @can('admin.notas.destroy')
                             @endcan
-                            @can('admin.posts.destroy')
-                            @endcan
-                            <form action="">
+                            <form action="" class="inline">
                                 <a href="{{ route('admin.notas.update', $post->id) }}"
                                     class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
                             </form>
-                            <a href="{{ route('admin.notas.edit', $post->id) }}"
-                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Editar') }}</a>
-
-
-
+                            @can('admin.notas.edit')
+                                <a href="{{ route('admin.notas.edit', $post->id) }}"
+                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
+                                    {{ __('Editar') }}
+                                </a>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

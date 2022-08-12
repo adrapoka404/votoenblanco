@@ -14,9 +14,19 @@ use App\Models\PostReaction;
 use App\Models\Postrelated;
 use App\Models\PostSaved;
 use App\Models\User;
-use App\View\Components\coment;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\TwitterCard;
+use Artesaos\SEOTools\Facades\JsonLd;
+// OR with multi
+use Artesaos\SEOTools\Facades\JsonLdMulti;
+
+// OR use only single facades
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class NotasController extends Controller
 {
@@ -60,7 +70,9 @@ class NotasController extends Controller
      */
     public function show($id, Request $request)
     {
-        $post = Post::find($id);
+        
+        $post = Post::where('slug', $id)->first();
+        $id = $post->id;
         $post->views = $post->views + 1;
         $post->save();
         
@@ -69,14 +81,13 @@ class NotasController extends Controller
         $categories     = Postcategory::where('post_id', $id)->get();
         $redactor       = User::find($post->user_create);
         $comments       = PostComent::where('post_id', $id)->where('status', 1)->get();
-
-
     
         if(!empty($relateds)){
     
             foreach($relateds as &$related) {
                 $r = Post::find($related->related_id);
                 $related->title = $r->title;
+                $related->slug = $r->slug;
             }
         }
 
@@ -94,7 +105,7 @@ class NotasController extends Controller
         $post->comments     = $comments;
 
         $post->saveme = false;
-        $post->likeme = false;
+        $post->ireaction = false;
         
         $slikes = PostReaction::where('reaction', 1)->where('post_id', $post->id)->get();
 
@@ -108,26 +119,52 @@ class NotasController extends Controller
 
         $post->nlikes = $nlikes->count();
 
-        if(PostReaction::where('post_id', $post->id)->where('user_id', $request->ip())->first())
-                $post->likeme =true;
-
+        $user = $request->ip();
+        
         if(Auth::user()) {
-            if(PostSaved::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first())
-                $post->saveme = true;
-
-            if(PostReaction::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first())
-                $post->likeme =true;
+            $user = Auth::user()->id;
+            //if($reaction = PostReaction::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first())
+            //    $post->likeme = $reaction->reaction;
         }
+        
+        if($meReaction = PostReaction::where('post_id', $post->id)->where('user_id', $user)->first())
+            $post->ireaction = $meReaction->reaction;
+                
+        SEOMeta::setTitle($post->title);
+        SEOMeta::setDescription($post->description);
+        SEOMeta::setCanonical(route('notas.show', $post->id));
 
-        
-        
+        OpenGraph::setDescription($post->description);
+        OpenGraph::setTitle($post->title);
+        OpenGraph::setUrl(route('notas.show', $post->id));
+        OpenGraph::addProperty('type', 'articles');
+
+        TwitterCard::setTitle($post->title);
+        TwitterCard::setSite('@websolutionstuff');
+
+        JsonLd::setTitle($post->title);
+        JsonLd::setDescription($post->description);
+        JsonLd::addImage(asset('storage'.$post->image_principal));
+
+        // OR use single only SEOTools
+
+        SEOTools::setTitle($post->title);
+        SEOTools::setDescription($post->description);
+        SEOTools::opengraph()->setUrl('https://websolutionstuff.com/');
+        SEOTools::setCanonical('https://websolutionstuff.com');
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('@websolutionstuff');
+        SEOTools::jsonLd()->addImage('https://websolutionstuff.com/frontTheme/assets/images/logo.png');
 
         return view('guest.nota', compact('post')); 
     }
 
     public function editores($id)
     {
-        $editor = User::find($id);
+        
+        $editor = User::where('slug',$id)->first();
+        
+        $id = $editor->id;   
         
         $who = $editor->name;
 
@@ -157,7 +194,9 @@ class NotasController extends Controller
                 foreach($posts as &$post)
                     $post->user = User::find($post->user_create);
             }
-            //return $posts;
+        $category->vistas = $category->vistas + 1;
+        $category->save();
+            //return $category;
         return view('guest.notas', compact('category', 'posts', 'who')); 
     }
     /**
@@ -197,81 +236,53 @@ class NotasController extends Controller
     public function admin(){
         
     }
-
-    public function like(Request $request){
+    public function reaction(Request $request){
+        
         $post       = $request->all()['post_id'];
         $reaction   = $request->all()['reaction'];
-        
+        $img        = '';
+        $time       = time();
+
         if(Auth::user())
             $user = Auth::user()->id;
         else
             $user = $request->ip();
         
+
         $exist = PostReaction::where('post_id', $post)->where('user_id', $user)->first();
-
-        $likes = PostReaction::where('post_id', $post)->where('reaction', $reaction)->get();
-
-        if(!$exist){
-            if(PostReaction::create(['user_id'=>$user, 'post_id'=>$post, 'reaction' => $reaction]))
-                return ['success' => true, 'likes' => count($likes)];    
-            else
-            return ['error' => true];    
+        
+        if(!$exist) {
+            PostReaction::create(['user_id'=>$user, 'post_id'=>$post, 'reaction' => $reaction]);
+            $img = 'On';
+            $imgs = [
+                'sLike'     => ($reaction == 1 ? asset('img/slikeOn.png').'?'.$time + 1 : asset('img/slike.png').'?'.$time + 1),
+                'like'      => ($reaction == 2 ? asset('img/likeOn.png').'?'.$time + 2 : asset('img/like.png').'?'.$time + 2),
+                'nLike'     => ($reaction == 3 ? asset('img/nolikeOn.png').'?'.$time + 3 : asset('img/nolike.png').'?'.$time + 3),
+            ];
         } else {
             $exist->delete();
-            return ['success' => true, 'likes' => count($likes) - 1];    
+            $imgs = [
+                'sLike'     => asset('img/slike.png').'?'.$time + 1,
+                'like'      => asset('img/like.png').'?'.$time + 2,
+                'nLike'     => asset('img/nolike.png').'?'.$time + 3,
+            ];
         }
             
+
+        $likes = PostReaction::where('post_id', $post)->where('reaction', 2)->get();
+        $slikes = PostReaction::where('post_id', $post)->where('reaction', 1)->get();
+        $nlikes = PostReaction::where('post_id', $post)->where('reaction', 3)->get();
+    
+        return [
+            'success'       => true, 
+            'reactions'     => [
+                            'slikes'    => $slikes->count(), 
+                            'likes'     => $likes->count(), 
+                            'nlikes'    => $nlikes->count()
+            ],
+            'imgs'          => $imgs
+            ];    
     }
-
-    public function slike(Request $request){
-        
-        $post       = $request->all()['post_id'];
-        $reaction   = $request->all()['reaction'];
-        
-        if(Auth::user())
-            $user = Auth::user()->id;
-        else
-            $user = $request->ip();
-        
-        $exist = PostReaction::where('post_id', $post)->where('user_id', $user)->first();
-
-        $slikes = PostReaction::where('post_id', $post)->where('reaction', $reaction)->get();
-
-        if(!$exist){
-            if(PostReaction::create(['user_id'=>$user, 'post_id'=>$post, 'reaction' => $reaction]))
-                return ['success' => true, 'slikes' => count($slikes)];    
-            else
-            return ['error' => true];    
-        } else{
-            $exist->delete();
-            return ['success' => true, 'slikes' => count($slikes)-1];
-        }
-            
-     }
-
-     public function nolike(Request $request){
-        $post       = $request->all()['post_id'];
-        $reaction   = $request->all()['reaction'];
-        
-        if(Auth::user())
-            $user = Auth::user()->id;
-        else
-            $user = $request->ip();
-        
-        $exist = PostReaction::where('post_id', $post)->where('user_id', $user)->first();
-
-        $nolikes = PostReaction::where('post_id', $post)->where('reaction', $reaction)->get();
-
-        if(!$exist){
-            if(PostReaction::create(['user_id'=>$user, 'post_id'=>$post, 'reaction' => $reaction]))
-                return ['success' => true, 'nolikes' => count($nolikes)];    
-            else
-            return ['error' => true];    
-        } else {
-            $exist->delete();
-            return ['success' => true, 'nolikes' => count($nolikes)-1];
-        }
-     }
 
      public function share($id){
         return $id;

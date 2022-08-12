@@ -49,6 +49,7 @@ Route::resource('notas', NotasController::class)
 
     Route::get('notas.editores.{nota}', [NotasController::class, 'editores'])->name('notas.editores');
     Route::get('notas.category.{category}', [NotasController::class, 'categorias'])->name('notas.categorias');
+    Route::post('notas.reaction', [NotasController::class, 'reaction'])->name('notas.reaction');
     Route::post('notas.like', [NotasController::class, 'like'])->name('notas.like');
     Route::post('notas.slike', [NotasController::class, 'slike'])->name('notas.slike');
     Route::post('notas.nolike', [NotasController::class, 'nolike'])->name('notas.nolike');
