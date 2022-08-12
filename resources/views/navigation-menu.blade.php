@@ -163,7 +163,6 @@
                 </div>
             </div>
         </div>
-        @can('admin.notas.index')
         <!-- Audience -->
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
@@ -200,18 +199,22 @@
             <div x-cloak x-show="open" @click.outside="open =false"
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3 ">
+                @can('admin.notas.index')
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.index') }}">
                         Todas
                     </a>
                 </div>
+                @endcan
+                @can('admin.notas.create')
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.create') }}">
                         Crear Post
                     </a>
                 </div>
+                @endcan
                 <div>
                     <h1
                         class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block">
@@ -219,7 +222,6 @@
                 </div>
             </div>
         </div>
-        @endcan
         <!-- Posts -->
         <div @click="$store.sidebar.active = 'posts' " x-data="tooltip" x-on:mouseover="show = true"
             x-on:mouseleave="show = false"

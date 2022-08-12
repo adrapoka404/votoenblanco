@@ -37,9 +37,7 @@
         </div>
     </div>
     @endcan
-    @can('#')
-        
-    @endcan
+
     <div class="p-6 border-2 border-b-0 border-l-0 border-wine ">
 
         <div class="ml-12">
