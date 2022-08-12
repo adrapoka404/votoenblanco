@@ -200,21 +200,23 @@
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3 ">
                 @can('admin.notas.index')
+                @endcan
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.index') }}">
                         Todas
                     </a>
                 </div>
-                @endcan
+                
                 @can('admin.notas.create')
+                @endcan
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.create') }}">
                         Crear Post
                     </a>
                 </div>
-                @endcan
+                
                 <div>
                     <h1
                         class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block">
