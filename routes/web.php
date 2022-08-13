@@ -33,8 +33,8 @@ Route::get('guest', function () {
 });
     $targetFolder = storage_path().'/app/public';
     $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
-    //echo " De " . $linkFolder . '<br>';
-    //echo " a " . $targetFolder;
+    echo " De " . $linkFolder . '<br>';
+    echo " a " . $targetFolder;
 
     symlink($targetFolder,$linkFolder);
     echo 'Symlink process successfully completed';
