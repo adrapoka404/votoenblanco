@@ -16,7 +16,7 @@
             </div>
             <div class="w-1/3 flex-1 items-center content-center ">
                 <div class=" pl-2 pr-5 text-justify">
-                    <span class="py-2 my-3 "><x-link-fb /> ({{ $destacada->created_at }}) <x-link-redactor userto="{{route('notas.editores', $destacada->redactor->id)}}" user="{{$destacada->redactor->name}}"/></span>
+                    <span class="py-2 my-3 "><x-link-fb /> ({{ $destacada->created_at }}) <x-link-redactor userto="{{route('notas.editores', $destacada->redactor->slug)}}" user="{{$destacada->redactor->name}}"/></span>
                     <p class="sumary my-3">
                         {{ htmlspecialchars_decode($destacada->description, ENT_HTML5) }}
                     </p>

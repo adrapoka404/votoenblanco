@@ -31,11 +31,16 @@ Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 Route::get('guest', function () {
     return view('welcome');
 });
-
-Route::get('storage-link', function(){
+    $targetFolder = $_SERVER['DOCUMENT_ROOT'].'/storage/app/public';
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
+    symlink($targetFolder,$linkFolder);
+    echo 'Symlink process successfully completed';
+    //echo $targetFolder; 
+/*
+Route::get('storage-link', function("{
     Artisan::call('storage:link');
 });
-
+*/
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -44,32 +49,32 @@ Route::resource('notas', NotasController::class)
     ->names('notas');
 
 
-    Route::resource('editores', EditoresController::class)
+Route::resource('editores', EditoresController::class)
     ->names('editores');
 
-    Route::get('notas.editores.{nota}', [NotasController::class, 'editores'])->name('notas.editores');
-    Route::get('notas.category.{category}', [NotasController::class, 'categorias'])->name('notas.categorias');
-    Route::post('notas.reaction', [NotasController::class, 'reaction'])->name('notas.reaction');
-    Route::post('notas.like', [NotasController::class, 'like'])->name('notas.like');
-    Route::post('notas.slike', [NotasController::class, 'slike'])->name('notas.slike');
-    Route::post('notas.nolike', [NotasController::class, 'nolike'])->name('notas.nolike');
-    Route::post('notas.share', [NotasController::class, 'share'])->name('notas.share');
-    Route::post('notas.save', [NotasController::class, 'save'])->name('notas.save');
-    Route::post('notas.nosave', [NotasController::class, 'nosave'])->name('notas.nosave');
-    Route::post('notas.coments', [NotasController::class, 'coments'])->name('notas.coments');
+Route::get('notas.editores.{nota}', [NotasController::class, 'editores'])->name('notas.editores');
+Route::get('notas.category.{category}', [NotasController::class, 'categorias'])->name('notas.categorias');
+Route::post('notas.reaction', [NotasController::class, 'reaction'])->name('notas.reaction');
+Route::post('notas.like', [NotasController::class, 'like'])->name('notas.like');
+Route::post('notas.slike', [NotasController::class, 'slike'])->name('notas.slike');
+Route::post('notas.nolike', [NotasController::class, 'nolike'])->name('notas.nolike');
+Route::post('notas.share', [NotasController::class, 'share'])->name('notas.share');
+Route::post('notas.save', [NotasController::class, 'save'])->name('notas.save');
+Route::post('notas.nosave', [NotasController::class, 'nosave'])->name('notas.nosave');
+Route::post('notas.coments', [NotasController::class, 'coments'])->name('notas.coments');
 
 
-    Route::get('notas.admin', [NotasController::class, 'admin'])->name('notas.admin');
+Route::get('notas.admin', [NotasController::class, 'admin'])->name('notas.admin');
 
-    // rutas para administracion de notas 
-    Route::resource('adminnotas', AdminNotasController::class)
+// rutas para administracion de notas 
+Route::resource('adminnotas', AdminNotasController::class)
     ->names('admin.notas');
 //Administracion de categorias
-    Route::resource('admincategories', CategoriesController::class)
+Route::resource('admincategories', CategoriesController::class)
     ->names('admin.categorias');
 
-    //Administracion de editores
-    Route::resource('admineditors', EditorsController::class)
+//Administracion de editores
+Route::resource('admineditors', EditorsController::class)
     ->names('admin.editors');
 
 Route::resource('estatusnotas', EstatusNotasController::class)->names('admin.notas.estatus');
