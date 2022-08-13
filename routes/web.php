@@ -31,6 +31,7 @@ Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 Route::get('guest', function () {
     return view('welcome');
 });
+/*
     $targetFolder = storage_path().'/app/public';
     $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
     echo " De " . $linkFolder . '<br>';
@@ -38,7 +39,7 @@ Route::get('guest', function () {
 
     symlink($targetFolder,$linkFolder);
     echo 'Symlink process successfully completed';
-    //echo $targetFolder; 
+    *///echo $targetFolder; 
 /*
 Route::get('storage-link', function("{
     Artisan::call('storage:link');
