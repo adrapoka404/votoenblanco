@@ -31,10 +31,10 @@ Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 Route::get('guest', function () {
     return view('welcome');
 });
-    $targetFolder = $_SERVER['DOCUMENT_ROOT'].'/storage/app/public';
+    $targetFolder = storage_path().'/app/public';
     $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
     echo " De " . $linkFolder . '<br>';
-    echo " a " . storage_path();
+    echo " a " . $targetFolder;
 
     //symlink($targetFolder,$linkFolder);
     //echo 'Symlink process successfully completed';
