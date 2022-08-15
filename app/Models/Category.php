@@ -15,4 +15,9 @@ class Category extends Model
     protected $guarded = [''];
 
     public $headers = ['nombre', 'estado', 'acciones'];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

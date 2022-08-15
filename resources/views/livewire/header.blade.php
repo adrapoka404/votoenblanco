@@ -59,20 +59,17 @@
     <div class="text-center md:border-r-2 border-white text-black">
         <a href="{{ route('web.reportajes') }}" class="text-white menuGral">Reportajes</a>
         <x-submenu>
-            <x-submenu-link where="{{ route('notas.categorias', 7) }}" text="{{ __('Vagabundario') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 6) }}" text="{{ __('Común unidad') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 8) }}" text="{{ __('Sensaciones') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 9) }}" text="{{ __('Haciendo Ecos') }}" />
+            @foreach ($reportajes as $reportaje)
+            <x-submenu-link where="{{ route('notas.categorias', $reportaje->slug) }}" text="{{ $reportaje->nombre }}" />
+            @endforeach
         </x-submenu>
     </div>
     <div class="text-center md:border-r-2 border-white text-black ">
         <a href="{{ route('web.entrevistas') }}" class="text-white menuGral">entrevistas</a>
         <x-submenu>
-            <x-submenu-link where="{{ route('notas.categorias', 10) }}" text="{{ __('conociendo a') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 11) }}"
-                text="{{ __('más humanos más chingones') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 12) }}" text="{{ __('mujeres en acción') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 13) }}" text="{{ __('victoriosos') }}" />
+            @foreach ($entrevistas as $entrevista)
+            <x-submenu-link where="{{ route('notas.categorias', $entrevista->slug) }}" text="{{ $entrevista->nombre }}" />
+            @endforeach
         </x-submenu>
     </div>
     <div class="text-center md:border-r-2 border-white text-black">
@@ -87,14 +84,9 @@
     <div class="text-center md:border-r-2 border-white text-black">
         <a href="{{ route('web.noticias') }}" class="text-white  menuGral">noticias</a>
         <x-submenu>
-            <x-submenu-link where="{{ route('notas.categorias', 14) }}" text="{{ __('Local') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 16) }}" text="{{ __('Nacional') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 15) }}" text="{{ __('Internacional') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 17) }}" text="{{ __('Deportes') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 18) }}" text="{{ __('Ciencia') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 19) }}" text="{{ __('Economía y Finanzas') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 20) }}" text="{{ __('Cultura') }}" />
-            <x-submenu-link where="{{ route('notas.categorias', 21) }}" text="{{ __('Entretenimiento') }}" />
+            @foreach ($noticias as $noticia)
+            <x-submenu-link where="{{ route('notas.categorias', $noticia->slug) }}" text="{{ $noticia->nombre }}" />
+            @endforeach
         </x-submenu>
     </div>
     <div class="text-center">
@@ -326,14 +318,15 @@
                             response($.map(data, function(item) {
                                 return {
                                     label: item.title,
-                                    value: item.id
+                                    value: item.id,
+                                    slug: item.slug
                                 }
                             }))
                         }
                     })
                 },
                 select: function(event, ui) {
-                    window.location.href = "{{ route('notas.show', '') }}" + '/' + ui.item.value;
+                    window.location.href = "{{ route('notas.show', '') }}" + '/' + ui.item.slug;
                 }
             })
         })

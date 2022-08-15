@@ -9,5 +9,5 @@ class Editor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_create', 'user_id', 'specialty', 'semblance','status'];
+    protected $fillable = ['user_create', 'user_id', 'specialty', 'semblance','status', 'vistas'];
 }

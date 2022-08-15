@@ -6,6 +6,7 @@ use App\Http\Livewire\Posts;
 use App\Http\Requests\StoreComentsRequest;
 use App\Models\Categories;
 use App\Models\Category;
+use App\Models\Editor;
 use App\Models\Post;
 use App\Models\Postcategory;
 use App\Models\PostComent;
@@ -72,6 +73,8 @@ class NotasController extends Controller
     {
         
         $post = Post::where('slug', $id)->first();
+
+        //return $post;
         $id = $post->id;
         $post->views = $post->views + 1;
         $post->save();
@@ -161,6 +164,7 @@ class NotasController extends Controller
 
     public function editores($id)
     {
+        //return $id;
         
         $editor = User::where('slug',$id)->first();
         
@@ -174,14 +178,19 @@ class NotasController extends Controller
            foreach($posts as &$post)
                 $post->user = User::find($post->user_create);
         }
+
+        $elEditor = Editor::where('user_id', $editor->id)->first();
+        
+        $elEditor->vistas = $elEditor->vistas + 1;
+        $elEditor->save();
            // return $posts;
         return view('guest.notas', compact('editor','posts','who')); 
     }
 
     public function categorias( $request ) {
         $posts = [];
-        $category = Category::find($request);
-        //return $category;
+        $category = Category::where('slug', $request)->first();
+        
         $who = $category->nombre;
 
         $postCategory = Postcategory::where('category_id', $category->id )->get();
@@ -196,7 +205,7 @@ class NotasController extends Controller
             }
         $category->vistas = $category->vistas + 1;
         $category->save();
-            //return $category;
+            
         return view('guest.notas', compact('category', 'posts', 'who')); 
     }
     /**

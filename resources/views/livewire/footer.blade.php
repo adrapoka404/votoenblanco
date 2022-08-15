@@ -67,7 +67,7 @@
         </div>
         <div class="w-full md:w-1/2 lg:w-2/3 font-sans font-light tracking-widest mt-20 pl-10 inline-block align-text-baseline">
         <p class=" align-bottom">Metepec. Estado de México</p>
-        <p>COPIRIGHT todos los derechos Reservados</p>
+        <p>COPYRIGHT todos los derechos Reservados</p>
         donde va este texto
         </div>
         <div class="w-full lg:w-1/3 flex flex-col-2 items-end mt-20 font-sans font-light tracking-widest place-content-end">

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class EditorsController extends Controller
 {
@@ -58,6 +59,7 @@ class EditorsController extends Controller
 
           $user->name       = $editor['name'];
           $user->email      = $editor['email'];
+          $user->slug       = Str::slug($editor['name'], '-');
           $user->password   = Hash::make('3d1t0r.VB');
           $user->save();
         } 
@@ -123,6 +125,7 @@ class EditorsController extends Controller
         if(!$user) {
           $user = new User();
           $user->name       = $upEditor['name'];
+          $user->slug       = Str::slug('-', $upEditor['name']);
           $user->email      = $upEditor['email'];
           $user->password   = Hash::make('3d1t0r.VB');
           $user->save();

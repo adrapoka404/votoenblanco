@@ -3,11 +3,19 @@
 
 </div>
 <div class="col-span-6 sm:col-span-4 mt-3">
+    {!! Form::textarea('description', old('description') ? old('description') : (isset($category) ?$category->description:'') , ['class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto ring-1 ring-wine', 'placeholder' => __('Descripción general'), 'row' => 2]) !!}
+
+</div>
+<div class="col-span-6 sm:col-span-4 mt-3">
+    {!! Form::textarea('description_video', old('description_video') ? old('description_video') : (isset($category) ?$category->description_video:''), ['class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto ring-1 ring-wine', 'placeholder' => __('Descripción para video'), 'row'=>2]) !!}
+
+</div>
+<div class="col-span-6 sm:col-span-4 mt-3">
     <input type="hidden" name="orden" value="1">
     <select name="patern_id" id="" class="border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto ring-wine">
         <option >{{__('Categoría padre')}}</option>
     @foreach ($categories as $cat)
-    @if (isset($category) && $category->orden == $cat->id)
+    @if (isset($category) && $category->patern_id == $cat->id)
     <option value="{{$cat->id}}" selected>{{$cat->nombre}}</option> 
         
     @else

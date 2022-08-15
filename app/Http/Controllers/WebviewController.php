@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Editor;
 use App\Models\Post;
 use App\Models\Postcategory;
 use App\Models\User;
@@ -24,15 +25,26 @@ class WebviewController extends Controller
     }
 
     public function entrevistas(){
-        return view('guest/entrevistas');
+        $category = Category::where('nombre', 'entrevistas')->first();
+        $categories = Category::where('patern_id', $category->id)->orderBy('nombre', 'asc')->get();
+
+        return view('guest/entrevistas', compact('categories'));
     }
 
     public function reportajes(){
-        return view('guest/reportajes');
+
+        $category = Category::where('nombre', 'reportajes')->first();
+        $categories = Category::where('patern_id', $category->id)->orderBy('nombre', 'asc')->get();
+        
+        return view('guest/reportajes', compact('categories'));
     }
 
     public function noticias(){
-        return view('guest/noticias');
+        $category = Category::where('nombre', 'noticias')->first();
+        $categories = Category::where('patern_id', $category->id)->orderBy('nombre', 'asc')->get();
+        
+
+        return view('guest/noticias', compact('categories'));
     }
 
     public function aboutus(){
@@ -84,6 +96,11 @@ class WebviewController extends Controller
 
         }   
         
-        return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes'));
+        $editors = Editor::where('status', 1)->orderBy('specialty', 'asc')->get();
+
+        foreach ($editors as &$editor)
+            $editor->user = User::find($editor->user_id);
+
+        return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors'));
     }
 }

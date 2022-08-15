@@ -156,7 +156,7 @@
         </div>
 
         <div class="py-10">
-            <x-title-dark>Qué opinas?</x-title-dark>
+            <x-title-dark>¿Qué opinas?</x-title-dark>
             <div class=" w-full md:w-2/3 mx-auto border-2 border-wine rounded-xl p-3">
                 <div class=" text-green font-light clear" id="successComment"></div>
                 {!! Form::open(['route' => 'notas.coments', 'id' => 'formComents']) !!}

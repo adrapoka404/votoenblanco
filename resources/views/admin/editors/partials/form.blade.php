@@ -79,6 +79,7 @@
         ]) !!}
     </x-input-form>
 </x-row-form>
+<x-jet-validation-errors />
 @section('js')
     <script>
         $(document).ready(function() {

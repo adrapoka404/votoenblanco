@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCategoriesRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
 {
@@ -17,7 +18,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('id', 'asc')->paginate(10);
+        $categories = Category::orderBy('nombre', 'asc')->paginate(10);
         $headers    = ['nombre', 'estado', 'acciones'];
         return view('admin.categories.index', compact('headers', 'categories'));
     }
@@ -44,16 +45,15 @@ class CategoriesController extends Controller
         $nurl = Storage::put('public/categories',$request->file('imagen'));
 
         $request->imagen    = str_replace('public/','',$nurl);
-        $request->slug      = str_replace(' ', '-', $request->nombre);
+        $request->slug      = Str::lower(Str::slug($request->nombre, '-'));
 
         $ncategory = Category::create($request->all());
 
-        $ncategory->slug = str_replace(' ', '-', $request->nombre);
         $ncategory->imagen = str_replace('public/','',$nurl);
 
         $ncategory->update();
         
-        return redirect()->route('admin.categorias.index')->with('info', __('Categoría de post creada'));
+        return redirect()->route('admin.categorias.index')->with('info', __('Categoría ' . $ncategory->nombre . ' creada'));
 
     }
 
@@ -91,19 +91,21 @@ class CategoriesController extends Controller
      */
     public function update(StoreCategoriesRequest $request, $id)
     {
-        $nurl = Storage::put('public/categories',$request->file('imagen'));
-
-        $request->imagen    = str_replace('public/','',$nurl);
-        $request->slug      = str_replace(' ', '-', $request->nombre);
-
-        $ncategory = Category::find($id);
-
-        $ncategory->update($request->all());
-        $ncategory->slug = str_replace(' ', '-', $request->nombre);
-        $ncategory->imagen = str_replace('public/','',$nurl);
-        $ncategory->save();
+        $ncategory = Category::where('slug',$id)->first();
         
-        return redirect()->route('admin.categorias.index')->with('info', __('Categoría de post editada'));
+        if($request->hasFile('imagen')) {    
+            $nurl = Storage::put('public/categories',$request->file('imagen'));
+            $ncategory->imagen    = str_replace('public/' ,'',$nurl);
+        }  
+        
+
+        $slug = Str::slug($request->nombre, '-');
+        $ncategory->slug = Str::lower($slug);
+        $ncategory->description = $request->description;
+        $ncategory->description_video = $request->description_video;
+
+        $ncategory->update();
+        return redirect()->route('admin.categorias.index')->with('info','Categoría ' . $ncategory->nombre . ' editada correctamente');
     }
 
     /**
