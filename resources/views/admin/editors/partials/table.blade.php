@@ -1,11 +1,12 @@
 <div class=" py-8 px-5">
     <div class="w-full text-right">
         @can('admin.editors.create')
+        @endcan
         <a href="{{ route('admin.editors.create') }}"
             class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
             Crear nuevo editor
         </a>
-        @endcan
+        
     </div>
     @if ($editors->count() == 0)
         <div class="w-full ">
