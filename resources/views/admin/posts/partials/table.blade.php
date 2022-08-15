@@ -26,8 +26,9 @@
                     <tr>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             @can('admin.notas.edit')
-                                <x-link-table href="{{ route('admin.notas.edit', $post->id) }}" txt="{{ $post->title }}" />
                             @endcan
+                            <x-link-table href="{{ route('admin.notas.edit', $post->id) }}" txt="{{ $post->title }}" />
+                            
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             <x-link-table href="{{ route('admin.editors.edit', $post->editor->id) }}"
@@ -53,11 +54,12 @@
                                     class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
                             </form>
                             @can('admin.notas.edit')
-                                <a href="{{ route('admin.notas.edit', $post->id) }}"
+                            @endcan
+                            <a href="{{ route('admin.notas.edit', $post->id) }}"
                                     class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
                                     {{ __('Editar') }}
                                 </a>
-                            @endcan
+                            
                         </td>
                     </tr>
                 @endforeach
