@@ -285,6 +285,7 @@
             </div>
         </div>
         @can('admin.editors.index')
+        @endcan
         <!-- Income -->
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
@@ -324,17 +325,19 @@
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3">
                 @can('admin.editors.index')
+                @endcan
                 <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                     href="{{ route('admin.editors.index') }}">
                     Todos
                 </a>
-                @endcan
+                
                 @can('admin.editors.create')
+                @endcan
                 <a href="{{ route('admin.editors.create') }}"
                     class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2 block">
                     Crear editor
                 </a>
-                @endcan
+                
                 <!-- Sub Dropdown  -->
                 <div x-data="sub_dropdown" class="relative w-full ">
                     <div @click="sub_toggle()" class="flex items-center justify-between cursor-pointer">
@@ -366,7 +369,6 @@
                     Item 4</h1>
             </div>
         </div>
-        @endcan
         
         <!-- Promote -->
         <div x-data="dropdown" class="relative">
