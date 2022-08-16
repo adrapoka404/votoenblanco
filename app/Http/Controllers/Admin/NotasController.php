@@ -195,7 +195,7 @@ class NotasController extends Controller
         $post->title                = $request->title;
         $post->slug                 = strtolower(str_replace(' ', '-', $request->title));
         $post->description          = $request->description;
-        $post->featured             = $request->featured;
+        $post->featured             = isset($request->featured) ? 1 : 0 ;
         $post->social_text          = $request->social_text;
         $post->slug_description     = strtolower(str_replace(' ', '-', $request->description));
         $post->image_principal      = $request->image_principal;
