@@ -4,8 +4,8 @@
             <div class="w-full md:w-2/3  items-center">
                 <div class="Header nota my-5">
                     <div class="text-red-800 text-3xl font-bold mb-5 w-full">{{ $post->title }}</div>
-                    <div class=" w-4/5 mx-auto border bg-gray border-gray-light text-center">
-                        <img src="{{ asset('storage/' . $post->image_principal) }}" alt="{{ $post->title }}" class="">
+                    <div class=" w-4/5 h-96 bg-no-repeat mx-auto border bg-gray border-gray-light text-center bg-cover bg-fixed " style="background-image: url({{ asset('storage/' . $post->image_principal) }})">
+                        
                     </div>
                 </div>
 
