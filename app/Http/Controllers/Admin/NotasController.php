@@ -188,7 +188,8 @@ class NotasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post = Post::find($id);
+        
+        $post = Post::where('slug', $id)->first();
 
         $post->user_edit            = Auth::user()->id;
         $post->title                = $request->title;
@@ -201,7 +202,7 @@ class NotasController extends Controller
         
         $post->save();
 
-        PostDetails::where('post_id', $id)->delete();
+        PostDetails::where('post_id', $post->sid)->delete();
 
         $post_details = new PostDetails();
 
@@ -226,7 +227,7 @@ class NotasController extends Controller
 
         $post_details->save();
 
-        Postcategory::where('post_id', $id)->delete();
+        Postcategory::where('post_id', $post->id)->delete();
 
         foreach($request->all()['categories'] as $category => $label){
             $postCategory = new Postcategory();
@@ -237,8 +238,8 @@ class NotasController extends Controller
             $postCategory->save();
         }
 
-        Postrelated::where('post_id', $id)->delete();
-        Postrelated::where('related_id', $id)->delete();
+        Postrelated::where('post_id', $post->id)->delete();
+        Postrelated::where('related_id', $post->id)->delete();
 
         if(isset($request->all()['related'])) {
             foreach($request->all()['related'] as $related => $label){
@@ -260,7 +261,7 @@ class NotasController extends Controller
             }
         }
 
-        return redirect()->route('admin.notas.create')->with('info', __('Post editado con éxito'));
+        return redirect()->route('admin.notas.create')->with('info', __($post->title . ' editado con éxito'));
     }
 
     /**
