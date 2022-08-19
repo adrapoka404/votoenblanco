@@ -311,7 +311,7 @@
                     <h1 x-cloak
                         x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ?
                             'sm:hidden' : ''">
-                        Admin Editores</h1>
+                        Configuración</h1>
                 </div>
                 <svg x-cloak x-bind:class="$store.sidebar.full ? '' : 'sm:hidden'" xmlns="http://www.w3.org/2000/svg"
                     class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -328,7 +328,7 @@
                 @endcan
                 <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                     href="{{ route('admin.editors.index') }}">
-                    Todos
+                    Editores
                 </a>
                 
                 @can('admin.editors.create')
@@ -343,7 +343,7 @@
                     <div @click="sub_toggle()" class="flex items-center justify-between cursor-pointer">
                         <h1
                             class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2">
-                            Item 3</h1>
+                            Generales</h1>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20"
                             fill="currentColor">
                             <path fill-rule="evenodd"
@@ -353,9 +353,9 @@
                     </div>
                     <div x-show="sub_open" @click.outside="sub_open = false"
                         x-bind:class="$store.sidebar.full ? sub_expandedClass : sub_shrinkedClass">
-                        <h1
+                        <a href="{{route('admin.videogalerias.index')}}"
                             class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">
-                            Sub Item 1</h1>
+                            Video Galerias</a>
                         <h1
                             class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">
                             Sub Item 2</h1>

@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\EditorsController;
 use App\Http\Controllers\Admin\EstatusNotasController;
 use App\Http\Controllers\Admin\NotasController as AdminNotasController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Admin\VideogalleriesController;
 use App\Http\Controllers\EditoresController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\ServicesController;
@@ -106,3 +108,9 @@ Route::get("web.team", [WebviewController::class, 'team'])->name('web.team');
 Route::resource('sudoroles', RolesController::class)->names("sudo.roles");
 Route::resource('sudopermissions', PermissionsController::class)->names("sudo.permissions");
 Route::resource('sudoasignpermissions', AsignPermissionsController::class)->names('sudo.asign.permissions');
+
+// Rutas para admin estadisticas
+Route::resource('adminstatistics', StatisticsController::class)->names('admin.estadisticas');
+
+// Rutas para admin estadisticas
+Route::resource('videogalleries', VideogalleriesController::class)->names('admin.videogalerias');

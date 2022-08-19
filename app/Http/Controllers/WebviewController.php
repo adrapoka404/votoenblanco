@@ -7,6 +7,7 @@ use App\Models\Editor;
 use App\Models\Post;
 use App\Models\Postcategory;
 use App\Models\User;
+use App\Models\VideoGallery;
 use Illuminate\Http\Request;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
@@ -65,9 +66,10 @@ class WebviewController extends Controller
         $nacionales   = [];
         $deportes     = [];
 
-        $destacada  = Post::where('featured', 1)->orderBy('created_at', 'desc')->first();
-        $destacadas = Post::where('featured', 1)->orderBy('id', 'desc')->offset(1)->limit(4)->get();
-        $categorias = Category::where('orden', 1)->whereIn('nombre', ['Deportes','Local','Nacional'])->get();
+        $destacada      = Post::where('featured', 1)->orderBy('created_at', 'desc')->first();
+        $destacadas     = Post::where('featured', 1)->orderBy('id', 'desc')->offset(1)->limit(4)->get();
+        
+        $categorias     = Category::where('orden', 1)->whereIn('nombre', ['Deportes','Local','Nacional'])->get();
         
         $destacada->redactor = User::find($destacada->user_create);
 
