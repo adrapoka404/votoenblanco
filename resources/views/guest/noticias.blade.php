@@ -1,26 +1,39 @@
 <x-guest-layout>
-    <x-liston>{{ __('noticias') }}</x-liston>
+    <div class="w-full">
+        <x-semblanza>
+            <x-slot name="nombre">
+                Noticias
+            </x-slot>
+            <x-slot name="description">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 gap-4">
-        @foreach ($categories as $category)
+            </x-slot>
+            <x-slot name="src">
+{{asset('img/haciendo_ecos.png')}}
+            </x-slot>
+            <x-slot name="especialidad">
+
+            </x-slot>
+        </x-semblanza>
         <div class="">
-            <div class=" grid grid-rows-2 gap-2">
-                <div class="mx-auto">
-                    <a href="{{ route('notas.categorias', $category->slug) }}">
-                        <img class=" w-86 h-52 object-cover object-center mb-4 " src="{{ asset('storage/'.$category->imagen) }}"
-                            alt="{{$category->nombre}}" />
-                    </a>
+            @if (count($categorias) > 0)
+                @foreach ($categorias as $post)
+                    <x-posts>
+                        <x-slot name="src">{{ asset('storage/' . $post->image_principal) }}</x-slot>
+                        <x-slot name="title">{{ $post->title }}</x-slot>
+                        <x-slot name="alt">{{ $post->title }}</x-slot>
+                        <x-slot name="date">{{ $post->created_at }}</x-slot>
+                        <x-slot name="user">{{ $post->user->name }}</x-slot>
+                        <x-slot name="userto">{{ route('notas.editores', $post->user->slug) }}</x-slot>
+                        <x-slot name="sumary">{{ $post->description }}</x-slot>
+                        <x-slot name="where">{{ route('notas.show', $post) }}</x-slot>
+
+                    </x-posts>
+                @endforeach
+            @else
+                <div class=" font-extralight text-wine text-center">
+                    Actualmente no hay notas en la seccion de Noticias
                 </div>
-                <div class="text-center mt-10">
-                    <div class="ml-5 my-auto">
-                        <div>
-                            <a href="{{ route('notas.categorias', $category->slug) }}"
-                                class="bg-red-800 px-10 text-white rounded-lg font-semibold">Ver más</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> 
-        @endforeach
+            @endif
+        </div>
     </div>
 </x-guest-layout>
