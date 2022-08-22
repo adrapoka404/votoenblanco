@@ -44,6 +44,9 @@ class WebviewController extends Controller
         $category = Category::where('nombre', 'noticias')->first();
         $categories = Category::where('patern_id', $category->id)->orderBy('nombre', 'asc')->get();
         
+        foreach($categories as $category) {
+            $category->posts = '';
+        }
 
         return view('guest/noticias', compact('categories'));
     }

@@ -123,6 +123,11 @@ class NotasController extends Controller
         $post->nlikes = $nlikes->count();
 
         $user = $request->ip();
+
+        $save = PostSaved::where('post_id', $post->id)->first();
+        
+        if($save)
+            $post->saveme = true;
         
         if(Auth::user()) {
             $user = Auth::user()->id;
@@ -264,16 +269,16 @@ class NotasController extends Controller
             PostReaction::create(['user_id'=>$user, 'post_id'=>$post, 'reaction' => $reaction]);
             $img = 'On';
             $imgs = [
-                'sLike'     => ($reaction == 1 ? asset('img/slikeOn.png').'?'.$time + 1 : asset('img/slike.png').'?'.$time + 1),
-                'like'      => ($reaction == 2 ? asset('img/likeOn.png').'?'.$time + 2 : asset('img/like.png').'?'.$time + 2),
-                'nLike'     => ($reaction == 3 ? asset('img/nolikeOn.png').'?'.$time + 3 : asset('img/nolike.png').'?'.$time + 3),
+                'sLike'     => ($reaction == 1 ? asset('img/slike.png').'?'.$time : asset('img/slikeOn.png').'?'.$time),
+                'like'      => ($reaction == 2 ? asset('img/like.png').'?'.$time : asset('img/likeOn.png').'?'.$time),
+                'nLike'     => ($reaction == 3 ? asset('img/nolike.png').'?'.$time : asset('img/nolikeOn.png').'?'.$time),
             ];
         } else {
             $exist->delete();
             $imgs = [
-                'sLike'     => asset('img/slike.png').'?'.$time + 1,
-                'like'      => asset('img/like.png').'?'.$time + 2,
-                'nLike'     => asset('img/nolike.png').'?'.$time + 3,
+                'sLike'     => asset('img/slikeOn.png').'?'.$time,
+                'like'      => asset('img/likeOn.png').'?'.$time,
+                'nLike'     => asset('img/nolikeOn.png').'?'.$time,
             ];
         }
             
@@ -311,12 +316,18 @@ class NotasController extends Controller
 
             $exist = PostSaved::where('post_id', $post)->where('user_id', $user)->first();
             
-            if(!$exist)
+            if(!$exist){
                 PostSaved::create(["user_id" => $user, "post_id" => $post]);
-            else
+                $img = asset('img/guardadas.png');
+                $label = 'Quitar de guardados';
+            }else{
                 $exist->delete();
+                $img = asset('img/guardar.png');
+                $label = 'Guardar';
+            }
+                
             
-            return ['success'=>true];
+            return ['success'=>true, 'img' => $img, 'label' => $label];
         } else
             return ['error'=>true];
     }

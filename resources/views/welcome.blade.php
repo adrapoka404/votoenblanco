@@ -9,7 +9,7 @@
                         {{ substr($destacada->title, 0, 75) . '...' }}
                     @endif
                 </div>
-                <div class="w-full h-80 bg-gray pb-2 bg-contain bg-fixed bg-no-repeat "
+                <div class="w-full h-80 bg-gray pb-2 bg-cover bg-no-repeat "
                     style="background-image: url('{{ asset('storage/' . $destacada->image_principal) }}')">
 
                 </div>

@@ -358,17 +358,19 @@
                             alert('Pop de suscripcion, que aun no hago');
                         }
                     }
-                    if (data.success && what == 'Save')
-                        $("#img" + what).attr('src', '{{ asset('img/') }}/img_' + what + 'On.png')
+                    if (data.success && what == 'Save') {
+                        $("#img" + what).attr('src', data.img)
+                        $("#saveLabel").html(data.label)
+                    }
 
                     if (data.success && (what == 'Slike' || what == "NoLike" || what == "Like")) {
                         $("#labelSlike").html(data.reactions.slikes);
                         $("#labelLike").html(data.reactions.likes);
                         $("#labelNoLike").html(data.reactions.nlikes);
                         
-                        $("#slike").attr("src", data.imgs.slike)
+                        $("#slike").attr("src", data.imgs.sLike)
                         $("#like").attr("src", data.imgs.like)
-                        $("#nolike").attr("src", data.imgs.nlike)
+                        $("#nolike").attr("src", data.imgs.nLike)
                     }
                         
                 }
