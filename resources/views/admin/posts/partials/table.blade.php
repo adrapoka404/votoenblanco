@@ -31,8 +31,8 @@
                             
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            <x-link-table href="{{ route('admin.editors.edit', $post->editor->id) }}"
-                                txt="{{ $post->user->name }}" />
+                            
+                                {{ $post->user->name }}
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             <select name="post[{{ $post->id }}][status]" id="">
