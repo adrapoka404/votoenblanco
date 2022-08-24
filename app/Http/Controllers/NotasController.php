@@ -124,13 +124,13 @@ class NotasController extends Controller
 
         $user = $request->ip();
 
-        $save = PostSaved::where('post_id', $post->id)->first();
-        
-        if($save)
-            $post->saveme = true;
-        
         if(Auth::user()) {
             $user = Auth::user()->id;
+
+            $save = PostSaved::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first();
+        
+            if($save)
+                $post->saveme = true;
             //if($reaction = PostReaction::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first())
             //    $post->likeme = $reaction->reaction;
         }
@@ -334,6 +334,7 @@ class NotasController extends Controller
 
     public function nosave(Request $request){
         $post = $request->all()['post_id'];
+        
         $user = Auth::user()->id;
         
         $exist = PostSaved::where('post_id', $post)->where('user_id', $user)->delete();
