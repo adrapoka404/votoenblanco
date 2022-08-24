@@ -37,21 +37,29 @@ class StatisticsController extends Controller
         foreach($posts as $post){
             $slikes = PostReaction::where('post_id', $post->id)->where('reaction', 1)->orderBy('id', 'asc')->get();
             
-            if(isset($slikes) && $slikes->count() > $intSLike)    
+            if(isset($slikes) && $slikes->count() > $intSLike){
+                $post->slikes = $slikes->count();
                 $masslike = $post;
+            }
 
             $likes = PostReaction::where('post_id', $post->id)->where('reaction', 1)->orderBy('id', 'asc')->get();
             
-            if(isset($likes) && $likes->count() > $intLike)    
-                    $maslike = $post;
+            if(isset($likes) && $likes->count() > $intLike){
+                $post->likes = $likes->count();
+                $maslike = $post;
+            }    
+                    
 
             $nlikes = PostReaction::where('post_id', $post->id)->where('reaction', 3)->orderBy('id', 'asc')->get();
             
-            if(isset($nlikes) && $nlikes->count() > $intNLike)    
+            if(isset($nlikes) && $nlikes->count() > $intNLike)  {
+                $post->nlikes = $nlikes->count();
                 $masnlike = $post;
+            }  
+                
 
         }
-        
+        //return $masleido;
         return view('admin.statistics.index', compact('masleida', 'masleido', 'masshare', 'masslike', 'maslike', 'masnlike'));
     }
 

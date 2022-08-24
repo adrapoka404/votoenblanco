@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EstatusNotasController;
 use App\Http\Controllers\Admin\NotasController as AdminNotasController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Admin\SuscriptorsController;
 use App\Http\Controllers\Admin\VideogalleriesController;
 use App\Http\Controllers\EditoresController;
 use App\Http\Controllers\NotasController;
@@ -114,3 +115,10 @@ Route::resource('adminstatistics', StatisticsController::class)->names('admin.es
 
 // Rutas para admin estadisticas
 Route::resource('videogalleries', VideogalleriesController::class)->names('admin.videogalerias');
+
+// Rutas para admin suscriptores
+Route::resource('suscriptors', SuscriptorsController::class)->names('admin.suscriptores');
+Route::get('suscriptorssaved', [SuscriptorsController::class, 'saved'])->name('admin.suscriptores.guardadas');
+Route::get('suscriptorsconfig', [SuscriptorsController::class, 'config'])->name('admin.suscriptores.config');
+Route::post('suscriptorssuscribeto', [SuscriptorsController::class, 'suscribeto'])->name('admin.suscriptores.suscribeto');
+Route::get('suscriptorspassword', [SuscriptorsController::class, 'password'])->name('admin.suscriptores.password');
