@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\PostReaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 class StatisticsController extends Controller
 {
@@ -60,6 +61,31 @@ class StatisticsController extends Controller
                 
 
         }
+        echo "mas leida";
+        echo "<pre>";
+        var_dump($masleida);
+        echo "</pre>";
+        echo "mas leido";
+        echo "<pre>";
+        var_dump($masleido);
+        echo "</pre>";
+        echo "mas compartido";
+        echo "<pre>";
+        var_dump($masshare);
+        echo "</pre>";
+        echo "mas super like";
+        echo "<pre>";
+        var_dump($masslike);
+        echo "</pre>";
+        echo "mas like";
+        echo "<pre>";
+        var_dump($maslike);
+        echo "</pre>";
+        echo "mas ni like";
+        echo "<pre>";
+        var_dump($masnlike);
+        echo "</pre>";
+        return "ñ_ñ";
         //return $masleido;
         return view('admin.statistics.index', compact('masleida', 'masleido', 'masshare', 'masslike', 'maslike', 'masnlike'));
     }
