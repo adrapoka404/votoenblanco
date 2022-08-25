@@ -65,6 +65,10 @@ class StatisticsController extends Controller
         return view('admin.statistics.index', compact('masleida', 'masleido', 'masshare', 'masslike', 'maslike', 'masnlike'));
     }
 
+    public function masleidas($start = '', $end=''){
+        return '$aqui mero';
+    }
+
     /**
      * Show the form for creating a new resource.
      *

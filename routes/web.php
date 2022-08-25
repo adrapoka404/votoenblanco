@@ -112,6 +112,7 @@ Route::resource('sudoasignpermissions', AsignPermissionsController::class)->name
 
 // Rutas para admin estadisticas
 Route::resource('adminstatistics', StatisticsController::class)->names('admin.estadisticas');
+Route::get('adminstatisticsmasleidas/{start}/{end}', [StatisticsController::class, 'masleidas'])->name('admin.estadisticas.masleidas');
 
 // Rutas para admin estadisticas
 Route::resource('videogalleries', VideogalleriesController::class)->names('admin.videogalerias');

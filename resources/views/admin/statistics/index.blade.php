@@ -11,6 +11,9 @@
                 </div>
                 <div class=" font-light text-sm">{{ $masleida->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masleida->image_principal) }})"></div>
+                <div class="w-full">
+                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas leidas</a>
+                </div>
             </div>
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
@@ -19,6 +22,9 @@
                 </div>
                 <div class=" font-light text-sm">{{ $masslike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masslike->image_principal) }})"></div>
+                <div class="w-full">
+                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas super likeadas</a>
+                </div>
             </div>
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
@@ -27,6 +33,9 @@
                 </div>
                 <div class=" font-light text-sm">{{ $maslike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$maslike->image_principal) }})"></div>
+                <div class="w-full">
+                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas likeadas</a>
+                </div>
             </div>
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
@@ -35,6 +44,9 @@
                 </div>
                 <div class=" font-light text-sm">{{ $masnlike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masnlike->image_principal) }})"></div>
+                <div class="w-full">
+                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas no likeadas</a>
+                </div>
             </div>
             
             <div class="p-2 border-2 border-wine m-2">
@@ -44,6 +56,9 @@
                 </div>
                 <div class=" font-light text-sm">{{ $masshare->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masshare->image_principal) }})"></div>
+                <div class="w-full">
+                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas compartidas</a>
+                </div>
             </div>
 
             <div class="p-2 border-2 border-wine m-2">
@@ -53,6 +68,9 @@
                 </div>
                 <div class=" font-light text-sm">{{ $masleido->user->name }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ $masleido->user->profile_photo_url }})"></div>
+                <div class="w-full">
+                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Los mas leidos</a>
+                </div>
             </div>
             
         </div>
