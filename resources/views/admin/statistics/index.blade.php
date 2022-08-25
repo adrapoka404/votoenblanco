@@ -4,21 +4,6 @@
     <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
         <x-info />
         <div class="grid grid-cols-2">
-            <div>
-                <h1>Mas leida</h1>
-                {{$masleida}}
-                <h1>Mas superlikeada</h1>
-                {{$masslike}}
-                <h1>mas likeada</h1>
-                {{$maslike}}
-                <h1>mas me enoja</h1>
-                {{$masnlike}}
-                <h1>Mas shared</h1>
-                {{$masshare}}
-                <h1>El mas leido</h1>
-                {{$masleido}}
-            </div>
-            @if (!empty($masleida))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     Mas leida
@@ -27,8 +12,6 @@
                 <div class=" font-light text-sm">{{ $masleida->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masleida->image_principal) }})"></div>
             </div>
-            @endif
-            @if (!empty($masslike))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     Mas super likeada
@@ -37,8 +20,6 @@
                 <div class=" font-light text-sm">{{ $masslike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masslike->image_principal) }})"></div>
             </div>
-            @endif
-            @if (!empty($maslike))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     Mas likeada
@@ -47,8 +28,6 @@
                 <div class=" font-light text-sm">{{ $maslike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$maslike->image_principal) }})"></div>
             </div>
-            @endif
-            @if (!empty($masnlike))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     Mas no likeada
@@ -57,7 +36,6 @@
                 <div class=" font-light text-sm">{{ $masnlike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masnlike->image_principal) }})"></div>
             </div>
-            @endif
             
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
