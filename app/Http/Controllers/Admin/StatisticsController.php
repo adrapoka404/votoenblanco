@@ -26,6 +26,7 @@ class StatisticsController extends Controller
         $masshare   = Post::where('status', 4)->orderBy('shareds', 'desc')->first();
         
         $posts      = Post::where('status', 4)->get();
+        
         $intSLike   = 0;
         $intLike    = 0;
         $intNLike   = 0;
