@@ -409,12 +409,13 @@
                 </div>
                 @endcan
                 @can('sudo.permissions.index')
+                @endcan
                 <div>
                     <a href="{{ route('sudo.permissions.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Permisos</a>
                 </div>
-                @endcan
+                
                 @can('sudo.asign.permissions.index')
                 <div>
                     <a href="{{ route('sudo.asign.permissions.index') }}"
