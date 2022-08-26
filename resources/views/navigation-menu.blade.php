@@ -401,13 +401,13 @@
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-white bg-gray-dark space-y-3">
                 @can('sudo.roles.index')
-                
+                @endcan
                 <div>
                     <a href="{{ route('sudo.roles.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Roles</a>
                 </div>
-                @endcan
+                
                 @can('sudo.permissions.index')
                 @endcan
                 <div>
@@ -417,12 +417,13 @@
                 </div>
                 
                 @can('sudo.asign.permissions.index')
+                @endcan
                 <div>
                     <a href="{{ route('sudo.asign.permissions.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Asignar Roles</a>
                 </div>
-                @endcan
+                
                 @can('admin.categorias.index')
                 <div>
                     <a href="{{ route('admin.categorias.index') }}"
