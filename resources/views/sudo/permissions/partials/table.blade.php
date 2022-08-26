@@ -1,8 +1,11 @@
 <div class="py-8 px-5">
     <div class="w-full text-right">
-        <a href="{{ route('sudo.permissions.create') }}" class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
-            Crear nuevo Permiso
-        </a>
+        @can('sudo.permissions.create')
+            <a href="{{ route('sudo.permissions.create') }}"
+                class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
+                Crear nuevo Permiso
+            </a>
+        @endcan
     </div>
     @if ($permissions->count() == 0)
         <div class="w-full ">
@@ -25,20 +28,23 @@
                 @foreach ($permissions as $permission)
                     <tr>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            <x-link-table href="{{ route('sudo.permissions.edit', $permission->id) }}" txt="{{ $permission->name }}" />
+                            <x-link-table href="{{ route('sudo.permissions.edit', $permission->id) }}"
+                                txt="{{ $permission->name }}" />
                         </td>
-                        
+
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             @can('sudo.permissions.edit')
+                                <form action="" class="inline">
+                                    <a href="{{ route('sudo.permissions.update', $permission->id) }}"
+                                        class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
+                                </form>
                             @endcan
                             @can('sudo.permissions.destroy')
+                                <a href="{{ route('sudo.permissions.edit', $permission->id) }}"
+                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
+                                    {{ __('Editar') }}
+                                </a>
                             @endcan
-                            <form action="" class="inline">
-                                <a href="{{ route('sudo.permissions.update', $permission->id) }}"
-                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
-                            </form>
-                            <a href="{{ route('sudo.permissions.edit', $permission->id) }}"
-                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Editar') }}</a>
 
 
 

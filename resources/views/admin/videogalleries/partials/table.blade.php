@@ -1,12 +1,11 @@
 <div class=" py-8 px-5">
     <div class="w-full text-right">
         @can('admin.videogalerias.create')
-        @endcan
         <a href="{{ route('admin.videogalerias.create') }}"
             class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
             Crear videogaleria
         </a>
-        
+        @endcan
     </div>
     @if ($vgalerias->count() == 0)
         <div class="w-full ">
@@ -33,11 +32,11 @@
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             
                             @can('admin.videogalerias.edit')
-                            @endcan
                             <a href="{{ route('admin.videogalerias.edit', $vgaleria) }}"
                                 class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
                                 {{ __('Editar') }}
                             </a>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

@@ -82,28 +82,29 @@
                     clip-rule="evenodd" />
             </svg>
         </button>
-
-        <!-- Home -->
-        <div x-data="tooltip" x-on:mouseover="show = true" x-on:mouseleave="show = false"
-            @click="$store.sidebar.active = 'home' "
-            class=" relative flex items-center hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
-            x-bind:class="{
-                'justify-start': $store.sidebar.full,
-                'sm:justify-center': !$store.sidebar
-                    .full,
-                'text-black bg-white': $store.sidebar.active == 'home',
-                'text-black bg-white ': $store.sidebar
-                    .active != 'home'
-            }">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            <a href="{{ route('dashboard') }}" x-cloak
-                x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ? 'sm:hidden' : ''">
-                Tablero</a>
-        </div>
+        @can('dashboard')
+            <!-- Home -->
+            <div x-data="tooltip" x-on:mouseover="show = true" x-on:mouseleave="show = false"
+                @click="$store.sidebar.active = 'home' "
+                class=" relative flex items-center hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
+                x-bind:class="{
+                    'justify-start': $store.sidebar.full,
+                    'sm:justify-center': !$store.sidebar
+                        .full,
+                    'text-black bg-white': $store.sidebar.active == 'home',
+                    'text-black bg-white ': $store.sidebar
+                        .active != 'home'
+                }">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <a href="{{ route('dashboard') }}" x-cloak
+                    x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ? 'sm:hidden' : ''">
+                    Tablero</a>
+            </div>
+        @endcan
         <!-- Profile -->
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
@@ -140,18 +141,22 @@
             <div x-cloak x-show="open" @click.outside="open =false"
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3 ">
+                @can('profile.show')
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
-                        href="{{route('profile.show')}}">
+                        href="{{ route('profile.show') }}">
                         Mi perfil
                     </a>
                 </div>
+                @endcan
+                @can('admin.editor.profile.edit')
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.editor.profile.edit', auth()->user()->id) }}">
                         Editar perfil
                     </a>
                 </div>
+                @endcan
                 <div>
                     <form method="POST" action="{{ route('logout') }}" x-data>
                         @csrf
@@ -200,28 +205,23 @@
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3 ">
                 @can('admin.notas.index')
-                @endcan
+                
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.index') }}">
                         Todas
                     </a>
                 </div>
-                
-                @can('admin.notas.create')
                 @endcan
+                @can('admin.notas.create')
+                
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.create') }}">
                         Crear Post
                     </a>
                 </div>
-                
-                <div>
-                    <h1
-                        class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block">
-                        Item 4</h1>
-                </div>
+                @endcan
             </div>
         </div>
         <!-- Posts -->
@@ -284,8 +284,6 @@
 
             </div>
         </div>
-        @can('admin.editors.index')
-        @endcan
         <!-- Income -->
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
@@ -325,19 +323,17 @@
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3">
                 @can('admin.editors.index')
-                @endcan
                 <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                     href="{{ route('admin.editors.index') }}">
                     Editores
                 </a>
-                
-                @can('admin.editors.create')
                 @endcan
+                @can('admin.editors.create')
                 <a href="{{ route('admin.editors.create') }}"
                     class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2 block">
                     Crear editor
                 </a>
-                
+                @endcan
                 <!-- Sub Dropdown  -->
                 <div x-data="sub_dropdown" class="relative w-full ">
                     <div @click="sub_toggle()" class="flex items-center justify-between cursor-pointer">
@@ -351,17 +347,15 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </div>
+                    
                     <div x-show="sub_open" @click.outside="sub_open = false"
                         x-bind:class="$store.sidebar.full ? sub_expandedClass : sub_shrinkedClass">
-                        <a href="{{route('admin.videogalerias.index')}}"
+                        @can('admin.videogalerias.index')
+                        <a href="{{ route('admin.videogalerias.index') }}"
                             class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">
-                            Video Galerias</a>
-                        <h1
-                            class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">
-                            Sub Item 2</h1>
-                        <h1
-                            class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">
-                            Sub Item 3</h1>
+                            Video Galerias
+                        </a>
+                        @endcan
                     </div>
                 </div>
                 <h1
@@ -369,7 +363,7 @@
                     Item 4</h1>
             </div>
         </div>
-        
+
         <!-- Promote -->
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
@@ -406,36 +400,48 @@
             <div x-cloak x-show="open" @click.outside="open=false"
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-white bg-gray-dark space-y-3">
+                @can('sudo.roles.index')
+                
                 <div>
                     <a href="{{ route('sudo.roles.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Roles</a>
                 </div>
+                @endcan
+                @can('sudo.permissions.index')
                 <div>
                     <a href="{{ route('sudo.permissions.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Permisos</a>
                 </div>
+                @endcan
+                @can('sudo.asign.permissions.index')
                 <div>
                     <a href="{{ route('sudo.asign.permissions.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Asignar Roles</a>
                 </div>
+                @endcan
+                @can('admin.categorias.index')
                 <div>
                     <a href="{{ route('admin.categorias.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Categorías
                     </a>
                 </div>
+                @endcan
+                @can('admin.notas.estatus.index')
                 <div>
                     <a class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block"
                         href="{{ route('admin.notas.estatus.index') }}">
                         Catalogo de estados
                     </a>
                 </div>
+                @endcan
             </div>
         </div>
         <!-- Suscriptors -->
+        @can('admin.suscriptores.index')
         <div x-data="tooltip" x-on:mouseover="show = true" x-on:mouseleave="show = false"
             @click="$store.sidebar.active = 'suscriptors' "
             class=" relative flex items-center hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
@@ -456,5 +462,6 @@
                 x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ? 'sm:hidden' : ''">
                 Suscriptores</a>
         </div>
+        @endcan
     </div>
 </div>

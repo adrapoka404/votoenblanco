@@ -1,8 +1,10 @@
 <div class="py-8 px-5">
     <div class="w-full text-right">
-        <a href="{{ route('admin.notas.create') }}" class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
-            Crear nuevo post
-        </a>
+        @can('admin.notas.create')
+            <a href="{{ route('admin.notas.create') }}" class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
+                Crear nuevo post
+            </a>
+        @endcan
     </div>
     @if ($posts->count() == 0)
         <div class="w-full ">
@@ -25,14 +27,11 @@
                 @foreach ($posts as $post)
                     <tr>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            @can('admin.notas.edit')
-                            @endcan
-                            <x-link-table href="{{ route('admin.notas.edit', $post->id) }}" txt="{{ $post->title }}" />
-                            
+                            {{ $post->title }}
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            
-                                {{ $post->user->name }}
+
+                            {{ $post->user->name }}
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             <select name="post[{{ $post->id }}][status]" id="">
@@ -48,18 +47,17 @@
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
 
                             @can('admin.notas.destroy')
+                                <form action="" class="inline">
+                                    <a href="{{ route('admin.notas.update', $post->id) }}"
+                                        class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
+                                </form>
                             @endcan
-                            <form action="" class="inline">
-                                <a href="{{ route('admin.notas.update', $post->id) }}"
-                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
-                            </form>
                             @can('admin.notas.edit')
-                            @endcan
-                            <a href="{{ route('admin.notas.edit', $post->id) }}"
+                                <a href="{{ route('admin.notas.edit', $post->id) }}"
                                     class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
                                     {{ __('Editar') }}
                                 </a>
-                            
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

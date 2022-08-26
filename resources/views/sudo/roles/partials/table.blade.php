@@ -1,8 +1,10 @@
 <div class="py-8 px-5">
     <div class="w-full text-right">
-        <a href="{{ route('sudo.roles.create') }}" class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
-            Crear nuevo Rol
-        </a>
+        @can('sudo.roles.create')
+            <a href="{{ route('sudo.roles.create') }}" class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">
+                Crear nuevo Rol
+            </a>
+        @endcan
     </div>
     @if ($roles->count() == 0)
         <div class="w-full ">
@@ -27,21 +29,22 @@
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             <x-link-table href="{{ route('sudo.roles.edit', $role->id) }}" txt="{{ $role->name }}" />
                         </td>
-                        
+
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             @can('sudo.roles.edit')
+                                <form action="" class="inline">
+                                    <a href="{{ route('sudo.asign.permissions.edit', $role->id) }}"
+                                        class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
+                                        {{ __('Asignar permisos') }}
+                                    </a>
+                                </form>
                             @endcan
                             @can('sudo.roles.destroy')
+                                <a href="{{ route('sudo.roles.edit', $role->id) }}"
+                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
+                                    {{ __('Editar') }}
+                                </a>
                             @endcan
-                            <form action="" class="inline">
-                                <a href="{{ route('sudo.asign.permissions.edit', $role->id) }}"
-                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Asignar permisos') }}</a>
-                            </form>
-                            <a href="{{ route('sudo.roles.edit', $role->id) }}"
-                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Editar') }}</a>
-
-
-
                         </td>
                     </tr>
                 @endforeach

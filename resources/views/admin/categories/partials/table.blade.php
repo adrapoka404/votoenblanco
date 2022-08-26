@@ -1,8 +1,11 @@
 <div class="py-8 px-5">
     <div class="w-full text-right">
-        <a href="{{ route('admin.categorias.create') }}"
-            class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">Crear nueva categoría</a>
-            <x-info />
+        @can('admin.categorias.create')
+            <a href="{{ route('admin.categorias.create') }}"
+                class="bg-file text-white bg-black rounded-full m-2 py-1 px-2 inlin">Crear nueva categoría
+            </a>
+        @endcan
+        <x-info />
     </div>
     @if ($categories->count() == 0)
         <div class="w-full ">
@@ -31,21 +34,21 @@
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             @can('admin.categorias.edit')
+                                <a href="{{ route('admin.categorias.edit', $category->id) }}"
+                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
+                                    {{ __('Editar') }}
+                                </a>
                             @endcan
                             @can('admin.categorias.destroy')
+                                <form action="{{ route('admin.categorias.destroy', $category) }}" method="POST"
+                                    class="w-full max-w-sm inline">
+                                    @csrf
+                                    @method('delete')
+
+                                    <input type="submit" value="{{ __('Quitar') }}"
+                                        class=" bg-wine text-white rounded-full m-2 py-1 px-2">
+                                </form>
                             @endcan
-                            <a href="{{ route('admin.categorias.edit', $category->id) }}"
-                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Editar') }}</a>
-
-                            <form action="{{ route('admin.categorias.destroy', $category) }}" method="POST"
-                                class="w-full max-w-sm inline">
-                                @csrf
-                                @method('delete')
-
-                                <input type="submit" value="{{ __('Quitar') }}"
-                                    class=" bg-wine text-white rounded-full m-2 py-1 px-2">
-                            </form>
-
                         </td>
                     </tr>
                 @endforeach
