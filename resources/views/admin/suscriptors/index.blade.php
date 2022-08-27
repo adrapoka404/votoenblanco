@@ -23,11 +23,6 @@
                 <x-slot name="to">{{route('admin.suscriptores.config')}}</x-slot>
                 <x-slot name="label">configuración</x-slot>
             </x-row-suscriptor>
-            <x-row-suscriptor>
-                <x-slot name="icono" >{{asset('img/privacy.png')}}</x-slot>
-                <x-slot name="to">{{route('profile.show')}}</x-slot>
-                <x-slot name="label">privacidad y contraseña</x-slot>
-            </x-row-suscriptor>
             <div class="w-full flex my-5 py-10">
                 <div class="inline w-1/2 text-center" >
                     <a href="" class="text-white bg-black rounded-full mx-5 px-5 py-2 capitalize">pagina principal</a>

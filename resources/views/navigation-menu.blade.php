@@ -169,6 +169,7 @@
             </div>
         </div>
         <!-- Audience -->
+        @can('admin.notas.index')
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
             <div @click="toggle('audience')" x-data="tooltip" x-on:mouseover="show = true"
@@ -205,7 +206,6 @@
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3 ">
                 @can('admin.notas.index')
-                
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.index') }}">
@@ -224,8 +224,9 @@
                 @endcan
             </div>
         </div>
+        @endcan
         <!-- Posts -->
-        <div @click="$store.sidebar.active = 'posts' " x-data="tooltip" x-on:mouseover="show = true"
+        <!--div @click="$store.sidebar.active = 'posts' " x-data="tooltip" x-on:mouseover="show = true"
             x-on:mouseleave="show = false"
             class=" relative flex justify-between items-center text-white hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
             x-bind:class="{
@@ -249,10 +250,10 @@
             </div>
             <h1 x-cloak x-bind:class="$store.sidebar.full ? '' : 'sm:hidden'"
                 class="w-5 h-5 p-1 bg-green rounded-full text-sm leading-3 text-center text-white">8</h1>
-        </div>
+        </div-->
 
         <!-- Schedules -->
-        <div @click="$store.sidebar.active = 'home' " x-data="tooltip" x-on:mouseover="show = true"
+        <!--div @click="$store.sidebar.active = 'home' " x-data="tooltip" x-on:mouseover="show = true"
             x-on:mouseleave="show = false"
             class=" relative flex justify-between items-center text-white hover:text-black hover:bg-white space-x-2 rounded-md p-2 cursor-pointer"
             x-bind:class="{
@@ -283,8 +284,9 @@
                 </h1>
 
             </div>
-        </div>
+        </div-->
         <!-- Income -->
+        @can('admin.editors.index')
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
             <div @click="toggle('income')" x-data="tooltip" x-on:mouseover="show = true"
@@ -363,8 +365,9 @@
                     Item 4</h1>
             </div>
         </div>
-
+        @endcan
         <!-- Promote -->
+        @can('sudo.roles.index')
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
             <div @click="toggle('promote')" x-data="tooltip" x-on:mouseover="show = true"
@@ -401,29 +404,26 @@
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-white bg-gray-dark space-y-3">
                 @can('sudo.roles.index')
-                @endcan
                 <div>
                     <a href="{{ route('sudo.roles.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Roles</a>
                 </div>
-                
-                @can('sudo.permissions.index')
                 @endcan
+                @can('sudo.permissions.index')
                 <div>
                     <a href="{{ route('sudo.permissions.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Permisos</a>
                 </div>
-                
-                @can('sudo.asign.permissions.index')
                 @endcan
+                @can('sudo.asign.permissions.index')
                 <div>
                     <a href="{{ route('sudo.asign.permissions.index') }}"
                         class="bg-gray-dark text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine ml-2 cursor-pointer block">
                         Asignar Roles</a>
                 </div>
-                
+                @endcan
                 @can('admin.categorias.index')
                 <div>
                     <a href="{{ route('admin.categorias.index') }}"
@@ -442,6 +442,7 @@
                 @endcan
             </div>
         </div>
+        @endcan
         <!-- Suscriptors -->
         @can('admin.suscriptores.index')
         <div x-data="tooltip" x-on:mouseover="show = true" x-on:mouseleave="show = false"

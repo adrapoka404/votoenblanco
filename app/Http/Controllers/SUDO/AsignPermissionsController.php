@@ -26,8 +26,7 @@ class AsignPermissionsController extends Controller
     public function edit($id) {
         $user = User::find($id);
         $roles = Role::all();
-        
-
+        //return $user;
         return view('sudo.users.edit', compact('user', 'roles'));
     }
 

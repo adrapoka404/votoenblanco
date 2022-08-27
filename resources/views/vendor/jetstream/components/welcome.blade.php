@@ -14,7 +14,6 @@
 
 <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
     @can('admin.notas.create')
-    @endcan
     <div class="p-6">
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
@@ -25,9 +24,8 @@
             </div>
         </div>
     </div>
-    
-    @can('admin.notas.index')
     @endcan
+    @can('admin.notas.index')
     <div class="p-6 border-2 border-wine border-t-0  border-r-0 ">
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
@@ -38,10 +36,9 @@
             </div>
         </div>
     </div>
-    
-
+    @endcan
+    @can('admin.estadisticas.index')
     <div class="p-6 border-2 border-b-0 border-l-0 border-wine ">
-
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
                 <a href="{{route('admin.estadisticas.index')}}" class="flex text-center text-4xl items-center">
@@ -51,8 +48,8 @@
             </div>
         </div>
     </div>
-    @can('admin.editors.create')
     @endcan
+    @can('admin.editors.create')
     <div class="p-6 ">
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
@@ -63,9 +60,8 @@
             </div>
         </div>
     </div>
-    
-    @can('admin.editors.index')
     @endcan
+    @can('admin.editors.index')
     <div class="p-6 ">
         <div class="ml-12">
             <div class="mt-2 text-sm text-gray-500">
@@ -76,5 +72,5 @@
             </div>
         </div>
     </div>
-    
+    @endcan
 </div>

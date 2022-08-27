@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-info />
     {!! Form::model($user, [
-        'route' => ['sudo.asign.permissions.update', $user],
+        'route' => ['sudo.asign.permissions.update', $user->id],
         'method' => 'put',
         'atocomplete' => 'off',
         'class' => 'px-5 mx-5',

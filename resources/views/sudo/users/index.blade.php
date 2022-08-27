@@ -41,20 +41,11 @@
                             </td>                            
                             <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                                 @can('sudo.asign.permissions.index')
-                                @endcan
-                                @can('sudo.asign.permissions.index')
-                                @endcan
                                 <a href="{{ route('sudo.asign.permissions.edit', $user->id) }}"
                                     class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
                                     {{ __('Roles') }}
                                 </a>
-                                <a href="{{ route('sudo.asign.permissions.edit', $user->id) }}"
-                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
-                                    {{ __('Permisos') }}
-                                </a>
-    
-    
-    
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

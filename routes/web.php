@@ -17,6 +17,7 @@ use App\Http\Controllers\SUDO\RolesController;
 use App\Http\Controllers\WebviewController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Permission;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,21 +128,18 @@ Route::get('suscriptorspassword', [SuscriptorsController::class, 'password'])->n
 //rutas
 Route::get('routes', function () {
     $routeCollection = Route::getRoutes();
-
-    echo "<table style='width:100%'>";
-    echo "<tr>";
-    echo "<td width='10%'><h4>HTTP Method</h4></td>";
-    echo "<td width='10%'><h4>Route</h4></td>";
-    echo "<td width='10%'><h4>Name</h4></td>";
-    echo "<td width='70%'><h4>Corresponding Action</h4></td>";
-    echo "</tr>";
     foreach ($routeCollection as $value) {
-        echo "<tr>";
-        echo "<td>" . $value->methods()[0] . "</td>";
-        echo "<td>" . $value->uri() . "</td>";
-        echo "<td>" . $value->getName() . "</td>";
-        echo "<td>" . $value->getActionName() . "</td>";
-        echo "</tr>";
+        if($value->getName() != '') {
+            $existe = Permission::where('name',$value->getName())->first();
+            if(!$existe)
+                Permission::create(['name'=> $value->getName()]);
+        
+        }
+        //echo $value->methods()[0] . "-----";
+        //echo $value->uri() . "-----";
+        //echo $value->getName() . "-----";
+        //echo $value->getActionName() . "-----<br>";
     }
-    echo "</table>";
+    
+    return redirect()->route('sudo.permissions.index');
 });
