@@ -169,7 +169,7 @@
             </div>
         </div>
         <!-- Audience -->
-        @role('Super Do')
+        @if (Auth::user()->can('admin.notas.index'))
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
             <div @click="toggle('audience')" x-data="tooltip" x-on:mouseover="show = true"
@@ -226,7 +226,7 @@
                 @endcan
             </div>
         </div>
-        @endrole
+        @endif
         <!-- Posts -->
         <!--div @click="$store.sidebar.active = 'posts' " x-data="tooltip" x-on:mouseover="show = true"
             x-on:mouseleave="show = false"
