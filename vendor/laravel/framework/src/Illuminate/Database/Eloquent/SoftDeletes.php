@@ -129,6 +129,16 @@ trait SoftDeletes
     }
 
     /**
+     * Restore a soft-deleted model instance without raising any events.
+     *
+     * @return bool|null
+     */
+    public function restoreQuietly()
+    {
+        return static::withoutEvents(fn () => $this->restore());
+    }
+
+    /**
      * Determine if the model instance has been soft-deleted.
      *
      * @return bool
@@ -199,7 +209,7 @@ trait SoftDeletes
      */
     public function getDeletedAtColumn()
     {
-        return defined('static::DELETED_AT') ? static::DELETED_AT : 'deleted_at';
+        return defined(static::class.'::DELETED_AT') ? static::DELETED_AT : 'deleted_at';
     }
 
     /**
