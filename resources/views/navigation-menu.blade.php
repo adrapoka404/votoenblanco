@@ -169,7 +169,7 @@
             </div>
         </div>
         <!-- Audience -->
-        @can('admin.notas.index')
+        @role('Super Do')
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
             <div @click="toggle('audience')" x-data="tooltip" x-on:mouseover="show = true"
@@ -205,14 +205,16 @@
             <div x-cloak x-show="open" @click.outside="open =false"
                 x-bind:class="$store.sidebar.full ? expandedClass : shrinkedClass"
                 class="text-black bg-gray-dark space-y-3 ">
-                @can('admin.notas.index')
+                @if (Auth::user()->can('admin.notas.index'))
+                    
                 <div>
                     <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
                         href="{{ route('admin.notas.index') }}">
                         Todas
                     </a>
                 </div>
-                @endcan
+                @endif
+                
                 @can('admin.notas.create')
                 
                 <div>
@@ -224,7 +226,7 @@
                 @endcan
             </div>
         </div>
-        @endcan
+        @endrole
         <!-- Posts -->
         <!--div @click="$store.sidebar.active = 'posts' " x-data="tooltip" x-on:mouseover="show = true"
             x-on:mouseleave="show = false"
