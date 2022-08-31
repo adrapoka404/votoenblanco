@@ -143,3 +143,9 @@ Route::get('routes', function () {
     
     return redirect()->route('sudo.permissions.index');
 });
+
+//borrar cache de permisos
+Route::get('clear-cache-permisos', function(){
+    app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+    exit('ñ_ñ');
+});
