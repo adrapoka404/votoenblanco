@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\Admin\SuscriptorsController;
 use App\Http\Controllers\Admin\VideogalleriesController;
 use App\Http\Controllers\EditoresController;
+use App\Http\Controllers\MigracionController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SUDO\AsignPermissionsController;
@@ -48,7 +49,12 @@ Route::get('guest', function () {
 Route::get('storage-link', function("{
     Artisan::call('storage:link');
 });
+
 */
+Route::get('clear-views', function(){
+    Artisan::call('view:clear');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -149,3 +155,5 @@ Route::get('clear-cache-permisos', function(){
     app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
     exit('ñ_ñ');
 });
+
+Route::resource('migracion', MigracionController::class)->names('migracion');
