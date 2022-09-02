@@ -55,6 +55,10 @@ Route::get('clear-views', function(){
     Artisan::call('view:clear');
 });
 
+Route::get('clear-permisions', function(){
+    Artisan::call('permission:cache-reset');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
