@@ -56,7 +56,7 @@ Route::get('clear-views', function(){
 });
 
 Route::get('clear-permisions', function(){
-    Artisan::call('permission:cache-reset');
+    app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
