@@ -288,7 +288,6 @@
             </div>
         </div-->
         <!-- Income -->
-        @can('admin.editors.index')
         <div x-data="dropdown" class="relative">
             <!-- Dropdown head -->
             <div @click="toggle('income')" x-data="tooltip" x-on:mouseover="show = true"
@@ -367,7 +366,6 @@
                     Item 4</h1>
             </div>
         </div>
-        @endcan
         <!-- Promote -->
         @can('sudo.roles.index')
         <div x-data="dropdown" class="relative">
