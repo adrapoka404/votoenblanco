@@ -50,7 +50,7 @@ Route::get('storage-link', function("{
     Artisan::call('storage:link');
 });
 
-*/
+
 Route::get('clear-views', function(){
     Artisan::call('view:clear');
 });
@@ -58,7 +58,7 @@ Route::get('clear-views', function(){
 Route::get('clear-permisions', function(){
     app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 });
-
+*/
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
