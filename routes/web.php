@@ -12,6 +12,7 @@ use App\Http\Controllers\EditoresController;
 use App\Http\Controllers\MigracionController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\SUDO\AsignPermissionsController;
 use App\Http\Controllers\SUDO\PermissionsController;
 use App\Http\Controllers\SUDO\RolesController;
@@ -161,3 +162,7 @@ Route::get('clear-cache-permisos', function(){
 });
 
 Route::resource('migracion', MigracionController::class)->names('migracion');
+
+//probando ogin con FB
+Route::get('auth/facebook', [SocialController::class, 'redirectFacebook']);
+Route::get('auth/facebook/callback', [SocialController::class, 'callbackFacebook']);

@@ -1,3 +1,14 @@
+<style>
+    .btm-facebook{
+        background: #0078ff;
+        color: white;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        display: block;
+        border-radius: 10px;
+    }
+</style>
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
@@ -50,5 +61,8 @@
                 </x-jet-button>
             </div>
         </form>
+        <div class="flex items-center justify-end mt-4">
+            <a class="btn btn-facebook" href="{{url('auth/facebook')}}">Login Facebook</a>
+        </div>
     </x-jet-authentication-card>
 </x-auth-layout>

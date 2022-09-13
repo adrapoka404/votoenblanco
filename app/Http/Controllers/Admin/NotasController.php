@@ -186,9 +186,10 @@ class NotasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePostRequest $request, $id)
     {
         
+return $request;
         $post = Post::where('slug', $id)->first();
 
         $post->user_edit            = Auth::user()->id;
@@ -202,7 +203,7 @@ class NotasController extends Controller
         
         $post->save();
 
-        PostDetails::where('post_id', $post->sid)->delete();
+        PostDetails::where('post_id', $post->id)->delete();
 
         $post_details = new PostDetails();
 

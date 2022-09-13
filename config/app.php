@@ -181,7 +181,8 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         
         Spatie\Permission\PermissionServiceProvider::class,
-
+        //fb socialite
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -203,6 +204,8 @@ return [
         'JsonLdMulti'   => Artesaos\SEOTools\Facades\JsonLdMulti::class,
         // or
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
+        //FBSocualite
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ])->toArray(),
 
 ];

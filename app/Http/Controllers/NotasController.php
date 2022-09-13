@@ -28,6 +28,7 @@ use Artesaos\SEOTools\Facades\JsonLdMulti;
 
 // OR use only single facades
 use Artesaos\SEOTools\Facades\SEOTools;
+use Illuminate\Support\Facades\Storage;
 
 class NotasController extends Controller
 {
@@ -146,14 +147,15 @@ class NotasController extends Controller
         OpenGraph::setTitle($post->title);
         OpenGraph::setUrl(route('notas.show', $post->id));
         OpenGraph::addProperty('type', 'articles');
+        OpenGraph::addImage(asset('storage/' . $post->image_principal));
 
         TwitterCard::setTitle($post->title);
         TwitterCard::setSite('@websolutionstuff');
-
+/*
         JsonLd::setTitle($post->title);
         JsonLd::setDescription($post->description);
         JsonLd::addImage(asset('storage'.$post->image_principal));
-
+*/
         // OR use single only SEOTools
 
         SEOTools::setTitle($post->title);

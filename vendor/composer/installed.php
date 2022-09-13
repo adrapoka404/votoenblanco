@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '669a5e787d64140e79c8ebd41b82d1556cc66ecf',
+        'reference' => 'ffc7d94d061539351400ee7488adbf9e7143872e',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -433,7 +433,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '669a5e787d64140e79c8ebd41b82d1556cc66ecf',
+            'reference' => 'ffc7d94d061539351400ee7488adbf9e7143872e',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -461,6 +461,15 @@
             'install_path' => __DIR__ . '/../laravel/serializable-closure',
             'aliases' => array(),
             'reference' => 'd78fd36ba031a1a695ea5a406f29996948d7011b',
+            'dev_requirement' => false,
+        ),
+        'laravel/socialite' => array(
+            'pretty_version' => 'v5.5.5',
+            'version' => '5.5.5.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/socialite',
+            'aliases' => array(),
+            'reference' => 'ce8b2f967eead5a6bae74449e207be6f8046edc3',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -515,6 +524,15 @@
             'install_path' => __DIR__ . '/../league/mime-type-detection',
             'aliases' => array(),
             'reference' => 'ff6248ea87a9f116e78edd6002e39e5128a0d4dd',
+            'dev_requirement' => false,
+        ),
+        'league/oauth1-client' => array(
+            'pretty_version' => 'v1.10.1',
+            'version' => '1.10.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/oauth1-client',
+            'aliases' => array(),
+            'reference' => 'd6365b901b5c287dd41f143033315e2f777e1167',
             'dev_requirement' => false,
         ),
         'livewire/livewire' => array(
@@ -808,8 +826,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(
