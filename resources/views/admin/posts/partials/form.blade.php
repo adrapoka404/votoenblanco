@@ -344,16 +344,16 @@
         CKEDITOR.replace('body');
         var categorySelect = $(".categoryold").length
         var relatedSelect = $(".relatedold").length
-        
+
 
         $(document).ready(function() {
             $("#btnModalImgs").on('click', function() {
-/*
-                $("#uploadButton").on('click', function() {
-                    console.log('click en el boton para subir imagen');
-                    $("#uploadFile").click();
-                })
-*/
+                /*
+                                $("#uploadButton").on('click', function() {
+                                    console.log('click en el boton para subir imagen');
+                                    $("#uploadFile").click();
+                                })
+                */
 
                 $.ajax({
                     url: "{{ route('services.popup_images') }}",
@@ -424,10 +424,11 @@
 
         })
 
-        function actionUploadImage(){
-            
+        function actionUploadImage() {
+
             var formData = new FormData();
-            
+            var subida = '';
+
             formData.append('image', $("#uploadFile")[0].files[0])
             formData.append('_token', $("[name='_token']").val())
             //formData.append('uploadIn', $("[name='_token']").val())
@@ -435,26 +436,30 @@
 
             $form = $("#formUploadImages")
             $.ajax({
-                url:'{{route('services.imagen_upload')}}'+'?'+$form.serialize(),
-                'method':'post',
-                data:formData,
-                processData:false,
-                contentType:false,
-                success:function(data){
-                    if(data.success)
-                        update_images(data.in)
+                url: '{{ route('services.imagen_upload') }}' + '?' + $form.serialize(),
+                'method': 'post',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.success) 
+                        select_image(data.to, data.img)
                 },
-                error: function(error){
-                    
-                    if(error.responseJSON.errors.image) {
+                beforeSend: function() {
+                    console.log('Subiendo hacer algo');
+                    $("#popup_images").html('<div class="text-blue animate-pulse" >Subiendo...</div>');
+                },
+                error: function(error) {
+
+                    if (error.responseJSON.errors.image) {
                         errores = error.responseJSON.errors.image
                         htmlError = '';
-                        $.each(error.responseJSON.errors.image, function(v, txt){
-                            htmlError += "<div class='text-red-200 text-xs'>"+txt+"</div>";
+                        $.each(error.responseJSON.errors.image, function(v, txt) {
+                            htmlError += "<div class='text-red-200 text-xs'>" + txt + "</div>";
                         })
                         $("#upload_errors").append(htmlError)
                     }
-                        
+
                 }
             })
         }
@@ -472,7 +477,7 @@
             })
         }
 
-        function update_images(directory) {
+        function update_images( directory ) {
             $.ajax({
                 url: "{{ route('services.data') }}?directory=" + directory,
                 type: 'GET',
@@ -493,7 +498,7 @@
             var content_directory = "<ul>"
             $.each(directories, function(i, v) {
                 content_directory += '<li class="w-full inline md:block ' + (v == inD ? 'bg-gray-dark' :
-                    'bg-white') +
+                        'bg-white') +
                     ' hover:bg-gray-dark cursor-pointer px-3 font-semibold text-sm py-2" onclick="update_images(\'' +
                     v + '\')" >' + v + '</li>'
             })

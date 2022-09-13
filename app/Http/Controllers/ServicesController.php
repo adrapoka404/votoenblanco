@@ -67,11 +67,14 @@ class ServicesController extends Controller
     
         foreach($carpetas as $i => $iam){
             if($iam == 'public/profile-photos')
-                $delete = $i;
+                $profiles = $i;
+                if($iam == 'public/categories')
+                $categories = $i;
         }
         
-        unset($carpetas[$delete]);
-        
+        unset($carpetas[$profiles]);
+        unset($carpetas[$categories]);
+
         foreach($images as &$image){
             $i = str_replace('public/','', $image);
             $data_images[] = ['img_to'=> asset('storage/'.$i), 'img' => $i];
@@ -93,9 +96,9 @@ class ServicesController extends Controller
             ]
         );
         
-        Storage::put($request->uploadIn.'/',$request->file('image'));
-        
-        return ["success"=>true, 'in' => $request->uploadIn];
+        $aqui = Storage::put($request->uploadIn,$request->file('image'));
+        $aqui = str_replace('public/','', $aqui);
+        return ["success"=>true, 'to' => asset('storage/'.$aqui), 'img' => $aqui];
     }
 
     public function sub_data($directory){
