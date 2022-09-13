@@ -97,8 +97,11 @@ class ServicesController extends Controller
         );
         
         $aqui = Storage::put($request->uploadIn,$request->file('image'));
+        $copy = Storage::copy(env('URI_STORAGE_PROD').$aqui, env('URI_STORAGE_PUB').$aqui);
         $aqui = str_replace('public/','', $aqui);
-        return ["success"=>true, 'to' => asset('storage/'.$aqui), 'img' => $aqui];
+
+        
+        return ["success"=>true, 'to' => asset('storage/'.$aqui), 'img' => $aqui, 'copy' => $copy];
     }
 
     public function sub_data($directory){
