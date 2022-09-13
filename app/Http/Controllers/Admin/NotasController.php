@@ -27,11 +27,14 @@ class NotasController extends Controller
      */
     public function index()
     {
-        //$posts      = Post::where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(5);
-        $posts      = Post::orderBy('title', 'asc')->paginate(5);
+        if (Auth::user()->roles()->get()[0]['name'] == 'Coordinación de Contenido Editorial')
+            $posts      = Post::orderBy('title', 'asc')->paginate(5);
+        else
+            $posts      = Post::where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(5);
+
         $statuses   = PostStatus::all();
 
-        foreach($posts as &$post) {
+        foreach ($posts as &$post) {
             $status = PostStatus::find($post->status);
             $post->status = $status;
 
@@ -40,9 +43,9 @@ class NotasController extends Controller
 
             $post->editor = Editor::where('user_id', $user->id)->first();
         }
-        
+
         $headers = ['Título', 'Editor', 'Estado', 'Acciones'];
-//return $post;
+        //return $post;
         return view('admin.posts.index', compact('posts', 'headers', 'statuses'));
     }
 
@@ -54,7 +57,7 @@ class NotasController extends Controller
     public function create()
     {
         $categories = Category::orderBy('nombre', 'asc')->get();
-        
+
         return view('admin.posts.create', compact('categories'));
     }
 
@@ -75,11 +78,11 @@ class NotasController extends Controller
         $post->title                = $request->title;
         $post->slug                 = strtolower(str_replace(' ', '-', $request->title));
         $post->description          = $request->description;
-        $post->featured             = isset($request->featured) ? 1 : 0 ;
+        $post->featured             = isset($request->featured) ? 1 : 0;
         $post->social_text          = $request->social_text;
         $post->slug_description     = strtolower(str_replace(' ', '-', $request->description));
         $post->image_principal      = $request->image_principal;
-        
+
         $post->save();
 
         $post_details = new PostDetails();
@@ -88,24 +91,24 @@ class NotasController extends Controller
         $post_details->body     = $request->body;
         $post_details->tags     = $request->tags;
         $post_details->keywords = $request->keywords;
-        
-        if($request->date) {
+
+        if ($request->date) {
             $post_details->posted       = $request->date;
             $post_details->posted_time  = $request->time;
         }
 
-        if($request->posted_now)
+        if ($request->posted_now)
             $post_details->posted_now = $request->posted_now;
 
-        if($request->redfb)
+        if ($request->redfb)
             $post_details->redfb = $request->redfb;
 
-        if($request->redtw)
+        if ($request->redtw)
             $post_details->redtw = $request->redtw;
 
         $post_details->save();
 
-        foreach($request->all()['categories'] as $category => $label){
+        foreach ($request->all()['categories'] as $category => $label) {
             $postCategory = new Postcategory();
 
             $postCategory->post_id = $post->id;
@@ -114,23 +117,22 @@ class NotasController extends Controller
             $postCategory->save();
         }
 
-        if(isset($request->all()['related'])) {
-            foreach($request->all()['related'] as $related => $label){
-                
-                    $postRelated = new Postrelated();
-        
-                    $postRelated->post_id = $post->id;
-                    $postRelated->related_id = $related;
-        
-                    $postRelated->save();
+        if (isset($request->all()['related'])) {
+            foreach ($request->all()['related'] as $related => $label) {
 
-                    $postRelated = new Postrelated();
-        
-                    $postRelated->post_id = $related;
-                    $postRelated->related_id = $post->id;
-        
-                    $postRelated->save();
-                
+                $postRelated = new Postrelated();
+
+                $postRelated->post_id = $post->id;
+                $postRelated->related_id = $related;
+
+                $postRelated->save();
+
+                $postRelated = new Postrelated();
+
+                $postRelated->post_id = $related;
+                $postRelated->related_id = $post->id;
+
+                $postRelated->save();
             }
         }
 
@@ -157,21 +159,21 @@ class NotasController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        $post->details = PostDetails::where('post_id',$post->id)->first();
+        $post->details = PostDetails::where('post_id', $post->id)->first();
 
         $postcategories = Postcategory::where('post_id', $post->id)->get();
         $postrelated = Postrelated::where('post_id', $post->id)->get();
-        
+
         $cats = [];
-        foreach($postcategories as $category) 
+        foreach ($postcategories as $category)
             $cats[] = Category::find($category->category_id);
-        
+
         $post->categories = $cats;
 
         $relateds = [];
-        foreach($postrelated as $related) 
+        foreach ($postrelated as $related)
             $relateds[] = Post::find($related->post_id);
-        
+
         $post->related = $relateds;
 
         $categories = Category::orderBy('nombre', 'asc')->get();
@@ -188,18 +190,18 @@ class NotasController extends Controller
      */
     public function update(StorePostRequest $request, $id)
     {
-        
+
         $post = Post::where('slug', $id)->first();
 
         $post->user_edit            = Auth::user()->id;
         $post->title                = $request->title;
         $post->slug                 = strtolower(str_replace(' ', '-', $request->title));
         $post->description          = $request->description;
-        $post->featured             = isset($request->featured) ? 1 : 0 ;
+        $post->featured             = isset($request->featured) ? 1 : 0;
         $post->social_text          = $request->social_text;
         $post->slug_description     = strtolower(str_replace(' ', '-', $request->description));
         $post->image_principal      = $request->image_principal;
-        
+
         $post->save();
 
         PostDetails::where('post_id', $post->id)->delete();
@@ -210,26 +212,26 @@ class NotasController extends Controller
         $post_details->body     = $request->body;
         $post_details->tags     = $request->tags;
         $post_details->keywords = $request->keywords;
-        
-        if($request->date) {
+
+        if ($request->date) {
             $post_details->posted       = $request->date;
             $post_details->posted_time  = $request->time;
         }
 
-        if($request->posted_now)
+        if ($request->posted_now)
             $post_details->posted_now = $request->posted_now;
 
-        if($request->redfb)
+        if ($request->redfb)
             $post_details->redfb = $request->redfb;
 
-        if($request->redtw)
+        if ($request->redtw)
             $post_details->redtw = $request->redtw;
 
         $post_details->save();
 
         Postcategory::where('post_id', $post->id)->delete();
 
-        foreach($request->all()['categories'] as $category => $label){
+        foreach ($request->all()['categories'] as $category => $label) {
             $postCategory = new Postcategory();
 
             $postCategory->post_id = $post->id;
@@ -241,23 +243,22 @@ class NotasController extends Controller
         Postrelated::where('post_id', $post->id)->delete();
         Postrelated::where('related_id', $post->id)->delete();
 
-        if(isset($request->all()['related'])) {
-            foreach($request->all()['related'] as $related => $label){
-                
-                    $postRelated = new Postrelated();
-        
-                    $postRelated->post_id = $post->id;
-                    $postRelated->related_id = $related;
-        
-                    $postRelated->save();
+        if (isset($request->all()['related'])) {
+            foreach ($request->all()['related'] as $related => $label) {
 
-                    $postRelated = new Postrelated();
-        
-                    $postRelated->post_id = $related;
-                    $postRelated->related_id = $post->id;
-        
-                    $postRelated->save();
-                
+                $postRelated = new Postrelated();
+
+                $postRelated->post_id = $post->id;
+                $postRelated->related_id = $related;
+
+                $postRelated->save();
+
+                $postRelated = new Postrelated();
+
+                $postRelated->post_id = $related;
+                $postRelated->related_id = $post->id;
+
+                $postRelated->save();
             }
         }
 

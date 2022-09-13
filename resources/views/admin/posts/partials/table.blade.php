@@ -47,10 +47,10 @@
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
 
                             @can('admin.notas.destroy')
-                                <form action="" class="inline">
+                                <!--form action="" class="inline">
                                     <a href="{{ route('admin.notas.update', $post->id) }}"
                                         class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
-                                </form>
+                                </form-->
                             @endcan
                             @can('admin.notas.edit')
                                 <a href="{{ route('admin.notas.edit', $post->id) }}"
