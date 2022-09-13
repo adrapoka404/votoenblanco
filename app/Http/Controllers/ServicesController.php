@@ -99,8 +99,8 @@ class ServicesController extends Controller
         $aqui = Storage::put($request->uploadIn,$request->file('image'));
         //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
         $aqui = str_replace('public/','', $aqui);
-        $esta = 'testvb/storage/app/public/'.$aqui;
-        $vaPara = 'public_html/testvb/storage/'.$aqui;
+        $esta = '/home/imvdeme1/testvb/storage/app/public/'.$aqui;
+        $vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$aqui;
         copy($esta, $vaPara);
         
 
