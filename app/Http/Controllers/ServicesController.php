@@ -64,6 +64,13 @@ class ServicesController extends Controller
                                 return $file->getBaseName();
                             });
 */
+    
+        foreach($carpetas as $i => $iam){
+            if($iam == 'public/profile-photos')
+                $delete = $i;
+        }
+        
+        unset($carpetas[$delete]);
         
         foreach($images as &$image){
             $i = str_replace('public/','', $image);
