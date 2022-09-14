@@ -54,11 +54,8 @@ class WebviewController extends Controller
         }
         
         foreach($categorias as &$cat){
-         //echo "Buscar usuario con id " . $cat->user_create.'<br>';
-            echo"<pre>";
-            print_r($cat);
-            echo"</pre>";
-
+         echo "Buscar usuario con id " . $cat->user_create.'<br>';
+         
             //$cat->user = User::find($cat->user_create);
         }
         die('ñ_ñ');
