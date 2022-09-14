@@ -52,7 +52,7 @@ class WebviewController extends Controller
                 $categorias[$pbc->post_id] = Post::find($pbc->post_id);  
             }
         }
-return $categorias;
+        
         foreach($categorias as &$cat)
             $cat->user = User::find($cat->user_create);
 
