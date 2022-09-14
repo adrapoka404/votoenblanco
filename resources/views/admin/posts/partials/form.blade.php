@@ -442,11 +442,10 @@
                 processData: false,
                 contentType: false,
                 success: function(data) {
-                   // if (data.success) 
-                        //select_image(data.to, data.img)
+                    if (data.success) 
+                        select_image(data.to, data.img)
                 },
                 beforeSend: function() {
-                    console.log('Subiendo hacer algo');
                     $("#popup_images").html('<div class="text-blue animate-pulse ml-12 font-semibold" > Subiendo... </div>');
                 },
                 error: function(error) {
