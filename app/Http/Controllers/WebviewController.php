@@ -47,7 +47,9 @@ class WebviewController extends Controller
         
         foreach($categories as $category) {
             $postByCate = Postcategory::where('category_id', $category->id)->offset(0)->limit(2)->orderBy('created_at','desc')->get();
-           
+            echo "<pre>";
+            print_r($categorias);
+        echo "</pre>";
             foreach($postByCate as $pbc){
                 $categorias[$pbc->post_id] = Post::find($pbc->post_id);  
             }
