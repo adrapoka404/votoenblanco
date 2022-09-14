@@ -44,7 +44,7 @@ class WebviewController extends Controller
         $category = Category::where('nombre', 'noticias')->first();
         $categories = Category::where('patern_id', $category->id)->orderBy('nombre', 'asc')->get();
         $categorias =  [];
-        return $categories;
+        
         foreach($categories as $category) {
             $postByCate = Postcategory::where('category_id', $category->id)->offset(0)->limit(2)->orderBy('created_at','desc')->get();
            
@@ -52,7 +52,7 @@ class WebviewController extends Controller
                 $categorias[$pbc->post_id] = Post::find($pbc->post_id);  
             }
         }
-
+return $categorias;
         foreach($categorias as &$cat)
             $cat->user = User::find($cat->user_create);
 
