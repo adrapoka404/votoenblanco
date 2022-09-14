@@ -91,17 +91,19 @@
 
                 </div>
                 <div class="w-1/2 cursor-pointer my-10 text-center">
-                    <div class="cursor-pointer" id="btnShare">
-                        <div class="fb-share-button" 
+                    <div class="cursor-pointer" id="">
+                        <img src="{{ asset('img/compartir.png') }}" alt="" id="comparte"
+                            class="inline w-20 h-20 cursor-pointer">
+                        <label for="comparte" class=" ml-5 font-bold text-3xl cursor-pointer" id='comparteLabel'>Comparte</label>
+                        <div class="fb-share-button w-full" 
                         data-href="{{route('notas.show', $post->slug)}}" 
                         data-layout="button_count" 
                         data-size="small">
-                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{route('notas.show', $post->slug)}}&amp;src=sdkpreparse"
-                         class="fb-xfbml-parse-ignore">Compartir</a>
+                        <a id='actionShared' target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{route('notas.show', $post->slug)}}&amp;src=sdkpreparse"
+                         class="fb-xfbml-parse-ignore">
+                        </a>
                         </div>
-                        <img src="{{ asset('img/compartir.png') }}" alt="" id="comparte"
-                            class="inline w-20 h-20">
-                        <label for="comparte" class=" ml-5 font-bold text-3xl">Comparte</label>
+                        
                     </div>
                 </div>
 

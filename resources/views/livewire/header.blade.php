@@ -287,8 +287,8 @@
                 reaction('NoSave')
             })
 
-            $("#btnShare").on('click', function() {
-                reaction(id, "{{ route('notas.share') }}")
+            $("#comparte, #comparteLabel").on('click', function() {
+                $("#actionShared").trigger('click')
             })
 
             $("#btnSuperLike").on('click', function() {
