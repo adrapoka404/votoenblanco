@@ -1,12 +1,14 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
         <x-slot name="txt">
-            ADX
+            <div class=" px-1 pt-4 text-red-800 font-sans font-black tracking-wide text-3xl ">Mantente informado</div>
+            <div class=" font-sans my-1 whitespace-pre text-2xl">de las noticias más relevantes</div>
+            <div class=" font-sans my-1 text-sm">y entérate antes que nadie de giveaways y promociones</div>
         </x-slot>
         <form method="POST" action="{{ route('register') }}">
             @csrf

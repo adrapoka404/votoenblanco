@@ -53,5 +53,6 @@
                 </div>
             @endif
         </div>
+        {{$posts->links()}}
     </div>
 </x-guest-layout>

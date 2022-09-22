@@ -12,7 +12,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            
         </x-slot>
         <x-slot name="txt">
             <div class=" px-1 pt-4 text-red-800 font-sans font-black tracking-wide text-3xl ">Mantente informado</div>
@@ -45,15 +45,12 @@
                     <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
             </div>
-
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
-                @endif
-
-                
+                @endif                
             </div>
             <div>
                 <x-jet-button class="ml-4 text-center items-center w-full">

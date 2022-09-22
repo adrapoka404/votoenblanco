@@ -28,7 +28,13 @@
                     <a href="" class="text-white bg-black rounded-full mx-5 px-5 py-2 capitalize">pagina principal</a>
                 </div>
                 <div class="inline w-1/2 text-center">
-                    <a href="" class="text-white bg-black rounded-full mx-5 px-5 py-2 capitalize">cerrar sesion</a>
+                    <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+                        {!! Form::submit('Cerrar sesión', [
+                            'class' =>
+                                'text-white bg-black rounded-full mx-5 px-5 py-2 capitalize cursor-pointer',
+                        ]) !!}
+                    </form>
                 </div>
             </div>
         </div>

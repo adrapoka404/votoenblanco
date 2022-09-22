@@ -10,7 +10,7 @@ class Category extends Model
     use HasFactory;
 
     //Para los permitidos
-    protected $fillable = ['nombre', 'slug','orden', 'visible', 'vistas', 'imagen', 'patern_id'];
+    protected $fillable = ['nombre', 'slug','orden', 'visible', 'vistas', 'imagen', 'patern_id', 'description', 'description_video'];
     //para los protegidos
     protected $guarded = [''];
 

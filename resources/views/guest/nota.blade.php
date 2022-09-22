@@ -52,7 +52,7 @@
         <div class="py-10">
             <x-title-dark>Comentarios</x-title-dark>
             @if (count($post->comments) == 0)
-                Esta nota aun no tiene comentarios
+                Esta nota aun no tiene comentarios autorizados
             @endif
             @foreach ($post->comments as $comment)
                 <x-coment-post>

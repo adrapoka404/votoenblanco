@@ -42,28 +42,6 @@ class NotasController extends Controller
 
         return view('guest.notas', compact('who')); 
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -179,7 +157,7 @@ class NotasController extends Controller
         
         $who = $editor->name;
 
-        $posts = Post::where('user_create', $id )->orderBy('created_at', 'desc')->get();
+        $posts = Post::where('user_create', $id )->orderBy('created_at', 'desc')->paginate(15);
         
         if($posts) {
            foreach($posts as &$post)
@@ -206,7 +184,7 @@ class NotasController extends Controller
             foreach($postCategory as $pc) 
                 $ids[] = $pc->post_id;
 
-                $posts = Post::whereIn('id', $ids)->orderBy('created_at', 'desc')->get();
+                $posts = Post::whereIn('id', $ids)->orderBy('created_at', 'desc')->paginate(15);
                 foreach($posts as &$post)
                     $post->user = User::find($post->user_create);
             }
@@ -215,43 +193,7 @@ class NotasController extends Controller
             
         return view('guest.notas', compact('category', 'posts', 'who')); 
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function admin(){
-        
-    }
+    
     public function reaction(Request $request){
         
         $post       = $request->all()['post_id'];

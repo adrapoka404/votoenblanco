@@ -224,6 +224,14 @@
                     </a>
                 </div>
                 @endcan
+                @can('admin.comentarios.index')
+                <div>
+                    <a class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:bg-white cursor-pointer pl-2 block"
+                        href="{{ route('admin.comentarios.index') }}">
+                        Comentarios
+                    </a>
+                </div>
+                @endcan
             </div>
         </div>
         @endif
@@ -463,7 +471,7 @@
             </svg>
             <a href="{{ route('admin.suscriptores.index') }}" x-cloak
                 x-bind:class="!$store.sidebar.full && show ? visibleClass : '' || !$store.sidebar.full && !show ? 'sm:hidden' : ''">
-                Suscriptores</a>
+                Suscriptor</a>
         </div>
         @endcan
     </div>

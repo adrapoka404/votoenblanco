@@ -46,7 +46,7 @@ class CategoriesController extends Controller
 
         $request->imagen    = str_replace('public/','',$nurl);
         $request->slug      = Str::lower(Str::slug($request->nombre, '-'));
-
+        
         $ncategory = Category::create($request->all());
 
         $ncategory->imagen = str_replace('public/','',$nurl);
@@ -55,17 +55,6 @@ class CategoriesController extends Controller
         
         return redirect()->route('admin.categorias.index')->with('info', __('Categoría ' . $ncategory->nombre . ' creada'));
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -106,16 +95,5 @@ class CategoriesController extends Controller
 
         $ncategory->update();
         return redirect()->route('admin.categorias.index')->with('info','Categoría ' . $ncategory->nombre . ' editada correctamente');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

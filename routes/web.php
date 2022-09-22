@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\CommentsController;
 use App\Http\Controllers\Admin\EditorsController;
 use App\Http\Controllers\Admin\EstatusNotasController;
 use App\Http\Controllers\Admin\NotasController as AdminNotasController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\SUDO\PermissionsController;
 use App\Http\Controllers\SUDO\RolesController;
 use App\Http\Controllers\WebviewController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
 
@@ -45,7 +47,7 @@ Route::get('guest', function () {
 
     symlink($targetFolder,$linkFolder);
     echo 'Symlink process successfully completed';
-    *///echo $targetFolder; 
+    */ //echo $targetFolder; 
 /*
 Route::get('storage-link', function("{
     Artisan::call('storage:link');
@@ -61,14 +63,20 @@ Route::get('clear-permisions', function(){
 });
 */
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    $roles = Auth::user()->roles()->get();
+    
+    if($roles[0]->name == 'Suscriptor')
+        return redirect()->route('admin.suscriptores.index');
     return view('dashboard');
 })->name('dashboard');
 
 Route::resource('notas', NotasController::class)
+->only(['index','show','editores','categorias','reaction', 'share', 'save', 'nosave','coments'])
     ->names('notas');
 
 
 Route::resource('editores', EditoresController::class)
+    ->only(['show'])
     ->names('editores');
 
 Route::get('notas.editores.{nota}', [NotasController::class, 'editores'])->name('notas.editores');
@@ -85,19 +93,6 @@ Route::post('notas.coments', [NotasController::class, 'coments'])->name('notas.c
 
 Route::get('notas.admin', [NotasController::class, 'admin'])->name('notas.admin');
 
-// rutas para administracion de notas 
-Route::resource('adminnotas', AdminNotasController::class)
-    ->names('admin.notas');
-//Administracion de categorias
-Route::resource('admincategories', CategoriesController::class)
-    ->names('admin.categorias');
-
-//Administracion de editores
-Route::resource('admineditors', EditorsController::class)
-    ->names('admin.editors');
-
-Route::resource('estatusnotas', EstatusNotasController::class)->names('admin.notas.estatus');
-Route::resource('editorprofile', ProfileController::class)->names('admin.editor.profile');
 //Rutas de servicios para autocompletes
 Route::get('services/related', [ServicesController::class, 'related'])->name('services.related');
 Route::get('services/search', [ServicesController::class, 'posts'])->name('services.posts');
@@ -117,46 +112,67 @@ Route::get("web.aboutus", [WebviewController::class, 'aboutus'])->name('web.abou
 Route::get("web.privacy", [WebviewController::class, 'privacy'])->name('web.privacy');
 Route::get("web.team", [WebviewController::class, 'team'])->name('web.team');
 
-//Rutas para el sudo
-Route::resource('sudoroles', RolesController::class)->names("sudo.roles");
-Route::resource('sudopermissions', PermissionsController::class)->names("sudo.permissions");
-Route::resource('sudoasignpermissions', AsignPermissionsController::class)->names('sudo.asign.permissions');
 
-// Rutas para admin estadisticas
-Route::resource('adminstatistics', StatisticsController::class)->names('admin.estadisticas');
-Route::get('adminstatisticsmasleidas/{start}/{end}', [StatisticsController::class, 'masleidas'])->name('admin.estadisticas.masleidas');
 
-// Rutas para admin estadisticas
-Route::resource('videogalleries', VideogalleriesController::class)->names('admin.videogalerias');
+// Rutas para admin y sudo que deben verificar login 
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::resource('estatusnotas', EstatusNotasController::class)->names('admin.notas.estatus');
+    Route::resource('editorprofile', ProfileController::class)->names('admin.editor.profile');
+    // rutas para administracion de notas 
+    Route::resource('adminnotas', AdminNotasController::class)
+        ->names('admin.notas');
+    //Administracion de categorias
+    Route::resource('admincategories', CategoriesController::class)
+        ->only('index', 'create', 'store', 'update', 'edit')
+        ->names('admin.categorias');
 
-// Rutas para admin suscriptores
-Route::resource('suscriptors', SuscriptorsController::class)->names('admin.suscriptores');
-Route::get('suscriptorssaved', [SuscriptorsController::class, 'saved'])->name('admin.suscriptores.guardadas');
-Route::get('suscriptorsconfig', [SuscriptorsController::class, 'config'])->name('admin.suscriptores.config');
-Route::post('suscriptorssuscribeto', [SuscriptorsController::class, 'suscribeto'])->name('admin.suscriptores.suscribeto');
-Route::get('suscriptorspassword', [SuscriptorsController::class, 'password'])->name('admin.suscriptores.password');
+    //Administracion de editores
+    Route::resource('admineditors', EditorsController::class)
+        ->names('admin.editors');
+
+    //Rutas para el sudo
+    Route::resource('sudoroles', RolesController::class)->names("sudo.roles");
+    Route::resource('sudopermissions', PermissionsController::class)->names("sudo.permissions");
+    Route::resource('sudoasignpermissions', AsignPermissionsController::class)->names('sudo.asign.permissions');
+
+    // Rutas para admin estadisticas
+    Route::resource('adminstatistics', StatisticsController::class)->names('admin.estadisticas');
+    Route::get('adminstatisticsmasleidas/{start}/{end}', [StatisticsController::class, 'masleidas'])->name('admin.estadisticas.masleidas');
+
+    // Rutas para admin estadisticas
+    Route::resource('videogalleries', VideogalleriesController::class)->names('admin.videogalerias');
+
+    Route::resource('suscriptors', SuscriptorsController::class)->names('admin.suscriptores');
+    Route::get('suscriptorssaved', [SuscriptorsController::class, 'saved'])->name('admin.suscriptores.guardadas');
+    Route::get('suscriptorsconfig', [SuscriptorsController::class, 'config'])->name('admin.suscriptores.config');
+    Route::post('suscriptorssuscribeto', [SuscriptorsController::class, 'suscribeto'])->name('admin.suscriptores.suscribeto');
+    Route::get('suscriptorspassword', [SuscriptorsController::class, 'password'])->name('admin.suscriptores.password');
+
+    // Rutas para admin comentarios
+    Route::resource('admincoments', CommentsController::class)->names('admin.comentarios');
+});
+
 
 //rutas
 Route::get('routes', function () {
     $routeCollection = Route::getRoutes();
     foreach ($routeCollection as $value) {
-        if($value->getName() != '') {
-            $existe = Permission::where('name',$value->getName())->first();
-            if(!$existe)
-                Permission::create(['name'=> $value->getName()]);
-        
+        if ($value->getName() != '') {
+            $existe = Permission::where('name', $value->getName())->first();
+            if (!$existe)
+                Permission::create(['name' => $value->getName()]);
         }
         //echo $value->methods()[0] . "-----";
         //echo $value->uri() . "-----";
         //echo $value->getName() . "-----";
         //echo $value->getActionName() . "-----<br>";
     }
-    
+
     return redirect()->route('sudo.permissions.index');
 });
 
 //borrar cache de permisos
-Route::get('clear-cache-permisos', function(){
+Route::get('clear-cache-permisos', function () {
     app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
     exit('ñ_ñ');
 });

@@ -39,16 +39,7 @@
                                     {{ __('Editar') }}
                                 </a>
                             @endcan
-                            @can('admin.categorias.destroy')
-                                <form action="{{ route('admin.categorias.destroy', $category) }}" method="POST"
-                                    class="w-full max-w-sm inline">
-                                    @csrf
-                                    @method('delete')
-
-                                    <input type="submit" value="{{ __('Quitar') }}"
-                                        class=" bg-wine text-white rounded-full m-2 py-1 px-2">
-                                </form>
-                            @endcan
+                            
                         </td>
                     </tr>
                 @endforeach
