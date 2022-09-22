@@ -24,9 +24,9 @@ class MigracionController extends Controller
     public function index()
     {
         ini_set('max_execution_time', 86400); // Extender a 1 dia
-        $name_file      = "migracion_julio_2021.txt";
-        $st_date_start  = strtotime('2021-07-01');
-        $st_date_end    = strtotime('2021-07-31');
+        $name_file      = "migracion_agosto_2021.txt";
+        $st_date_start  = strtotime('2021-08-01');
+        $st_date_end    = strtotime('2021-08-30');
         $daystrtotime   = 86400;
         $existen        = 0;
         $migradas        = 0;
