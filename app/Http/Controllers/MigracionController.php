@@ -25,7 +25,7 @@ class MigracionController extends Controller
     {
         ini_set('max_execution_time', 86400); // Extender a 1 dia
 
-        $st_date_start  = strtotime('2022-09-20');
+        $st_date_start  = strtotime('2021-01-01');
         $st_date_end    = strtotime('2022-09-21');
         $daystrtotime   = 86400;
         $existen        = 0;
