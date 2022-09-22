@@ -86,8 +86,8 @@ class MigracionController extends Controller
                 ->where('post_date', 'like', $day . '%')
                 ->orderBy('id', 'ASC')
                 ->get();
-
-            fwrite($file, "Se obtienen " . $posts->count() . PHP_EOL);
+//return $posts;
+          fwrite($file, "Se obtienen " . $posts->count() . PHP_EOL);
             $existen += $posts->count();
             foreach ($posts as &$post_wp) {
                 fwrite($file, "---------------------------------------- START -----------------------------------" . PHP_EOL);
@@ -157,7 +157,7 @@ class MigracionController extends Controller
                 $post_wp->tags          = $tags;
                 $post_wp->seos          = $seos;
                 $post_wp->terms         = $terms;
-
+//return $post_wp;
                 if (isset($images[0])) {
                     $images = $images[0];
 
