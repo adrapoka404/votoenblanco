@@ -74,7 +74,7 @@ class MigracionController extends Controller
             $days[] = date('Y-m-d', $dat);
 
 
-        $file = fopen("home/imvdeme1/testvb/storage/logs/migracion.txt", "w");
+        $file = fopen("home/imvdeme1/public_html/testvb/storage/logs/migracion.txt", "w");
 
         foreach ($days as $day) {
             fwrite($file, "Comenzamos con " . $day . PHP_EOL);
