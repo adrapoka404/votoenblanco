@@ -24,9 +24,9 @@ class MigracionController extends Controller
     public function index()
     {
         ini_set('max_execution_time', 86400); // Extender a 1 dia
-
+        $name_file      = "migracion_enero_2021.txt";
         $st_date_start  = strtotime('2021-01-01');
-        $st_date_end    = strtotime('2021-03-31');
+        $st_date_end    = strtotime('2021-01-31');
         $daystrtotime   = 86400;
         $existen        = 0;
         $migradas        = 0;
@@ -74,7 +74,7 @@ class MigracionController extends Controller
             $days[] = date('Y-m-d', $dat);
 
 
-        $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/migracion_2021_trimestre1.txt", "w");
+        $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/".$name_file, "w");
 
         foreach ($days as $day) {
             fwrite($file, "Comenzamos con " . $day . PHP_EOL);
