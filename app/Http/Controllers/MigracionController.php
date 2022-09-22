@@ -74,7 +74,7 @@ class MigracionController extends Controller
             $days[] = date('Y-m-d', $dat);
 
 
-        $file = fopen("home/imvdeme1/public_html/testvb/storage/logs/migracion.txt", "w");
+        $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/migracion.txt", "w");
 
         foreach ($days as $day) {
             fwrite($file, "Comenzamos con " . $day . PHP_EOL);
@@ -165,7 +165,7 @@ class MigracionController extends Controller
                     try {
                         $name = time() . rand(1, 5) . '.jpg';
                         $wp_imagen = file_get_contents($post_wp->image);
-                        $new_image = 'home/imvdeme1/testvb/storage/app/public/posts/migration' . $name;
+                        $new_image = '/home/imvdeme1/testvb/storage/app/public/posts/migration' . $name;
                         fwrite($file, "Se copia imagen de " . $post_wp->image . " a la ruta " . $new_image . PHP_EOL);
                         $new_url = 'posts/migration/' . $name;
                         $save_in = file_put_contents($new_image, $wp_imagen);
