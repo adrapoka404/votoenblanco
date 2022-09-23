@@ -24,9 +24,9 @@ class MigracionController extends Controller
     public function index()
     {
         ini_set('max_execution_time', 86400); // Extender a 1 dia
-        $name_file      = "migracion_diciembre_2021.txt";
-        $st_date_start  = strtotime('2021-12-01');
-        $st_date_end    = strtotime('2021-12-31');
+        $name_file      = "migracion_enero_2021.txt";
+        $st_date_start  = strtotime('2021-01-01');
+        $st_date_end    = strtotime('2021-01-31');
         $daystrtotime   = 86400;
         $existen        = 0;
         $migradas        = 0;
@@ -74,11 +74,11 @@ class MigracionController extends Controller
             $days[] = date('Y-m-d', $dat);
 
 
-//        $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/".$name_file, "w");
+        $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/".$name_file, "w");
 
         foreach ($days as $day) {
-            //fwrite($file, "Comenzamos con " . $day . PHP_EOL);
-            //fwrite($file, "Siendo las " . date('Y:m:d H:m:s') . PHP_EOL);
+            fwrite($file, "Comenzamos con " . $day . PHP_EOL);
+            fwrite($file, "Siendo las " . date('Y:m:d H:m:s') . PHP_EOL);
             $posts = DB::connection('mysql_wp')
                 ->table('wp_posts')
                 ->where('post_type', 'post')
@@ -86,7 +86,7 @@ class MigracionController extends Controller
                 ->where('post_date', 'like', $day . '%')
                 ->orderBy('id', 'ASC')
                 ->get();
-return $posts;
+//return $posts;
           fwrite($file, "Se obtienen " . $posts->count() . PHP_EOL);
             $existen += $posts->count();
             foreach ($posts as &$post_wp) {
@@ -221,6 +221,7 @@ return $posts;
                         $post->slug_description     = strtolower($desc);
                         $post->image_principal      = $post_wp->image;
                         $post->wp_id                = $post_wp->ID;
+                        $post->created_at           = $post_wp->post_date;
 
                         try {
                             $post->save();
