@@ -73,6 +73,10 @@ class WebviewController extends Controller
         return view('guest/team');
     }
 
+    public function terms(){
+        return view('guest/terms');
+    }
+
     public function welcome(){
         
         $locales      = [];

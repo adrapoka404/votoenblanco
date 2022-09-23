@@ -7,27 +7,27 @@
         <div class="w-full md:w-1/2 lg:w-1/3 font-sans font-light tracking-widest items-center my-10 md:my-auto ">
             <div class="flex flex-col-5 flex-row-2">
                 <div>
-                    <a href="https://bit.ly/3hIQPCu" target="_blank">
+                    <a href="{{$link_ig}}" target="_blank">
                         <div class=" w-8 h-8 bg-no-repeat mx-1 bg-insta bg-contain"></div>
                     </a>
                 </div>
                 <div>
-                    <a href="https://www.facebook.com/VtenBlanco" target="_blank">
+                    <a href="{{$link_fb}}" target="_blank">
                         <div class="w-8 h-8 bg-no-repeat mx-2 bg-fb bg-contain"></div>
                     </a>
                 </div>
                 <div>
-                    <a href="https://bit.ly/35yOasG" target="_blank">
+                    <a href="{{$link_tw}}" target="_blank">
                         <div class="w-8 h-8 bg-no-repeat mx-2 bg-tw bg-contain"></div>
                     </a>
                 </div>
-                <div> <a href="https://bit.ly/3hOtXkR" target="_blank">
+                <div> <a href="{{$link_tt}}" target="_blank">
                         <div class="w-8 h-8 bg-no-repeat mx-2 bg-tt bg-contain"></div>
                     </a>
 
                 </div>
                 <div>
-                    <a href="https://www.youtube.com/channel/UCGCPi8_DG0nUq_A_E0sN4SQ" target="_blank">
+                    <a href="{{$link_yt}}" target="_blank">
                         <div class="w-8 h-8 bg-no-repeat mx-2 bg-yt bg-contain"></div>
                     </a>
                 </div>
@@ -35,7 +35,7 @@
             </div>
             
             <div class="w-full mt-5 inline-flex">
-                <a href="https://wa.me/5526593156" target="_blank" id="inWhats">
+                <a href="https://wa.me/{{$link_cw}}" target="_blank" id="inWhats">
                     <div class=" bg-whats w-8 h-8 bg-contain"></div>
                     
                     <span class="" id="inWhats">Anúnciate con nosotros</span>
@@ -62,6 +62,11 @@
             <div class="ml-5 my-5">
                 <x-actionfooter href="{{ route('web.privacy') }}" :active="request()->routeIs('#')">
                     {{ __('aviso de privacidad') }}
+                </x-actionfooter>
+            </div>
+            <div class="ml-5 my-5">
+                <x-actionfooter href="{{ route('web.terms') }}" :active="request()->routeIs('#')">
+                    {{ __('aviso legal y terminos y condiciones de uso') }}
                 </x-actionfooter>
             </div>
         </div>

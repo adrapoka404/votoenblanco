@@ -1039,6 +1039,10 @@ select {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
 .my-10 {
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
@@ -1062,10 +1066,6 @@ select {
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
-}
-.mx-10 {
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
 }
 .my-16 {
   margin-top: 4rem;
@@ -1143,6 +1143,9 @@ select {
 .ml-5 {
   margin-left: 1.25rem;
 }
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
 .mr-80 {
   margin-right: 20rem;
 }
@@ -1163,9 +1166,6 @@ select {
 }
 .mr-1 {
   margin-right: 0.25rem;
-}
-.mb-10 {
-  margin-bottom: 2.5rem;
 }
 .mt-16 {
   margin-top: 4rem;
@@ -1236,6 +1236,9 @@ select {
 .h-32 {
   height: 8rem;
 }
+.h-1\/2 {
+  height: 50%;
+}
 .h-96 {
   height: 24rem;
 }
@@ -1253,9 +1256,6 @@ select {
 }
 .h-80 {
   height: 20rem;
-}
-.h-1\/2 {
-  height: 50%;
 }
 .h-60 {
   height: 15rem;
@@ -1976,6 +1976,9 @@ select {
 .text-justify {
   text-align: justify;
 }
+.indent-5 {
+  text-indent: 1.25rem;
+}
 .align-bottom {
   vertical-align: bottom;
 }
@@ -2012,20 +2015,20 @@ select {
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
-}
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
 }
 .text-7xl {
   font-size: 4.5rem;
+  line-height: 1;
+}
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.text-5xl {
+  font-size: 3rem;
   line-height: 1;
 }
 .font-medium {
@@ -2040,11 +2043,11 @@ select {
 .font-bold {
   font-weight: 700;
 }
-.font-extralight {
-  font-weight: 200;
-}
 .font-black {
   font-weight: 900;
+}
+.font-extralight {
+  font-weight: 200;
 }
 .uppercase {
   text-transform: uppercase;

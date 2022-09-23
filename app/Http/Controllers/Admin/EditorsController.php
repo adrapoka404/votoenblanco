@@ -64,8 +64,8 @@ class EditorsController extends Controller
           $user->save();
         } 
 
-        //$role = Role::where('name', 'Creador de Contenido')->first();
-        //$user->roles()->sync($role->id);
+        $role = Role::where('name', 'Creador de Contenido')->first();
+        $user->roles()->sync($role->id);
         
         $editor['user_id'] = $user->id;
 
@@ -136,8 +136,8 @@ class EditorsController extends Controller
             $user->update();
         }
         
-        //$role = Role::where('name', 'Creador de Contenido')->first();
-        //$user->roles()->sync($role->id);
+        $role = Role::where('name', 'Creador de Contenido')->first();
+        $user->roles()->sync($role->id);
         $upEditor['user_id'] = $user->id;
 
         $editor->update($upEditor);

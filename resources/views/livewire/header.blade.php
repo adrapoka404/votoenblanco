@@ -3,7 +3,38 @@
         <div class="mt-3">
             <x-jet-application-logo />
             <div class="w-full right-0 text-center ">
-                <x-redes-header />
+                <div class="my-5 inline-flex h-5">
+                    @foreach ($configs as $conf)
+                        @if ($conf->tag == 'link_ig' ||
+                            $conf->tag == 'link_fb' ||
+                            $conf->tag == 'link_tw' ||
+                            $conf->tag == 'link_tt' ||
+                            $conf->tag == 'link_yt')
+                            <a href="{{ $conf->value }}" class="inline-flex" target="_blank">
+                                @if ($conf->tag == 'link_ig')
+                                    <img src="{{ asset('img/ig_wine.png') }}" alt=""
+                                        class="mx-5 w-5 h-5 inline-flex">
+                                @endif
+                                @if ($conf->tag == 'link_fb')
+                                    <img src="{{ asset('img/fb_wine.png') }}" alt=""
+                                        class="mx-5 w-5 h-5 inline-flex">
+                                @endif
+                                @if ($conf->tag == 'link_tw')
+                                    <img src="{{ asset('img/tw_wine.png') }}" alt=""
+                                        class="mx-5 w-5 h-5 inline-flex">
+                                @endif
+                                @if ($conf->tag == 'link_tt')
+                                    <img src="{{ asset('img/tt_wine.png') }}" alt=""
+                                        class="mx-5 w-5 h-5 inline-flex">
+                                @endif
+                                @if ($conf->tag == 'link_yt')
+                                    <img src="{{ asset('img/yt_wine.png') }}" alt=""
+                                        class="mx-5 w-5 h-5 inline-flex">
+                                @endif
+                            </a>
+                        @endif
+                    @endforeach
+                </div>
             </div>
         </div>
         <div class="items-center my-auto flex">
@@ -11,13 +42,15 @@
             <div class=" text-right mx-auto">
                 @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Admin</a>
+                        <a href="{{ url('/dashboard') }}"
+                            class="text-sm text-gray-700 dark:text-gray-500 underline">Admin</a>
                         <form method="POST" action="{{ route('logout') }}" x-data>
                             @csrf
                             {!! Form::submit('Cerrar sesión', ['class' => 'ml-4 text-sm text-gray-700 dark:text-gray-500 underline']) !!}
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Cuenta</a>
+                        <a href="{{ route('login') }}"
+                            class="text-sm text-gray-700 dark:text-gray-500 underline">Cuenta</a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
@@ -60,7 +93,8 @@
         <a href="{{ route('web.reportajes') }}" class="text-white menuGral">Reportajes</a>
         <x-submenu>
             @foreach ($reportajes as $reportaje)
-            <x-submenu-link where="{{ route('notas.categorias', $reportaje->slug) }}" text="{{ $reportaje->nombre }}" />
+                <x-submenu-link where="{{ route('notas.categorias', $reportaje->slug) }}"
+                    text="{{ $reportaje->nombre }}" />
             @endforeach
         </x-submenu>
     </div>
@@ -68,7 +102,8 @@
         <a href="{{ route('web.entrevistas') }}" class="text-white menuGral">entrevistas</a>
         <x-submenu>
             @foreach ($entrevistas as $entrevista)
-            <x-submenu-link where="{{ route('notas.categorias', $entrevista->slug) }}" text="{{ $entrevista->nombre }}" />
+                <x-submenu-link where="{{ route('notas.categorias', $entrevista->slug) }}"
+                    text="{{ $entrevista->nombre }}" />
             @endforeach
         </x-submenu>
     </div>
@@ -85,7 +120,8 @@
         <a href="{{ route('web.noticias') }}" class="text-white  menuGral">noticias</a>
         <x-submenu>
             @foreach ($noticias as $noticia)
-            <x-submenu-link where="{{ route('notas.categorias', $noticia->slug) }}" text="{{ $noticia->nombre }}" />
+                <x-submenu-link where="{{ route('notas.categorias', $noticia->slug) }}"
+                    text="{{ $noticia->nombre }}" />
             @endforeach
         </x-submenu>
     </div>
@@ -99,7 +135,8 @@
     </div>
 
     <!-- This example requires Tailwind CSS v2.0+ -->
-    <div class="relative z-10  hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="modalRevista">
+    <div class="relative z-10  hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true"
+        id="modalRevista">
         <!--
       Background backdrop, show/hide based on modal state.
   
@@ -367,12 +404,12 @@
                         $("#labelSlike").html(data.reactions.slikes);
                         $("#labelLike").html(data.reactions.likes);
                         $("#labelNoLike").html(data.reactions.nlikes);
-                        
+
                         $("#slike").attr("src", data.imgs.sLike)
                         $("#like").attr("src", data.imgs.like)
                         $("#nolike").attr("src", data.imgs.nLike)
                     }
-                        
+
                 }
             })
         }

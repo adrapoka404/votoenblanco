@@ -202,62 +202,70 @@
         <span class="text-red-600 text-xs">{{ $message }}</span>
     @enderror
 </div>
-<div class="pb-3 my-2">
-    {!! Form::label('posted', __('Publicar nota en votoenblanco.com.mx'), [
-        'class' => 'text-2xl font-semibold text-black mb-3',
-    ]) !!}
-    <div class="grid grid-cols-2 w-full">
-        <div>
-            {!! Form::label('post_now', 'Publicar en cuanto el editor autorice', []) !!}
-            {!! Form::checkbox(
-                'post_now',
-                1,
-                old('post_now') ? old('post_now') : (isset($post) ? $post->details->posted_now : true),
-                [
-                    'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
-                ],
-            ) !!}
+@if($editor)
+    <div class="pb-3 my-2">
+        {!! Form::label('posted', __('Publicar nota en votoenblanco.com.mx'), [
+            'class' => 'text-2xl font-semibold text-black mb-3',
+        ]) !!}
+        <div class="grid grid-cols-2 w-full">
+            <div>
+                {!! Form::label('post_now', 'Publicar en cuanto el editor autorice', []) !!}
+                {!! Form::checkbox(
+                    'post_now',
+                    1,
+                    old('post_now') ? old('post_now') : (isset($post) ? $post->details->posted_now : true),
+                    [
+                        'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
+                    ],
+                ) !!}
+
+            </div>
+            <div>
+                @error('date')
+                    <span class="text-red-600 text-xs">{{ $message }}</span>
+                @enderror
+                @error('time')
+                    <span class="text-red-600 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
+            <div>
+
+                {!! Form::date('date', old('date') ? old('date') : (isset($post) ? $post->details->posted : ''), []) !!} -
+                {!! Form::time('time', old('time') ? old('time') : (isset($post) ? $post->details->posted_time : ''), []) !!}
+            </div>
+
 
         </div>
-        <div>
+        <div class="pb-3 my-3">
+            {!! Form::label('', __('Nota destacada'), ['class' => 'text-2xl font-semibold text-black mb-3']) !!}
+            <div>
+                {!! Form::label('featured', __('¿Destacar nota?')) !!}
+                {!! Form::checkbox('featured', 1, old('featured') ? old('featured') : (isset($post) ? $post->featured : false), [
+                    'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
+                ]) !!}
+            </div>
+            <div>
+                <small class=" text-xs text-blue top-0">
+                    Remplaza la nota principal del sitio
+                </small>
+            </div>
             @error('date')
                 <span class="text-red-600 text-xs">{{ $message }}</span>
             @enderror
             @error('time')
                 <span class="text-red-600 text-xs">{{ $message }}</span>
             @enderror
+
         </div>
-        <div>
-
-            {!! Form::date('date', old('date') ? old('date') : (isset($post) ? $post->details->posted : ''), []) !!} -
-            {!! Form::time('time', old('time') ? old('time') : (isset($post) ? $post->details->posted_time : ''), []) !!}
-        </div>
-
-
     </div>
-    <div class="pb-3 my-3">
-        {!! Form::label('', __('Nota destacada'), ['class' => 'text-2xl font-semibold text-black mb-3']) !!}
-        <div>
-            {!! Form::label('featured', __('¿Destacar nota?')) !!}
-            {!! Form::checkbox('featured', 1, old('featured') ? old('featured') : (isset($post) ? $post->featured : false), [
-                'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
-            ]) !!}
-        </div>
-        <div>
-            <small class=" text-xs text-blue top-0">
-                Remplaza la nota principal del sitio
-            </small>
-        </div>
-        @error('date')
-            <span class="text-red-600 text-xs">{{ $message }}</span>
-        @enderror
-        @error('time')
-            <span class="text-red-600 text-xs">{{ $message }}</span>
-        @enderror
-
-    </div>
-</div>
-
+@else
+    {!! Form::hidden(
+        'featured',
+        0,
+        old('featured') ? old('featured') : (isset($post) ? $post->featured : false),
+        [],
+    ) !!}
+@endif
 <div class="pb-3 grid grid-cols-2  ">
     <div>
         {!! Form::hidden(
@@ -442,11 +450,12 @@
                 processData: false,
                 contentType: false,
                 success: function(data) {
-                    if (data.success) 
+                    if (data.success)
                         select_image(data.to, data.img)
                 },
                 beforeSend: function() {
-                    $("#popup_images").html('<div class="text-blue animate-pulse ml-12 font-semibold" > Subiendo... </div>');
+                    $("#popup_images").html(
+                        '<div class="text-blue animate-pulse ml-12 font-semibold" > Subiendo... </div>');
                 },
                 error: function(error) {
 
@@ -476,7 +485,7 @@
             })
         }
 
-        function update_images( directory ) {
+        function update_images(directory) {
             $.ajax({
                 url: "{{ route('services.data') }}?directory=" + directory,
                 type: 'GET',

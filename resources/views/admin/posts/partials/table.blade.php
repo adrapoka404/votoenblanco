@@ -11,7 +11,8 @@
             <input type="text" value="{{ $filter_title }}" name="filter_title" id="filter_title"
                 placeholder="Filtrar por contenido">
         </div>
-        <div class="flex-1">
+        <div class="flex-1 text-center">
+            @if($editor)
             <select name="filter_editor" id="filter_editor">
                 <option value="">Filtrar por editor</option>
                 @foreach ($editors as $editor)
@@ -22,6 +23,10 @@
                     @endif
                 @endforeach
             </select>
+            @else
+                {{Auth::user()->name}}
+                <input type="hidden" value="{{ Auth::user()->id }}" name="filter_editor" id="filter_editor">
+            @endif
         </div>
         <div class="flex-1">
             <select name="filter_status" id="filter_status">
@@ -41,7 +46,6 @@
             <label class=" bg-file text-white bg-orange rounded-full m-2 py-1 px-2 inline cursor-pointer w-full"
                 id='btnClearFilter'>Limpiar filtros</label>
         </div>
-
     </div>
     @if ($posts->count() == 0)
         <div class="w-full ">
@@ -71,23 +75,28 @@
                             {{ $post->user->name }}
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            <select name="post[{{ $post->id }}][status]" id="" class="capitalize">
-                                @foreach ($statuses as $status)
-                                    @if ($status->id == $post->status->id)
-                                        <option value="{{ $status->id }}" selected>{{ $status->name }}</option>
-                                    @else
-                                        <option value="{{ $status->id }}">{{ $status->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
+                            @if ($editor)
+                                <select name="post[{{ $post->id }}][status]" id="" class="capitalize">
+                                    @foreach ($statuses as $status)
+                                        @if ($status->id == $post->status->id)
+                                            <option value="{{ $status->id }}" selected>{{ $status->name }}</option>
+                                        @else
+                                            <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            @else
+                                {{ $post->status->name }}
+                            @endif
+
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
 
                             @can('admin.notas.destroy')
                                 <!--form action="" class="inline">
-                                        <a href="{{ route('admin.notas.update', $post->id) }}"
-                                            class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
-                                    </form-->
+                                            <a href="{{ route('admin.notas.update', $post->id) }}"
+                                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
+                                        </form-->
                             @endcan
                             @can('admin.notas.edit')
                                 <a href="{{ route('admin.notas.edit', $post->id) }}"

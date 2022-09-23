@@ -13,7 +13,7 @@
                 <div class="nota body text2xl text-justify">
                     <div class="py-2 my-3">
                         <x-link-fb /> ({{ $post->created_at }})
-                        <x-link-redactor userto="{{ route('notas.editores', $post->editor->id) }}"
+                        <x-link-redactor userto="{{ route('notas.editores', $post->editor->slug) }}"
                             user="{{ $post->editor->name }}" />
                     </div>
                     {!! $post->details->body !!}

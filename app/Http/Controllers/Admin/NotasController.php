@@ -31,29 +31,29 @@ class NotasController extends Controller
 
         $query = $posts->newQuery();
 
-        if($request->has('filter_title')) {
+        if ($request->has('filter_title')) {
             $filter_title = $request->filter_title;
-            $query->where('title', 'like', '%'.$filter_title.'%');
+            $query->where('title', 'like', '%' . $filter_title . '%');
         } else
-        $filter_title = '';
+            $filter_title = '';
 
-        if($request->has('filter_editor')){
+        if ($request->has('filter_editor')) {
             $filter_editor = $request->filter_editor;
-            $query->where('user_create', Editor::find($filter_editor)->id);
+            $query->where('user_create', $filter_editor);
         } else
-        $filter_editor = 0;
+            $filter_editor = 0;
 
-        if($request->has('filter_status')){
+        if ($request->has('filter_status')) {
             $filter_status = $request->filter_status;
             $query->where('status', $filter_status);
         } else
-        $filter_status = 0;
+            $filter_status = 0;
 
         $roles = Auth::user()->roles()->get();
         $editor = false;
 
-        foreach($roles as $role) {
-            if($role->name == 'Coordinación de Contenido Editorial' )
+        foreach ($roles as $role) {
+            if ($role->name == 'Coordinación de Contenido Editorial')
                 $editor = true;
         }
 
@@ -75,7 +75,7 @@ class NotasController extends Controller
         $editors = User::role('Creador de Contenido')->get();
 
         $headers = ['Título', 'Editor', 'Estado', 'Acciones'];
-        //return $editors;
+        
         return view('admin.posts.index', compact('posts', 'headers', 'statuses', 'editor', 'editors', 'filter_status', 'filter_title', 'filter_editor'));
     }
 
@@ -88,7 +88,15 @@ class NotasController extends Controller
     {
         $categories = Category::orderBy('nombre', 'asc')->get();
 
-        return view('admin.posts.create', compact('categories'));
+        $roles = Auth::user()->roles()->get();
+        $editor = false;
+
+        foreach ($roles as $role) {
+            if ($role->name == 'Coordinación de Contenido Editorial')
+                $editor = true;
+        }
+
+        return view('admin.posts.create', compact('categories', 'editor'));
     }
 
     /**
@@ -207,8 +215,16 @@ class NotasController extends Controller
         $post->related = $relateds;
 
         $categories = Category::orderBy('nombre', 'asc')->get();
-        //return $post;
-        return view('admin.posts.edit', compact('categories', 'post'));
+
+        $roles = Auth::user()->roles()->get();
+        $editor = false;
+
+        foreach ($roles as $role) {
+            if ($role->name == 'Coordinación de Contenido Editorial')
+                $editor = true;
+        }
+
+        return view('admin.posts.edit', compact('categories', 'post', 'editor'));
     }
 
     /**

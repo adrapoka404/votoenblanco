@@ -92,6 +92,7 @@ class CategoriesController extends Controller
         $ncategory->slug = Str::lower($slug);
         $ncategory->description = $request->description;
         $ncategory->description_video = $request->description_video;
+        $ncategory->patern_id = $request->patern_id;
 
         $ncategory->update();
         return redirect()->route('admin.categorias.index')->with('info','Categoría ' . $ncategory->nombre . ' editada correctamente');

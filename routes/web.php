@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\CommentsController;
+use App\Http\Controllers\Admin\ConfigsController;
 use App\Http\Controllers\Admin\EditorsController;
 use App\Http\Controllers\Admin\EstatusNotasController;
 use App\Http\Controllers\Admin\NotasController as AdminNotasController;
@@ -111,6 +112,7 @@ Route::get('noticias', [WebviewController::class, 'noticias'])->name('web.notici
 Route::get("web.aboutus", [WebviewController::class, 'aboutus'])->name('web.aboutus');
 Route::get("web.privacy", [WebviewController::class, 'privacy'])->name('web.privacy');
 Route::get("web.team", [WebviewController::class, 'team'])->name('web.team');
+Route::get("web.terms", [WebviewController::class, 'terms'])->name('web.terms');
 
 
 
@@ -150,6 +152,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Rutas para admin comentarios
     Route::resource('admincoments', CommentsController::class)->names('admin.comentarios');
+
+    // Rutas para admin configuraciones
+    Route::resource('adminconfigs', ConfigsController::class)->only('index', 'store')->names('admin.configuraciones');
 });
 
 

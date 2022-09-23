@@ -368,6 +368,17 @@
                         </a>
                         @endcan
                     </div>
+                    <div x-show="sub_open" @click.outside="sub_open = false"
+                        x-bind:class="$store.sidebar.full ? sub_expandedClass : sub_shrinkedClass">
+                        @can('admin.configuraciones.index')
+                        permitido
+                        @endcan
+                        <a href="{{ route('admin.configuraciones.index') }}"
+                            class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">
+                            Links
+                        </a>
+                        
+                    </div>
                 </div>
                 <h1
                     class="bg-gray-dark border-l-4 border-l-gray-dark hover:border-l-wine hover:text-black hover:bg-white cursor-pointer pl-2">

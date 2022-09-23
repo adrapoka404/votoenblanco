@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Category;
+use App\Models\Config;
 use App\Models\Editor;
 use App\Models\User;
 use Livewire\Component;
@@ -36,7 +37,8 @@ class Header extends Component
         if ($cnoticias)
             $noticias = Category::where('patern_id', $cnoticias->id)->orderBy('nombre', 'asc')->get();
 
+        $configs = Config::all();
 
-        return view('livewire.header', compact('editors', 'reportajes', 'entrevistas', 'noticias'));
+        return view('livewire.header', compact('editors', 'reportajes', 'entrevistas', 'noticias', 'configs'));
     }
 }
