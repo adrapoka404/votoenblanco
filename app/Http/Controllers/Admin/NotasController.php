@@ -15,6 +15,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use League\OAuth1\Client\Server\Tumblr;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -25,28 +26,57 @@ class NotasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Post $posts)
     {
-        if (Auth::user()->roles()->get()[0]['name'] == 'Coordinación de Contenido Editorial')
-            $posts      = Post::orderBy('title', 'asc')->paginate(5);
+
+        $query = $posts->newQuery();
+
+        if($request->has('filter_title')) {
+            $filter_title = $request->filter_title;
+            $query->where('title', 'like', '%'.$filter_title.'%');
+        } else
+        $filter_title = '';
+
+        if($request->has('filter_editor')){
+            $filter_editor = $request->filter_editor;
+            $query->where('user_create', Editor::find($filter_editor)->id);
+        } else
+        $filter_editor = 0;
+
+        if($request->has('filter_status')){
+            $filter_status = $request->filter_status;
+            $query->where('status', $filter_status);
+        } else
+        $filter_status = 0;
+
+        $roles = Auth::user()->roles()->get();
+        $editor = false;
+
+        foreach($roles as $role) {
+            if($role->name == 'Coordinación de Contenido Editorial' )
+                $editor = true;
+        }
+
+        if ($editor)
+            $posts      = $query->orderBy('title', 'asc')->paginate(15);
         else
-            $posts      = Post::where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(5);
+            $posts      = $query->where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(15);
 
         $statuses   = PostStatus::all();
 
         foreach ($posts as &$post) {
-            $status = PostStatus::find($post->status);
-            $post->status = $status;
+            $post->status = PostStatus::find($post->status);
 
-            $user = User::find($post->user_create);
-            $post->user = $user;
+            $post->user = User::find($post->user_create);
 
-            $post->editor = Editor::where('user_id', $user->id)->first();
+            $post->editor = Editor::where('user_id', $post->user->id)->first();
         }
 
+        $editors = User::role('Creador de Contenido')->get();
+
         $headers = ['Título', 'Editor', 'Estado', 'Acciones'];
-        //return $post;
-        return view('admin.posts.index', compact('posts', 'headers', 'statuses'));
+        //return $editors;
+        return view('admin.posts.index', compact('posts', 'headers', 'statuses', 'editor', 'editors', 'filter_status', 'filter_title', 'filter_editor'));
     }
 
     /**

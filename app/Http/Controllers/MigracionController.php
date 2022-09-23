@@ -29,7 +29,7 @@ class MigracionController extends Controller
         $st_date_end    = strtotime('2022-09-22');
         $daystrtotime   = 86400;
         $existen        = 0;
-        $migradas        = 0;
+        $migradas       = 0;
 
         $days       = [];
         $relateds   = [];
@@ -74,8 +74,8 @@ class MigracionController extends Controller
             $days[] = date('Y-m-d', $dat);
 
 
-        $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/".$name_file, "w");
-
+        $file = fopen("C:/xampp/htdocs/votoenblanco/storage/logs/".$name_file, "w");
+        //$file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/".$name_file, "w");
         foreach ($days as $day) {
             fwrite($file, "Comenzamos con " . $day . PHP_EOL);
             fwrite($file, "Siendo las " . date('Y:m:d H:m:s') . PHP_EOL);
@@ -165,7 +165,8 @@ class MigracionController extends Controller
                     try {
                         $name = time() . rand(1, 5) . '.jpg';
                         $wp_imagen = file_get_contents($post_wp->image);
-                        $new_image = '/home/imvdeme1/testvb/storage/app/public/posts/migration/' . $name;
+                        $new_image = 'C:/xampp/htdocs/votoenblanco/storage/app/posts/migration/' . $name;
+                        //$new_image = '/home/imvdeme1/testvb/storage/app/public/posts/migration/' . $name;
                         fwrite($file, "Se copia imagen de " . $post_wp->image . " a la ruta " . $new_image . PHP_EOL);
                         $new_url = 'posts/migration/' . $name;
                         $save_in = file_put_contents($new_image, $wp_imagen);
@@ -189,9 +190,7 @@ class MigracionController extends Controller
                             $category = "omite";
                     }
                 }
-                //$esta = '/home/imvdeme1/testvb/storage/app/public/migration/'.$name;
-                //$vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$name;
-                //copy($esta, $vaPara);
+                
                 $post_wp->omitir = false;
                 if (count($post_wp->categories) == 1 && $post_wp->categories[0] == 'omite') {
                     return $post_wp->categories;
@@ -211,7 +210,8 @@ class MigracionController extends Controller
                             $descripcionytextsocial     = $post_wp->post_title;
 
 
-                        $post->user_create          = 22;//ID del usuario editor de las notas
+                        //$post->user_create          = 22;//ID del usuario editor de las notas
+                        $post->user_create          = 13;//ID del usuario editor de las notas
                         $post->title                = $post_wp->post_title;
                         $post->slug                 = $post_wp->post_name;
                         $post->description          =  $descripcionytextsocial;
@@ -258,6 +258,7 @@ class MigracionController extends Controller
                         }
                         fwrite($file, "Concluye la migracion de la nota " . $post_wp->post_title . " siendo las " . date('Y-m-d H:m:s') . PHP_EOL);
                         fwrite($file, "------------------------------------------------ END ------------------------------------------------------" . PHP_EOL . PHP_EOL);
+                        $migradas++;
                     } else
                         fwrite($file, "EL post " . $post_wp->post_title . " ya existe" . PHP_EOL);
                 } else {
@@ -293,9 +294,10 @@ class MigracionController extends Controller
             }
         }
 
+        fwrite($file, "Notas encontradas: ". $existen ." migradas " . $migradas . PHP_EOL);
         fwrite($file, "Concluye el proceso de migracion siendo las " . date('Y-m-d H:m:s') . PHP_EOL);
         fclose($file);
-        exit('ñ.ñ');
+        exit("Notas encontradas: ". $existen ." migradas " . $migradas);
     }
 
 

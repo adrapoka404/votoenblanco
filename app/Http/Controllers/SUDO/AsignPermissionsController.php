@@ -31,7 +31,7 @@ class AsignPermissionsController extends Controller
     }
 
     public function update(Request $request) {
-        return $request;
+        //return $request;
         $user = User::find($request->user_id);
         
         if(isset($request->roles ))
