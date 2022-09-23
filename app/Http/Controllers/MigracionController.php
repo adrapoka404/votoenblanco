@@ -74,11 +74,11 @@ class MigracionController extends Controller
             $days[] = date('Y-m-d', $dat);
 
 
-        $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/".$name_file, "w");
+//        $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/".$name_file, "w");
 
         foreach ($days as $day) {
-            fwrite($file, "Comenzamos con " . $day . PHP_EOL);
-            fwrite($file, "Siendo las " . date('Y:m:d H:m:s') . PHP_EOL);
+            //fwrite($file, "Comenzamos con " . $day . PHP_EOL);
+            //fwrite($file, "Siendo las " . date('Y:m:d H:m:s') . PHP_EOL);
             $posts = DB::connection('mysql_wp')
                 ->table('wp_posts')
                 ->where('post_type', 'post')
@@ -86,7 +86,7 @@ class MigracionController extends Controller
                 ->where('post_date', 'like', $day . '%')
                 ->orderBy('id', 'ASC')
                 ->get();
-//return $posts;
+return $posts;
           fwrite($file, "Se obtienen " . $posts->count() . PHP_EOL);
             $existen += $posts->count();
             foreach ($posts as &$post_wp) {
