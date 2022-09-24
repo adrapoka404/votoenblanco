@@ -358,7 +358,16 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </div>
-                    
+                    <div x-show="sub_open" @click.outside="sub_open = false"
+                        x-bind:class="$store.sidebar.full ? sub_expandedClass : sub_shrinkedClass">
+                        @can('admin.anuncios.index')
+                        
+                        <a href="{{ route('admin.anuncios.index') }}"
+                            class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">
+                            Anuncios
+                        </a>
+                        @endcan
+                    </div>
                     <div x-show="sub_open" @click.outside="sub_open = false"
                         x-bind:class="$store.sidebar.full ? sub_expandedClass : sub_shrinkedClass">
                         @can('admin.videogalerias.index')
@@ -371,13 +380,12 @@
                     <div x-show="sub_open" @click.outside="sub_open = false"
                         x-bind:class="$store.sidebar.full ? sub_expandedClass : sub_shrinkedClass">
                         @can('admin.configuraciones.index')
-                        permitido
-                        @endcan
+                        
                         <a href="{{ route('admin.configuraciones.index') }}"
                             class="bg-gray-dark hover:text-black hover:bg-white border-l-4 border-l-gray-dark hover:border-l-wine pl-2 cursor-pointer ">
                             Links
                         </a>
-                        
+                        @endcan
                     </div>
                 </div>
                 <h1

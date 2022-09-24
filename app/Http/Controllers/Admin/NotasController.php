@@ -321,4 +321,13 @@ class NotasController extends Controller
     {
         //
     }
+
+    public function change_status( Request $request)
+    {
+        $post = Post::find($request->post_id);
+        $post->status = $request->status_id;
+        $post->save();
+
+        return redirect()->route('admin.notas.index')->with('info', __($post->title . ' editado con éxito'));
+    }
 }

@@ -12,7 +12,7 @@ class ServicesController extends Controller
 {
     public function related(Request $request){
         $posts_response = [];
-        $posts_response['Notas'] = Post::where('title', 'like', '%'.$request->search .'%')->get();
+        $posts_response['Notas'] = Post::where('status', 4)->where('title', 'like', '%'.$request->search .'%')->get();
         
         $categories = Category::where('nombre', 'like', '%'.$request->search.'%')->get();
 
@@ -20,7 +20,7 @@ class ServicesController extends Controller
             $postByCategory = Postcategory::where('category_id', $category->id)->get();
 
             foreach($postByCategory as $pbc)
-                $posts_response[$category->nombre][] = Post::find($pbc->post_id);
+                $posts_response[$category->nombre][] = Post::where('status', 4)->where('id',$pbc->post_id)->first();
         }
 
         return $posts_response;
@@ -29,7 +29,7 @@ class ServicesController extends Controller
     public function posts(Request $request){
         
         $posts_response=[];
-        $posts = Post::where('title', 'like', '%'.$request->search .'%')->get();
+        $posts = Post::where('status', 4)->where('title', 'like', '%'.$request->search .'%')->get();
         foreach($posts as $post)   
             $posts_response[$post->id] = $post;
 

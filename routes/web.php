@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\CommentsController;
 use App\Http\Controllers\Admin\ConfigsController;
@@ -123,6 +124,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // rutas para administracion de notas 
     Route::resource('adminnotas', AdminNotasController::class)
         ->names('admin.notas');
+    Route::get('adminnotaschangestatus', [AdminNotasController::class, 'change_status'])->name('admin.notas.change_status');
     //Administracion de categorias
     Route::resource('admincategories', CategoriesController::class)
         ->only('index', 'create', 'store', 'update', 'edit')
@@ -155,6 +157,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Rutas para admin configuraciones
     Route::resource('adminconfigs', ConfigsController::class)->only('index', 'store')->names('admin.configuraciones');
+
+    // Rutas para admin anuncios
+    Route::resource('adminads', AdsController::class)->names('admin.anuncios');
 });
 
 

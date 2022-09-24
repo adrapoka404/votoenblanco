@@ -157,7 +157,7 @@ class NotasController extends Controller
         
         $who = $editor->name;
 
-        $posts = Post::where('user_create', $id )->orderBy('created_at', 'desc')->paginate(15);
+        $posts = Post::where('status', 4)->where('user_create', $id )->orderBy('created_at', 'desc')->paginate(15);
         
         if($posts) {
            foreach($posts as &$post)
@@ -184,7 +184,7 @@ class NotasController extends Controller
             foreach($postCategory as $pc) 
                 $ids[] = $pc->post_id;
 
-                $posts = Post::whereIn('id', $ids)->orderBy('created_at', 'desc')->paginate(15);
+                $posts = Post::where('status', 4)->whereIn('id', $ids)->orderBy('created_at', 'desc')->paginate(15);
                 foreach($posts as &$post)
                     $post->user = User::find($post->user_create);
             }

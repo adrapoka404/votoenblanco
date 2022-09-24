@@ -49,9 +49,9 @@ class WebviewController extends Controller
             $postByCate = Postcategory::where('category_id', $category->id)->offset(0)->limit(2)->orderBy('created_at','desc')->get();
             
             foreach($postByCate as $pbc){
-                $tpost = Post::find($pbc->post_id);  
+                $tpost = Post::where('status', 4)->where('id', $pbc->post_id)->first();  
                 if($tpost)
-                    $categorias[$pbc->post_id] = Post::find($pbc->post_id);  
+                    $categorias[$pbc->post_id] = Post::where('status', 4)->where('id',$pbc->post_id)->first();  
             }
         }
         foreach($categorias as &$cat){
@@ -83,8 +83,8 @@ class WebviewController extends Controller
         $nacionales   = [];
         $deportes     = [];
 
-        $destacada      = Post::where('featured', 1)->orderBy('created_at', 'desc')->first();
-        $destacadas     = Post::where('featured', 1)->orderBy('id', 'desc')->offset(1)->limit(4)->get();
+        $destacada      = Post::where('featured', 1)->where('status', 4)->orderBy('created_at', 'desc')->first();
+        $destacadas     = Post::where('featured', 1)->where('status', 4)->orderBy('id', 'desc')->offset(1)->limit(4)->get();
         
         $categorias     = Category::where('orden', 1)->whereIn('nombre', ['Deportes','Local','Nacional'])->get();
         
@@ -100,17 +100,17 @@ class WebviewController extends Controller
             
             if( strtolower  ($category->nombre) == 'deportes') {//14856 ** boo
                 foreach($postCat as $post)
-                    $deportes[] = Post::find($post->post_id);
+                    $deportes[] = Post::where('status', 4)->where('id',$post->post_id)->first();
             }
 
             if( strtolower  ($category->nombre) == 'local') {
                 foreach($postCat as $post)
-                    $locales[] = Post::find($post->post_id);
+                    $locales[] = Post::where('status', 4)->where('id',$post->post_id)->first();
             }
 
             if( strtolower  ($category->nombre) == 'nacional') {
                 foreach($postCat as $post)
-                    $nacionales[] = Post::find($post->post_id);
+                    $nacionales[] = Post::where('status', 4)->where('id',$post->post_id)->first();
             }
 
         }   

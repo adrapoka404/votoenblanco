@@ -12,19 +12,19 @@
                 placeholder="Filtrar por contenido">
         </div>
         <div class="flex-1 text-center">
-            @if($editor)
-            <select name="filter_editor" id="filter_editor">
-                <option value="">Filtrar por editor</option>
-                @foreach ($editors as $editor)
-                    @if ($filter_editor == $editor->id)
-                        <option value="{{ $editor->id }}" selected>{{ $editor->name }}</option>
-                    @else
-                        <option value="{{ $editor->id }}">{{ $editor->name }}</option>
-                    @endif
-                @endforeach
-            </select>
+            @if ($editor)
+                <select name="filter_editor" id="filter_editor">
+                    <option value="">Filtrar por editor</option>
+                    @foreach ($editors as $editor)
+                        @if ($filter_editor == $editor->id)
+                            <option value="{{ $editor->id }}" selected>{{ $editor->name }}</option>
+                        @else
+                            <option value="{{ $editor->id }}">{{ $editor->name }}</option>
+                        @endif
+                    @endforeach
+                </select>
             @else
-                {{Auth::user()->name}}
+                {{ Auth::user()->name }}
                 <input type="hidden" value="{{ Auth::user()->id }}" name="filter_editor" id="filter_editor">
             @endif
         </div>
@@ -76,7 +76,9 @@
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             @if ($editor)
-                                <select name="post[{{ $post->id }}][status]" id="" class="capitalize">
+                                <select name="post[{{ $post->id }}][status]" id=""
+                                    class="change_status capitalize" data-title="{{ $post->title }}"
+                                    data-post="{{ $post->id }}">
                                     @foreach ($statuses as $status)
                                         @if ($status->id == $post->status->id)
                                             <option value="{{ $status->id }}" selected>{{ $status->name }}</option>
@@ -94,9 +96,9 @@
 
                             @can('admin.notas.destroy')
                                 <!--form action="" class="inline">
-                                            <a href="{{ route('admin.notas.update', $post->id) }}"
-                                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
-                                        </form-->
+                                                <a href="{{ route('admin.notas.update', $post->id) }}"
+                                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Actualizar') }}</a>
+                                            </form-->
                             @endcan
                             @can('admin.notas.edit')
                                 <a href="{{ route('admin.notas.edit', $post->id) }}"
@@ -119,7 +121,20 @@
 @section('jqueryui')
     <script>
         var base = "{{ route('admin.notas.index') }}";
+        var change_status  = "{{ route('admin.notas.change_status', '') }}";
         $(document).ready(function() {
+            $(".change_status").on('change', function() {
+                elemento = $(this)
+                text = "Confirma que deseas cambiar el estado del post " + elemento.data('title') +
+                    ' al estado ' + $("option:selected", this).text();
+                if (confirm(text) == true) {
+                    url = '/?post_id='+elemento.data('post')+'&status_id='+$("option:selected", this).val()
+                    //console.log(change_status + url)
+                    $(location).prop('href', change_status + url)
+                } else {
+                    console.log("You canceled!");
+                }
+            })
             $("#btnClearFilter").on('click', function() {
                 $(location).prop('href', base)
             })
