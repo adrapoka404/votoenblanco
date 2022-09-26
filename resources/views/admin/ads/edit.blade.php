@@ -4,6 +4,7 @@
         'route' => ['admin.anuncios.update', $ad],
         'method' => 'put',
         'atocomplete' => 'off',
+        'files' => true,
         'class' => 'px-5 mx-5',
     ]) !!}
     @include('admin.ads.partials.form')

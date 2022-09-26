@@ -10,7 +10,13 @@
                 @endif
 
                 <x-slot name="description">
-
+                   <div class="h-32 ">
+                    @if(isset($ads_category))
+                        @foreach ($ads_category as $ac)
+                        <img src="{{asset('storage/'.$ac->body)}}" alt="{{$ac->name}}" class=" h-32">
+                        @endforeach
+                    @endif
+                </div>
                 </x-slot>
                 <x-slot name="src">
                     @if (isset($category))

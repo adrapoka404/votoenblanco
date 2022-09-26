@@ -25,7 +25,9 @@ class StoreAdRequest extends FormRequest
     {
         return [
             "name" => "required",
-            "body" => "required",
+            "body" => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            "body_2" => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            "body_3" => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             "status" => "required",
             "orden" => "nullable|numeric",
             "start" => "required",
@@ -38,7 +40,18 @@ class StoreAdRequest extends FormRequest
     {
         return [
             "name.required"     => "El campo Nombre es requerido",
-            "body.required"     => "El campo Cuerpo es requerido",
+            "body.required"    => "El archivo de imagen de tamaño LG es requerido",
+                "body.image"       => "El archivo no es una imagen",
+                "body.mimes"       => "El archivo de imagen no tiene una extension valida. Extensiones permitidas: (jpeg,png,jpg,gif,svg)",
+                "body.max"         => "La imagen no debe superar los 2MB",
+                "body_2.required"    => "El archivo de imagen de tamaño MD es requerido",
+                "body_2.image"       => "El archivo no es una imagen",
+                "body_2.mimes"       => "El archivo de imagen no tiene una extension valida. Extensiones permitidas: (jpeg,png,jpg,gif,svg)",
+                "body_2.max"         => "La imagen no debe superar los 2MB",
+                "body_3.required"    => "El archivo de imagen de tamaño SM es requerido",
+                "body_3.image"       => "El archivo no es una imagen",
+                "body_3.mimes"       => "El archivo de imagen no tiene una extension valida. Extensiones permitidas: (jpeg,png,jpg,gif,svg)",
+                "body_3.max"         => "La imagen no debe superar los 2MB",
             "status.required"   => "El campo estatus es requerido",
             "orden.numeric"     => "El campo orden debe ser numerico",
             "start.required"    => "La fecha de inicio es requerida",

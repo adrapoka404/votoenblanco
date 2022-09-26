@@ -56,7 +56,12 @@
             <x-slot name="description"></x-slot>
             <x-slot name="content">
                 <div class="grid grid-cols-1 lg:grid-cols-2">
-                    <div class=" w-full h-full bg-black text-white text-center"> Publicidad</div>
+                    <div class=" w-full h-full bg-black text-white text-center"> 
+                    @foreach ($home_local as $hl)
+                    <img src="{{asset('storage/'.$hl->body)}}" alt="{{$hl->name}}">
+                        
+                    @endforeach
+                    </div>
                     <div class="px-4 py-5 sm:p-6 bg-white grid md:grid-cols-2 items-center">
                         @foreach ($locales as $local)
                             <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"

@@ -14,7 +14,10 @@
         </div>
     </div>
     <div class="bg-black w-full md:w-1/3 text-center h-96 text-white font-extralight text-2xl m-2">
-        Publicidad
+        @foreach ($home_lateral as $hl)
+                    <img src="{{asset('storage/'.$hl->body)}}" alt="{{$hl->name}}">
+                        
+                    @endforeach
     </div>
 
 </div>

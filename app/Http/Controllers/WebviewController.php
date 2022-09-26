@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ad;
 use App\Models\Category;
 use App\Models\Editor;
 use App\Models\Post;
@@ -120,6 +121,15 @@ class WebviewController extends Controller
         foreach ($editors as &$editor)
             $editor->user = User::find($editor->user_id);
 
-        return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors'));
+        $home_local     = null;
+        $ads = Ad::where('status', 1)->get();
+
+        foreach($ads as $ad) {
+            $sections = unserialize($ad->sections);
+                if(in_array('home_local', $sections))
+                $home_local[] = $ad;
+        }
+        //return $home_lateral;
+        return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors','home_local'));
     }
 }

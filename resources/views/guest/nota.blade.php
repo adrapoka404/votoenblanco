@@ -43,11 +43,17 @@
                     <div>Sin notas relacionadas</div>
                 @endif
 
-                <div class="ml-5 h-96 bg-black text-white text-center">Publicidad</div>
+                <div class="ml-5 h-96 bg-black text-white text-center">
+                    @foreach ($ads_lateral as $al)
+                    <img src="{{asset('storage/'.$al->body)}}" alt="{{$al->name}}">
+                    @endforeach
+                </div>
             </div>
         </div>
         <div class="bg-black  my-auto h-96 text-white text-center mb-10">
-            Publicidad
+            @foreach ($ads_fin as $af)
+                    <img src="{{asset('storage/'.$af->body)}}" alt="{{$af->name}}" class="h-96 mx-auto">
+                    @endforeach
         </div>
         <div class="py-10">
             <x-title-dark>Comentarios</x-title-dark>

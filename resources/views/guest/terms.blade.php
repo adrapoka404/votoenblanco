@@ -6,7 +6,7 @@
 
                 <div class="flex h-96 text-right items-end text-white">
                     <div class=" w-full font-bold text-4xl h-20 mb-10">
-                        <span class="mx-10 px-10 text-5xl"> Aviso legal y terminos y condiciones de uso</span>
+                        <span class="mx-10 px-10 text-5xl"> Aviso legal y términos y condiciones de uso</span>
                     </div>
 
                 </div>

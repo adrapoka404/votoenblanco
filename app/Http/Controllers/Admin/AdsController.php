@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAdRequest;
 use App\Models\Ad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AdsController extends Controller
 {
@@ -45,15 +46,45 @@ class AdsController extends Controller
      */
     public function store(StoreAdRequest $request)
     {
+        
+        $in = 'public/ads';
+        $aqui = Storage::put($in,$request->file('body'));
+        //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
+        $aqui = str_replace('public/','', $aqui);
+        $esta = '/home/imvdeme1/testvb/storage/app/public/'.$aqui;
+        $vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$aqui;
+        copy($esta, $vaPara);
+        
+
+        $aqui_2 = Storage::put($in,$request->file('body_2'));
+        //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
+        $aqui_2 = str_replace('public/','', $aqui);
+        $esta = '/home/imvdeme1/testvb/storage/app/public/'.$aqui;
+        $vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$aqui;
+        copy($esta, $vaPara);
+        
+        
+
+        $aqui_3 = Storage::put($in,$request->file('body_3'));
+        //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
+        $aqui_3 = str_replace('public/','', $aqui);
+        $esta = '/home/imvdeme1/testvb/storage/app/public/'.$aqui;
+        $vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$aqui;
+        copy($esta, $vaPara);
+        
+        
         $ad = new Ad();
         $ad->user_create =  Auth::user()->id;
         $ad->name =  $request->name;
-        $ad->body =  $request->body;
+        $ad->body =  $aqui;
+        $ad->body_2 =  $aqui_2;
+        $ad->body_3 =  $aqui_3;
         $ad->status =  $request->status;
         $ad->orden =  $request->orden;
         $ad->start =  $request->start;
         $ad->end =  $request->end;
         $ad->sections =  serialize($request->sections);
+
         $ad->save();
 
         return redirect()->route('admin.anuncios.index')->with('info', 'Anuncio ' . $ad->name . ' creado con exito');

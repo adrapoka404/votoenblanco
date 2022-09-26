@@ -3,6 +3,8 @@
     {!! Form::open([
         'route' => 'admin.anuncios.store',
         'atocomplete' => 'off',
+        'atocomplete' => 'off',
+        'files' => true,
         'class' => 'px-5 mx-5',
     ]) !!}
     @include('admin.ads.partials.form')

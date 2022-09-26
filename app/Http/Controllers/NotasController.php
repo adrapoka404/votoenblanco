@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Livewire\Posts;
 use App\Http\Requests\StoreComentsRequest;
+use App\Models\Ad;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Editor;
@@ -144,7 +145,21 @@ class NotasController extends Controller
         SEOTools::twitter()->setSite('@websolutionstuff');
         SEOTools::jsonLd()->addImage('https://websolutionstuff.com/frontTheme/assets/images/logo.png');
 
-        return view('guest.nota', compact('post')); 
+        $ads_lateral     = null;
+        $ads_fin     = null;
+        $ads = Ad::where('status', 1)->get();
+
+        foreach($ads as $ad) {
+            $sections = unserialize($ad->sections);
+                if(in_array('view_nota_lateral', $sections))
+                $ads_lateral[] = $ad;
+
+                if(in_array('view_nota_fin', $sections))
+                $ads_fin[] = $ad;
+        }
+
+
+        return view('guest.nota', compact('post', 'ads_lateral', 'ads_fin')); 
     }
 
     public function editores($id)
@@ -168,6 +183,7 @@ class NotasController extends Controller
         
         $elEditor->vistas = $elEditor->vistas + 1;
         $elEditor->save();
+
            // return $posts;
         return view('guest.notas', compact('editor','posts','who')); 
     }
@@ -191,7 +207,17 @@ class NotasController extends Controller
         $category->vistas = $category->vistas + 1;
         $category->save();
             
-        return view('guest.notas', compact('category', 'posts', 'who')); 
+    
+        $ads_category     = null;
+        $ads = Ad::where('status', 1)->get();
+
+        foreach($ads as $ad) {
+            $sections = unserialize($ad->sections);
+                if(in_array('view_category', $sections))
+                $ads_category[] = $ad;
+        }
+
+        return view('guest.notas', compact('category', 'posts', 'who', 'ads_category')); 
     }
     
     public function reaction(Request $request){
