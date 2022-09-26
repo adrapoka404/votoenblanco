@@ -66,7 +66,7 @@
             </div>
             <div class="ml-5 my-5">
                 <x-actionfooter href="{{ route('web.terms') }}" :active="request()->routeIs('#')">
-                    {{ __('aviso legal y terminos y condiciones de uso') }}
+                    {{ __('aviso legal y términos y condiciones de uso') }}
                 </x-actionfooter>
             </div>
         </div>

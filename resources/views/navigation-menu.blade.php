@@ -66,7 +66,9 @@
 
     <h1 class="text-white font-black py-4"
         x-bind:class="$store.sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 xm:px-2'">
-        <a href="/">LOGO</a>
+        <a href="/">
+        <img src="{{asset('img/admin_home.png')}}" alt="">
+        </a>
     </h1>
 
     <div class="px-4 space-y-2">
