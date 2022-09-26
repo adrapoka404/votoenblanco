@@ -110,6 +110,16 @@ class NotasController extends Controller
 
         //return $request;
         //$nurl = Storage::put('public/posts/'.date('Y_m'),$request->file('image_principal'));
+
+        //Es creador de contenido?
+        $roles = Auth::user()->roles()->get();
+        $editor = false;
+
+        foreach ($roles as $role) {
+            if ($role->name == 'Creador de contenido')
+                $editor = true;
+        }
+
         $post = new Post();
 
         $post->user_create          = Auth::user()->id;
@@ -120,7 +130,11 @@ class NotasController extends Controller
         $post->social_text          = $request->social_text;
         $post->slug_description     = strtolower(str_replace(' ', '-', $request->description));
         $post->image_principal      = $request->image_principal;
+        
+        if(!$editor)
+            $post->status = 4;
 
+            //return $post;
         $post->save();
 
         $post_details = new PostDetails();
