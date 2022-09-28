@@ -188,6 +188,7 @@ Route::get('clear-cache-permisos', function () {
 });
 
 Route::resource('migracion', MigracionController::class)->names('migracion');
+Route::get('migracion_csv', [MigracionController::class, 'read_csv'])->name('migracion_csv');
 
 //probando ogin con FB
 Route::get('auth/facebook', [SocialController::class, 'redirectFacebook']);

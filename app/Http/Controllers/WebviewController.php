@@ -129,7 +129,7 @@ class WebviewController extends Controller
                 if(in_array('home_local', $sections))
                 $home_local[] = $ad;
         }
-        //return $home_lateral;
+        
         return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors','home_local'));
     }
 }

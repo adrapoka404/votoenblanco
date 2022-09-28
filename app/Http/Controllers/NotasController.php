@@ -7,6 +7,7 @@ use App\Http\Requests\StoreComentsRequest;
 use App\Models\Ad;
 use App\Models\Categories;
 use App\Models\Category;
+use App\Models\DailyStatistic;
 use App\Models\Editor;
 use App\Models\Post;
 use App\Models\Postcategory;
@@ -53,8 +54,8 @@ class NotasController extends Controller
     {
         
         $post = Post::where('slug', $id)->first();
-
-        //return $post;
+        $headers = apache_request_headers();
+        
         $id = $post->id;
         $post->views = $post->views + 1;
         $post->save();
@@ -157,7 +158,14 @@ class NotasController extends Controller
                 if(in_array('view_nota_fin', $sections))
                 $ads_fin[] = $ad;
         }
+//estadistcas
+        $diario = new DailyStatistic();
+        
+        $diario->post_id = $post->id;
+        $diario->url    = url()->current();
+        $diario->reference = serialize($headers);
 
+        $diario->save();
 
         return view('guest.nota', compact('post', 'ads_lateral', 'ads_fin')); 
     }
@@ -185,6 +193,16 @@ class NotasController extends Controller
         $elEditor->save();
 
            // return $posts;
+           $headers = apache_request_headers();
+
+           $diario = new DailyStatistic();
+           
+           $diario->user_id = $elEditor->id;
+           $diario->url    = url()->current();
+           $diario->reference = serialize($headers);
+   
+           $diario->save();
+
         return view('guest.notas', compact('editor','posts','who')); 
     }
 
@@ -216,6 +234,16 @@ class NotasController extends Controller
                 if(in_array('view_category', $sections))
                 $ads_category[] = $ad;
         }
+
+        $headers = apache_request_headers();
+           
+           $diario = new DailyStatistic();
+           
+           $diario->category_id = $category->id;
+           $diario->url    = url()->current();
+           $diario->reference = serialize($headers);
+   
+           $diario->save();
 
         return view('guest.notas', compact('category', 'posts', 'who', 'ads_category')); 
     }

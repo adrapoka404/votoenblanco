@@ -23,13 +23,15 @@ class MigracionController extends Controller
      */
     public function index()
     {
+
         ini_set('max_execution_time', 86400); // Extender a 1 dia
-        $name_file      = "migracion_septiembre_2022.txt";
-        $st_date_start  = strtotime('2022-09-01');
-        $st_date_end    = strtotime('2022-09-22');
+        $name_file      = "migracion_septiembre_2022_del_22_al_26.txt";
+        $st_date_start  = strtotime('2022-09-23');
+        $st_date_end    = strtotime('2022-09-26');
         $daystrtotime   = 86400;
         $existen        = 0;
         $migradas       = 0;
+        $app            = env('APP_URL');
 
         $days       = [];
         $relateds   = [];
@@ -74,8 +76,13 @@ class MigracionController extends Controller
             $days[] = date('Y-m-d', $dat);
 
 
-        $file = fopen("C:/xampp/htdocs/votoenblanco/storage/logs/".$name_file, "w");
-        //$file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/".$name_file, "w");
+
+        if ($app == 'http://votoenblanco.test')
+            $file = fopen("C:/xampp/htdocs/votoenblanco/storage/logs/" . $name_file, "w");
+        else
+            $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/" . $name_file, "w");
+
+
         foreach ($days as $day) {
             fwrite($file, "Comenzamos con " . $day . PHP_EOL);
             fwrite($file, "Siendo las " . date('Y:m:d H:m:s') . PHP_EOL);
@@ -86,8 +93,8 @@ class MigracionController extends Controller
                 ->where('post_date', 'like', $day . '%')
                 ->orderBy('id', 'ASC')
                 ->get();
-//return $posts;
-          fwrite($file, "Se obtienen " . $posts->count() . PHP_EOL);
+            //return $posts;
+            fwrite($file, "Se obtienen " . $posts->count() . PHP_EOL);
             $existen += $posts->count();
             foreach ($posts as &$post_wp) {
                 fwrite($file, "---------------------------------------- START -----------------------------------" . PHP_EOL);
@@ -157,7 +164,7 @@ class MigracionController extends Controller
                 $post_wp->tags          = $tags;
                 $post_wp->seos          = $seos;
                 $post_wp->terms         = $terms;
-//return $post_wp;
+                //return $post_wp;
                 if (isset($images[0])) {
                     $images = $images[0];
 
@@ -165,8 +172,11 @@ class MigracionController extends Controller
                     try {
                         $name = time() . rand(1, 5) . '.jpg';
                         $wp_imagen = file_get_contents($post_wp->image);
-                        $new_image = 'C:/xampp/htdocs/votoenblanco/storage/app/posts/migration/' . $name;
-                        //$new_image = '/home/imvdeme1/testvb/storage/app/public/posts/migration/' . $name;
+                        if ($app == 'http://votoenblanco.test')
+                            $new_image = 'C:/xampp/htdocs/votoenblanco/storage/app/posts/migration/' . $name;
+                        else
+                            $new_image = '/home/imvdeme1/testvb/storage/app/public/posts/migration/' . $name;
+
                         fwrite($file, "Se copia imagen de " . $post_wp->image . " a la ruta " . $new_image . PHP_EOL);
                         $new_url = 'posts/migration/' . $name;
                         $save_in = file_put_contents($new_image, $wp_imagen);
@@ -190,7 +200,7 @@ class MigracionController extends Controller
                             $category = "omite";
                     }
                 }
-                
+
                 $post_wp->omitir = false;
                 if (count($post_wp->categories) == 1 && $post_wp->categories[0] == 'omite') {
                     return $post_wp->categories;
@@ -209,9 +219,11 @@ class MigracionController extends Controller
                         else
                             $descripcionytextsocial     = $post_wp->post_title;
 
+                        if ($app == 'http://votoenblanco.test')
+                            $post->user_create          = 13; //ID del usuario editor en local
+                        else
+                            $post->user_create          = 22; //ID del usuario editor en produccion
 
-                        //$post->user_create          = 22;//ID del usuario editor de las notas
-                        $post->user_create          = 13;//ID del usuario editor de las notas
                         $post->title                = $post_wp->post_title;
                         $post->slug                 = $post_wp->post_name;
                         $post->description          =  $descripcionytextsocial;
@@ -294,12 +306,50 @@ class MigracionController extends Controller
             }
         }
 
-        fwrite($file, "Notas encontradas: ". $existen ." migradas " . $migradas . PHP_EOL);
+        fwrite($file, "Notas encontradas: " . $existen . " migradas " . $migradas . PHP_EOL);
         fwrite($file, "Concluye el proceso de migracion siendo las " . date('Y-m-d H:m:s') . PHP_EOL);
         fclose($file);
-        exit("Notas encontradas: ". $existen ." migradas " . $migradas);
+        exit("Notas encontradas: " . $existen . " migradas " . $migradas);
     }
 
+    public function read_csv()
+    {
+        $hay = 0;
+        $rute = storage_path() . "/app/public/files/estadisticas.csv";
+        if (($open = fopen($rute, "r")) !== FALSE) {
+
+            while (($data = fgetcsv($open, 1000, ",")) !== FALSE) {
+                return $data;
+                if(!isset($data[2]))
+                    continue;
+
+                if (isset($data[2]) && $data[2] == 'http://votoenblanco.com.mx/') {
+                    continue;
+                } else {
+
+                    $vistas = $data[1];
+                    $buscar = $data[2];
+                    $buscar = str_replace('https://votoenblanco.com.mx/', '', $buscar);
+                    $buscar = str_replace('http://votoenblanco.com.mx/', '', $buscar);
+                    $buscar = explode('/', $buscar);
+
+                   if(isset($buscar[1]))
+                        $slug = $buscar[1];
+                    
+                    $post = Post::where('slug', $slug)->first();
+                    
+                    if ($post != null) {
+                        $post->views += $vistas;
+                        $post->save();
+                    }
+                }
+                $hay++;
+            }
+
+            fclose($open);
+        }
+        return "Concluido, revisar " . $hay;
+    }
 
     /**
      * Show the form for creating a new resource.
