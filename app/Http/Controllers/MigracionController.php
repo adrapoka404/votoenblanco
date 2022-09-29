@@ -316,19 +316,20 @@ class MigracionController extends Controller
     {
         $hay = 0;
         $rute = storage_path() . "/app/public/files/estadisticas.csv";
+
         if (($open = fopen($rute, "r")) !== FALSE) {
 
             while (($data = fgetcsv($open, 1000, ",")) !== FALSE) {
-                return $data;
+                
                 if(!isset($data[2]))
                     continue;
 
-                if (isset($data[2]) && $data[2] == 'http://votoenblanco.com.mx/') {
+                if (isset($data[2]) && mb_convert_encoding($data[2], 'UTF-8', 'UTF-8') == 'http://votoenblanco.com.mx/') {
                     continue;
                 } else {
 
                     $vistas = $data[1];
-                    $buscar = $data[2];
+                    $buscar = mb_convert_encoding($data[2], 'UTF-8', 'UTF-8');
                     $buscar = str_replace('https://votoenblanco.com.mx/', '', $buscar);
                     $buscar = str_replace('http://votoenblanco.com.mx/', '', $buscar);
                     $buscar = explode('/', $buscar);
@@ -347,7 +348,7 @@ class MigracionController extends Controller
             }
 
             fclose($open);
-        }
+        }else   echo "no se lee";
         return "Concluido, revisar " . $hay;
     }
 
