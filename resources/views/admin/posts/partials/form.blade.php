@@ -261,8 +261,7 @@
 @else
     {!! Form::hidden(
         'featured',
-        0,
-        old('featured') ? old('featured') : (isset($post) ? $post->featured : false),
+        old('featured') ? old('featured') : (isset($post) ? $post->featured : 0),
         [],
     ) !!}
 @endif
