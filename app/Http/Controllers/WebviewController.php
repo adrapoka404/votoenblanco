@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ad;
 use App\Models\Category;
+use App\Models\DailyStatistic;
 use App\Models\Editor;
 use App\Models\Post;
 use App\Models\Postcategory;
@@ -78,7 +79,7 @@ class WebviewController extends Controller
         return view('guest/terms');
     }
 
-    public function welcome(){
+    public function welcome() {
         
         $locales      = [];
         $nacionales   = [];
@@ -130,6 +131,15 @@ class WebviewController extends Controller
                 $home_local[] = $ad;
         }
         
+        $headers = apache_request_headers();
+           
+        $diario = new DailyStatistic();
+        
+        $diario->url    = url()->current();
+        $diario->reference = serialize($headers);
+
+        $diario->save();
+
         return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors','home_local'));
     }
 }
