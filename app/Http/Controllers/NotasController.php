@@ -352,7 +352,7 @@ class NotasController extends Controller
             $coment['user_id'] = $user->id;
         
         //demomento
-        $coment['status'] = 1;
+        $coment['status'] = 0;
 
         PostComent::create($coment);
 
