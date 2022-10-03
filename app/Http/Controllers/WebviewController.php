@@ -95,12 +95,11 @@ class WebviewController extends Controller
         foreach($destacadas as &$desta){
             $desta->redactor = User::find($desta->user_create);
         }
-        //return $destacadas;
-
+        
         foreach($categorias as $category) {
             $postCat = Postcategory::where('category_id', $category->id)->orderBy('created_at', 'desc')->limit(2)->get();
             
-            if( strtolower  ($category->nombre) == 'deportes') {//14856 ** boo
+            if( strtolower  ($category->nombre) == 'deportes') {
                 foreach($postCat as $post)
                     $deportes[] = Post::where('status', 4)->where('id',$post->post_id)->first();
             }

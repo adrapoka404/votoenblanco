@@ -56,24 +56,26 @@
             <x-slot name="description"></x-slot>
             <x-slot name="content">
                 <div class="grid grid-cols-1 lg:grid-cols-2">
-                    <div class=" w-full h-full bg-black text-white text-center"> 
-                    @foreach ($home_local as $hl)
-                    <img src="{{asset('storage/'.$hl->body)}}" alt="{{$hl->name}}">
-                        
-                    @endforeach
+                    <div class=" w-full h-full bg-black text-white text-center">
+                        @foreach ($home_local as $hl)
+                            <img src="{{ asset('storage/' . $hl->body) }}" alt="{{ $hl->name }}">
+                        @endforeach
                     </div>
                     <div class="px-4 py-5 sm:p-6 bg-white grid md:grid-cols-2 items-center">
-                        @foreach ($locales as $local)
-                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
-                                style="background-image: url({{ asset('storage/' . $local->image_principal) }})">
-                                <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                    <a class="mr-5 my-auto cursor-pointer"
-                                        href="{{ route('notas.show', $local->slug) }}">
-                                        {{ $local->title }}
-                                    </a>
+                        @if (!empty($locales))
+                            @foreach ($locales as $local)
+                                <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
+                                    style="background-image: url({{ asset('storage/' . $local->image_principal) }})">
+                                    <div
+                                        class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
+                                        <a class="mr-5 my-auto cursor-pointer"
+                                            href="{{ route('notas.show', $local->slug) }}">
+                                            {{ $local->title }}
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </x-slot>
@@ -87,18 +89,19 @@
                     @foreach ($editors as $editor)
                         <div class="grid grid-cols-2">
                             <div>
-                                <a href="{{route('notas.editores', $editor->user->slug)}}">
-                                <img class=" h-52 rounded-full object-cover object-center mb-4 "
-                                    src="{{ $editor->user->profile_photo_url }}" alt="{{ $editor->user->name }}" />
+                                <a href="{{ route('notas.editores', $editor->user->slug) }}">
+                                    <img class=" h-52 rounded-full object-cover object-center mb-4 "
+                                        src="{{ $editor->user->profile_photo_url }}"
+                                        alt="{{ $editor->user->name }}" />
                                 </a>
                             </div>
                             <div class="text-left items-center content-center   ">
                                 <div class="ml-5 my-auto">
                                     <div class="text-red-800 font-bold w-full">
-                                        <a href="{{route('notas.editores', $editor->user->slug)}}">
+                                        <a href="{{ route('notas.editores', $editor->user->slug) }}">
                                             {{ $editor->user->name }}
                                         </a>
-                                        </div>
+                                    </div>
                                     <small>{{ $editor->specialty }}</small>
                                 </div>
                             </div>
@@ -114,17 +117,19 @@
             <x-slot name="description"></x-slot>
             <x-slot name="content">
                 <div class=" grid md:grid-cols-2 items-center mx-auto   ">
-                    @foreach ($nacionales as $nacional)
-                        <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
-                            style="background-image: url({{ asset('storage/' . $nacional->image_principal) }})">
-                            <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                <a class="mr-5 my-auto cursor-pointer "
-                                    href="{{ route('notas.show', $nacional->slug) }}">
-                                    {{ $nacional->title }}
-                                </a>
+                    @if (!empty($nacionales))
+                        @foreach ($nacionales as $nacional)
+                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
+                                style="background-image: url({{ asset('storage/' . $nacional->image_principal) }})">
+                                <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
+                                    <a class="mr-5 my-auto cursor-pointer "
+                                        href="{{ route('notas.show', $nacional->slug) }}">
+                                        {{ $nacional->title }}
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                 </div>
             </x-slot>
         </x-jet-action-section>
@@ -135,18 +140,19 @@
             <x-slot name="description"></x-slot>
             <x-slot name="content">
                 <div class=" grid md:grid-cols-2 items-center mx-auto   ">
-                    @foreach ($deportes as $deporte)
-                        <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
-                            style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
-                            <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                <a class="mr-5 my-auto cursor-pointer"
-                                    href="{{ route('notas.show', $deporte->slug) }}">
-                                    {{ $deporte->title }}
-                                </a>
+                    @if (!empty($deportes))
+                        @foreach ($deportes as $deporte)
+                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
+                                style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
+                                <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
+                                    <a class="mr-5 my-auto cursor-pointer"
+                                        href="{{ route('notas.show', $deporte->slug) }}">
+                                        {{ $deporte->title }}
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-
+                        @endforeach
+                    @endif
                 </div>
             </x-slot>
         </x-jet-action-section>
