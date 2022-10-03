@@ -138,7 +138,7 @@ class WebviewController extends Controller
         $diario->reference = serialize($headers);
 
         $diario->save();
-
+return $nacionales;
         return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors','home_local'));
     }
 }
