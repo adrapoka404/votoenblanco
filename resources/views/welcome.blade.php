@@ -62,8 +62,9 @@
                         @endforeach
                     </div>
                     <div class="px-4 py-5 sm:p-6 bg-white grid md:grid-cols-2 items-center">
-                        @if (!empty($locales))
-                            @foreach ($locales as $local)
+
+                        @foreach ($locales as $local)
+                            @if ($local != null)
                                 <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
                                     style="background-image: url({{ asset('storage/' . $local->image_principal) }})">
                                     <div
@@ -74,8 +75,9 @@
                                         </a>
                                     </div>
                                 </div>
-                            @endforeach
-                        @endif
+                            @endif
+                        @endforeach
+
                     </div>
                 </div>
             </x-slot>
@@ -117,8 +119,8 @@
             <x-slot name="description"></x-slot>
             <x-slot name="content">
                 <div class=" grid md:grid-cols-2 items-center mx-auto   ">
-                    @if (!empty($nacionales))
-                        @foreach ($nacionales as $nacional)
+                    @foreach ($nacionales as $nacional)
+                        @if ($nacional != null)
                             <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
                                 style="background-image: url({{ asset('storage/' . $nacional->image_principal) }})">
                                 <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
@@ -128,8 +130,9 @@
                                     </a>
                                 </div>
                             </div>
-                        @endforeach
-                    @endif
+                        @endif
+                    @endforeach
+
                 </div>
             </x-slot>
         </x-jet-action-section>
@@ -140,8 +143,9 @@
             <x-slot name="description"></x-slot>
             <x-slot name="content">
                 <div class=" grid md:grid-cols-2 items-center mx-auto   ">
-                    @if (!empty($deportes))
-                        @foreach ($deportes as $deporte)
+
+                    @foreach ($deportes as $deporte)
+                        @if ($deport != null)
                             <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
                                 style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
                                 <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
@@ -151,8 +155,9 @@
                                     </a>
                                 </div>
                             </div>
-                        @endforeach
-                    @endif
+                        @endif
+                    @endforeach
+
                 </div>
             </x-slot>
         </x-jet-action-section>
