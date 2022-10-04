@@ -145,7 +145,7 @@
                 <div class=" grid md:grid-cols-2 items-center mx-auto   ">
 
                     @foreach ($deportes as $deporte)
-                        @if ($deport != null)
+                        @if ($deporte != null)
                             <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
                                 style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
                                 <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
