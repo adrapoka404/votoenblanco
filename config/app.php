@@ -203,11 +203,11 @@ return [
         'JsonLd'        => Artesaos\SEOTools\Facades\JsonLd::class,
         'JsonLdMulti'   => Artesaos\SEOTools\Facades\JsonLdMulti::class,
         // or
-        'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
+        'SEO'           => Artesaos\SEOTools\Facades\SEOTools::class,
         //FBSocualite
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Socialite'     => Laravel\Socialite\Facades\Socialite::class,
         //Resezice image
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image'         => Intervention\Image\Facades\Image::class
     ])->toArray(),
 
 ];

@@ -59,12 +59,16 @@
                     <div class=" w-full h-full bg-black text-white text-center">
                         <div id="carouselPanelLocal" class="carousel slide relative" data-bs-ride="carousel">
                             <div class="carousel-inner relative w-full overflow-hidden">
+                                @if(empty($home_local))
+                                <div class="bg-black">Publicidad</div>
+                                @else
                                 @foreach ($home_local as $indx => $hl)
                                     <div
                                         class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
                                         <img src="{{ asset('storage/' . $hl->sections->local->origin) }}" class="block w-full" alt="{{ $hl->name }}" />
                                     </div>
                                 @endforeach
+                                @endif
                             </div>
                             <button
                                 class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
