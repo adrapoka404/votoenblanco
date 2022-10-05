@@ -122,11 +122,11 @@ class WebviewController extends Controller
             $editor->user = User::find($editor->user_id);
 
         $home_local     = null;
-        $ads = Ad::where('status', 1)->get();
-
-        foreach($ads as $ad) {
-            $sections = unserialize($ad->sections);
-                if(in_array('home_local', $sections))
+        $ads = Ad::where('status', 1)->orderBy('orden', 'asc')->get();
+        
+        foreach($ads as &$ad) {
+            $ad->sections = json_decode($ad->sections);
+            if($ad->sections->local)
                 $home_local[] = $ad;
         }
         

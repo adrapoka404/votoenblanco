@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="">
-        <div class="mx-auto flex  my-10 ">
-            <div class=" text-center w-1/3  flex-1 pl-10">
+        <div class="md:mx-10 lg:mx-10 lg:grid lg:grid-cols-3 my-10 ">
+            <div class=" text-center lg:grid w-full lg:pl-10">
                 <div class="text-red-800 text-3xl font-bold mb-5 w-full">
                     @if (strlen($destacada->title) > 75)
                         {{ $destacada->title }}
@@ -14,8 +14,8 @@
 
                 </div>
             </div>
-            <div class="w-1/3 flex-1 items-center content-center ">
-                <div class=" pl-2 pr-5 text-justify">
+            <div class="w-full my-10 lg:grid content-center">
+                <div class="pl-2 pr-5 text-justify">
                     <span class="py-2 my-3 ">
                         <x-link-fb /> ({{ $destacada->created_at }})
                         <x-link-redactor userto="{{ route('notas.editores', $destacada->redactor->slug) }}"
@@ -29,7 +29,7 @@
                 </div>
 
             </div>
-            <div class="w-1/3 flex-1 pl-10">
+            <div class="w-full lg:grid lg:pl-10">
                 <div class="ml-5 text-red-800 font-extralight text-3xl">Destacadas:</div>
                 @foreach ($destacadas as $dest)
                     <div class="ml-5 my-3  inline-flex w-7/8">
@@ -57,9 +57,28 @@
             <x-slot name="content">
                 <div class="grid grid-cols-1 lg:grid-cols-2">
                     <div class=" w-full h-full bg-black text-white text-center">
-                        @foreach ($home_local as $hl)
-                            <img src="{{ asset('storage/' . $hl->body) }}" alt="{{ $hl->name }}">
-                        @endforeach
+                        <div id="carouselPanelLocal" class="carousel slide relative" data-bs-ride="carousel">
+                            <div class="carousel-inner relative w-full overflow-hidden">
+                                @foreach ($home_local as $indx => $hl)
+                                    <div
+                                        class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                        <img src="{{ asset('storage/' . $hl->sections->local->origin) }}" class="block w-full" alt="{{ $hl->name }}" />
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button
+                                class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                                type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button
+                                class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                                type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="next">
+                                <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="px-4 py-5 sm:p-6 bg-white grid md:grid-cols-2 items-center">
 

@@ -7,6 +7,7 @@ window.Alpine = Alpine;
 Alpine.start();
 
 import $ from 'jquery';
+import 'tw-elements';
 window.$ = window.jQuery = $;
 
 //import 'jquery-ui/ui/widgets/datepicker.js';

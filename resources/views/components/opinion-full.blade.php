@@ -11,7 +11,7 @@
                 <div>{{$specialty}}</div>
                 <div>
                     <a href="{{ $href }}"
-                        class="bg-red-800 px-10 text-white rounded-lg font-semibold">notas y aportaciones</a>
+                        class="bg-red-800 md:px-10 block text-white text-center rounded-lg font-semibold ">notas y aportaciones</a>
                 </div>
             </div>
         </div>

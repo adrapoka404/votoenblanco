@@ -129,7 +129,7 @@
         <div class="items-center cursor-pointer" id='buscadortxt'>
             <img src="{{ asset('img/lupita.png') }}" alt="" class=" w-6 my-auto inline">
             <label for="buscadortxt" class="cursor-pointer" id="nosearch">Buscar</label>
-            <input type="text" class=" font-semibold rounded-full hidden text-red-800" placeholder="Nombre nota"
+            <input type="text" class=" font-semibold rounded-full hidden text-red-800 lg:block" placeholder="Nombre nota"
                 id="search">
         </div>
     </div>
@@ -162,7 +162,7 @@
             To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         -->
                 <div
-                    class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 w-1/2">
+                    class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 w-3/4 lg:1/3">
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class=" sm:items-start">
                             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -183,7 +183,7 @@
         </div>
     </div>
 </div>
-<div class="grid gridcols-3 md:grid-cols-3 uppercase text-2xl text-white items-center bg-black my-2">
+<div class="grid sm:grid-rows-3 lg:grid-cols-3 lg:grid-rows-1 uppercase text-2xl text-white items-center bg-black my-2">
     <div class="uppercase text-white text-center font-sans text-lg mx-2 h-full">
         <style>
             .tradingview-widget-copyright {

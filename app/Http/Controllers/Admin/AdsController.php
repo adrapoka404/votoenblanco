@@ -8,6 +8,8 @@ use App\Models\Ad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+Use Illuminate\Support\Facades\File;
+use Image;
 
 class AdsController extends Controller
 {
@@ -24,8 +26,13 @@ class AdsController extends Controller
         $filter_end     = '';
 
         $ads = Ad::paginate(15);
-        $headers = ['nombre', 'estado', 'inicia', 'finaliza', 'acciones'];
-        return view('admin.ads.index', compact('ads', 'headers', 'filter_name', 'filter_status', 'filter_start' ,'filter_end'));
+        
+        foreach($ads as &$ad)
+            $ad->sections = json_decode($ad->sections);
+        
+        //    return $ads;
+        $headers = ['nombre', 'thumbnails','estado', 'inicia', 'finaliza', 'acciones'];
+        return view('admin.ads.index', compact('ads', 'headers', 'filter_name', 'filter_status', 'filter_start', 'filter_end'));
     }
 
     /**
@@ -47,43 +54,153 @@ class AdsController extends Controller
     public function store(StoreAdRequest $request)
     {
         
-        $in = 'public/ads';
-        $aqui = Storage::put($in,$request->file('body'));
-        //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
-        $aqui = str_replace('public/','', $aqui);
-        $esta = '/home/imvdeme1/testvb/storage/app/public/'.$aqui;
-        $vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$aqui;
-        copy($esta, $vaPara);
+        $in         = 'public/ads';
+        $thumbnails = storage_path().'/app/public/';
+        $app        = env('APP_URL');
+        $adds       = [];
+        //return $request;
+        //verificar si existe ruta para os thumbs
+        if(!File::exists($thumbnails.'ads/thumbnails/'))
+            File::makeDirectory($thumbnails.'ads/thumbnails/', 0755, true, true);
         
+        if ($request->hasFile('add.local')) {
 
-        $aqui_2 = Storage::put($in,$request->file('body_2'));
-        //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
-        $aqui_2 = str_replace('public/','', $aqui);
-        $esta = '/home/imvdeme1/testvb/storage/app/public/'.$aqui;
-        $vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$aqui;
-        copy($esta, $vaPara);
-        
-        
+            $aqui = Storage::put($in, $request->file('add.local'));
+            $aqui   = str_replace('public/', '', $aqui);
+            if ($app != 'http://votoenblanco.test') {
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $local = $request->file('add.local');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_50x50.'.$local->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_150x150.'.$local->extension();
+            $thumb_list = Image::make($local->path());
+            $thumb_list->resize(150,150, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
 
-        $aqui_3 = Storage::put($in,$request->file('body_3'));
-        //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
-        $aqui_3 = str_replace('public/','', $aqui);
-        $esta = '/home/imvdeme1/testvb/storage/app/public/'.$aqui;
-        $vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$aqui;
-        copy($esta, $vaPara);
-        
-        
+            $thumb_list->resize(50,50, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['local'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+        }
+
+        if ($request->hasFile('add.hlateral')) {
+
+            $aqui = Storage::put($in, $request->file('add.hlateral'));
+            $aqui   = str_replace('public/', '', $aqui);
+
+            if ($app != 'http://votoenblanco.test') {
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $hlateral = $request->file('add.hlateral');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_40x70.'.$hlateral->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_120x210.'.$hlateral->extension();
+            $thumb_list = Image::make($hlateral->path());
+            $thumb_list->resize(120,210, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(40,70, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['hlateral'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+            
+        }
+
+        if ($request->hasFile('add.category')) {
+
+            $aqui = Storage::put($in, $request->file('add.category'));
+            $aqui   = str_replace('public/', '', $aqui);
+
+            if ($app != 'http://votoenblanco.test') {
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $category = $request->file('add.category');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_150x50.'.$category->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_300x70.'.$category->extension();
+            $thumb_list = Image::make($category->path());
+            $thumb_list->resize(300,70, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(150,50, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['category'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+        }
+
+        if ($request->hasFile('add.postbody')) {
+
+            $aqui = Storage::put($in, $request->file('add.postbody'));
+            $aqui   = str_replace('public/', '', $aqui);
+
+            if ($app != 'http://votoenblanco.test') {
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $postbody = $request->file('add.postbody');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_100x50.'.$postbody->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_350x100.'.$postbody->extension();
+            $thumb_list = Image::make($postbody->path());
+            $thumb_list->resize(350,100, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(100,50, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['postbody'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+        }
+
+        if ($request->hasFile('add.postlateral')) {
+
+            $aqui = Storage::put($in, $request->file('add.postlateral'));
+            $aqui   = str_replace('public/', '', $aqui);
+            
+            if ($app != 'http://votoenblanco.test') {
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $postlateral = $request->file('add.postlateral');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_50x50.'.$postlateral->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_150x150.'.$postlateral->extension();
+            $thumb_list = Image::make($postlateral->path());
+            $thumb_list->resize(150,150, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(50,50, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['postlateral'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+        }
+
         $ad = new Ad();
         $ad->user_create =  Auth::user()->id;
         $ad->name =  $request->name;
-        $ad->body =  $aqui;
-        $ad->body_2 =  $aqui_2;
-        $ad->body_3 =  $aqui_3;
         $ad->status =  $request->status;
         $ad->orden =  $request->orden;
         $ad->start =  $request->start;
         $ad->end =  $request->end;
-        $ad->sections =  serialize($request->sections);
+        $ad->sections =  json_encode($adds);
 
         $ad->save();
 
@@ -111,8 +228,8 @@ class AdsController extends Controller
     {
         $ad = Ad::find($id);
 
-        $ad->sections = unserialize($ad->sections);
-        
+        $ad->sections = json_decode($ad->sections);
+
         return view('admin.ads.edit', compact('ad'));
     }
 
@@ -125,14 +242,152 @@ class AdsController extends Controller
      */
     public function update(StoreAdRequest $request, $id)
     {
+
+        $in         = 'public/ads';
+        $thumbnails = storage_path().'/app/public/';
+        $app        = env('APP_URL');
+        $adds       = [];
+        //return $request;
+        //verificar si existe ruta para os thumbs
+        if(!File::exists($thumbnails.'ads/thumbnails/'))
+            File::makeDirectory($thumbnails.'ads/thumbnails/', 0755, true, true);
+        
+        if ($request->hasFile('add.local')) {
+
+            $aqui = Storage::put($in, $request->file('add.local'));
+            $aqui   = str_replace('public/', '', $aqui);
+
+            if ($app != 'http://votoenblanco.test') {    
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $local = $request->file('add.local');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_50x50.'.$local->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_150x150.'.$local->extension();
+            $thumb_list = Image::make($local->path());
+            $thumb_list->resize(150,150, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(50,50, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['local'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+        }
+
+        if ($request->hasFile('add.hlateral')) {
+
+            $aqui = Storage::put($in, $request->file('add.hlateral'));
+            $aqui   = str_replace('public/', '', $aqui);
+            if ($app != 'http://votoenblanco.test') {
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $hlateral = $request->file('add.hlateral');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_40x70.'.$hlateral->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_120x210.'.$hlateral->extension();
+            $thumb_list = Image::make($hlateral->path());
+            $thumb_list->resize(120,210, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(40,70, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['hlateral'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+            
+        }
+
+        if ($request->hasFile('add.category')) {
+
+            $aqui   = Storage::put($in, $request->file('add.category'));
+            $aqui   = str_replace('public/', '', $aqui);
+
+            if ($app != 'http://votoenblanco.test') {
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $category = $request->file('add.category');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_150x50.'.$category->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_300x70.'.$category->extension();
+            $thumb_list = Image::make($category->path());
+            $thumb_list->resize(300,70, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(150,50, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['category'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+        }
+
+        if ($request->hasFile('add.postbody')) {
+
+            $aqui = Storage::put($in, $request->file('add.postbody'));
+            $aqui   = str_replace('public/', '', $aqui);
+
+            if ($app != 'http://votoenblanco.test') {    
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $postbody = $request->file('add.postbody');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_100x50.'.$postbody->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_350x100.'.$postbody->extension();
+            $thumb_list = Image::make($postbody->path());
+            $thumb_list->resize(350,100, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(100,50, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['postbody'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+        }
+
+        if ($request->hasFile('add.postlateral')) {
+
+            $aqui = Storage::put($in, $request->file('add.postlateral'));
+            $aqui   = str_replace('public/', '', $aqui);
+            if ($app != 'http://votoenblanco.test') {
+                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+                copy($esta, $vaPara);
+            }
+            //crear vista para admin-add-list y admin-add-edi            
+            $postlateral = $request->file('add.postlateral');
+            $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_50x50.'.$postlateral->extension();
+            $url_thumb_form = 'ads/thumbnails/'.time().'_thumbnail_150x150.'.$postlateral->extension();
+            $thumb_list = Image::make($postlateral->path());
+            $thumb_list->resize(150,150, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_form);
+
+            $thumb_list->resize(50,50, function($const){
+                $const->aspectRatio();
+            })->save($thumbnails.$url_thumb_list);
+
+            $adds['postlateral'] = ['origin' => $aqui, 'thumb_list' => $url_thumb_list, 'thumb_form' => $url_thumb_form];
+        }
+        
         $ad = Ad::find($id);
         $ad->name =  $request->name;
-        $ad->body =  $request->body;
         $ad->status =  $request->status;
         $ad->orden =  $request->orden;
         $ad->start =  $request->start;
         $ad->end =  $request->end;
-        $ad->sections =  serialize($request->sections);
+        $ad->sections =  json_encode($adds);
         $ad->save();
 
         return redirect()->route('admin.anuncios.index')->with('info', 'Anuncio ' . $ad->name . ' editado con exito');

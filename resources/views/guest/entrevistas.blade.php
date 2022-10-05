@@ -6,7 +6,7 @@
         @foreach ($categories as $i => $category)
         @if (fmod($i, 2) == 0)
         <div class="col-span-3">
-            <div class=" grid grid-cols-2">
+            <div class=" grid md:grid-cols-2">
                 <div class="mx-auto">
                     <a href="{{ route('notas.categorias', $category->slug) }}">
                         <img class=" w-86 h-52 object-cover object-center mb-4 " src="{{ asset('storage/'.$category->imagen) }}"
@@ -35,7 +35,7 @@
         </div>
         @else
         <div class=" col-span-3">
-            <div class=" grid grid-cols-2">
+            <div class=" grid md:grid-cols-2">
                 <div class="text-left mt-10">
                     <div class="ml-5 my-auto">
                         <div class="text-red-800 font-semibold">Descripción</div>

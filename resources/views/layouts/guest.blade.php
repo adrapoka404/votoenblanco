@@ -17,7 +17,7 @@
      <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     @livewireStyles
     {!! SEO::generate() !!}
 </head>

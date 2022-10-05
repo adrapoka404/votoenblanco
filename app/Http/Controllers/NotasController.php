@@ -148,17 +148,17 @@ class NotasController extends Controller
 
         $ads_lateral     = null;
         $ads_fin     = null;
-        $ads = Ad::where('status', 1)->get();
+        $ads = Ad::where('status', 1)->orderBy('orden', 'asc')->get();
 
-        foreach($ads as $ad) {
-            $sections = unserialize($ad->sections);
-                if(in_array('view_nota_lateral', $sections))
+        foreach($ads as &$ad) {
+            $ad->sections = json_decode($ad->sections);
+                if(isset( $ad->sections->postlateral))
                 $ads_lateral[] = $ad;
 
-                if(in_array('view_nota_fin', $sections))
+                if(isset($ad->sections->postbody))
                 $ads_fin[] = $ad;
         }
-//estadistcas
+        
         $diario = new DailyStatistic();
         
         $diario->post_id = $post->id;
@@ -227,14 +227,14 @@ class NotasController extends Controller
             
     
         $ads_category     = null;
-        $ads = Ad::where('status', 1)->get();
+        $ads = Ad::where('status', 1)->orderBy('orden', 'asc')->get();
 
-        foreach($ads as $ad) {
-            $sections = unserialize($ad->sections);
-                if(in_array('view_category', $sections))
+        foreach($ads as &$ad) {
+            $ad->sections = json_decode($ad->sections);
+                if(isset($ad->sections->category))
                 $ads_category[] = $ad;
         }
-
+        
         $headers = apache_request_headers();
            
            $diario = new DailyStatistic();

@@ -44,16 +44,54 @@
                 @endif
 
                 <div class="ml-5 h-96 bg-black text-white text-center">
-                    @foreach ($ads_lateral as $al)
-                    <img src="{{asset('storage/'.$al->body)}}" alt="{{$al->name}}">
-                    @endforeach
+                    <div id="carouselNotaPanelLateral" class="carousel slide relative" data-bs-ride="carousel">
+                        <div class="carousel-inner relative w-full overflow-hidden">
+                            @foreach ($ads_lateral as $indx => $al)
+                                <div
+                                    class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                    <img src="{{ asset('storage/' . $al->sections->postlateral->origin) }}" class="block w-full h-96" alt="{{ $al->name }}" />
+                                </div>
+                            @endforeach
+                        </div>
+                        <button
+                            class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                            type="button" data-bs-target="#carouselNotaPanelLateral" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button
+                            class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                            type="button" data-bs-target="#carouselNotaPanelLateral" data-bs-slide="next">
+                            <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="bg-black  my-auto h-96 text-white text-center mb-10">
-            @foreach ($ads_fin as $af)
-                    <img src="{{asset('storage/'.$af->body)}}" alt="{{$af->name}}" class="h-96 mx-auto">
-                    @endforeach
+                    <div id="carouselPanelLocal" class="carousel slide relative" data-bs-ride="carousel">
+                        <div class="carousel-inner relative w-full overflow-hidden">
+                            @foreach ($ads_fin as $indx => $af)
+                                <div
+                                    class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                    <img src="{{ asset('storage/' . $af->sections->postbody->origin) }}" class="block w-full h-96" alt="{{ $af->name }}" />
+                                </div>
+                            @endforeach
+                        </div>
+                        <button
+                            class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                            type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button
+                            class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                            type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="next">
+                            <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
         </div>
         <div class="py-10">
             <x-title-dark>Comentarios</x-title-dark>

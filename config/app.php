@@ -206,6 +206,8 @@ return [
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
         //FBSocualite
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        //Resezice image
+        'Image' => Intervention\Image\Facades\Image::class
     ])->toArray(),
 
 ];

@@ -34,11 +34,11 @@
         <div class="flex-1">
             <div>
                 <label class=" bg-file text-white bg-green rounded-full m-2 py-1 px-2 inline cursor-pointer w-full"
-                id='btnFilter'>Filtrar</label>
+                    id='btnFilter'>Filtrar</label>
             </div>
             <div>
-            <label class=" bg-file text-white bg-orange rounded-full m-2 py-1 px-2 inline cursor-pointer w-full"
-                id='btnClearFilter'>Limpiar filtros</label>
+                <label class=" bg-file text-white bg-orange rounded-full m-2 py-1 px-2 inline cursor-pointer w-full"
+                    id='btnClearFilter'>Limpiar filtros</label>
             </div>
         </div>
     </div>
@@ -61,31 +61,90 @@
             </x-slot>
             <x-slot name="tbody">
                 @foreach ($ads as $ad)
-                    <tr>
+                    <tr class="border-b-2 border-b-wine">
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
                             {{ $ad->name }}
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
 
-                            @if( $ad->status == 1 )
-                            Activo
+                            @if (isset($ad->sections->local->thumb_list))
+                                <div class="flex flex-col">
+                                    <div class="flex-1">
+                                        Sección Local del home
+                                    </div>
+                                    <div class="flex-2">
+                                        <img src="{{ asset('storage/' . $ad->sections->local->thumb_list) }}"
+                                            alt="{{ $ad->name }}" />
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if (isset($ad->sections->hlateral->thumb_list))
+                                <div class="flex flex-col">
+                                    <div class="flex-1">
+                                        Barra lateral del home
+                                    </div>
+                                    <div class="flex-2">
+                                        <img src="{{ asset('storage/' . $ad->sections->hlateral->thumb_list) }}"
+                                            alt="{{ $ad->name }}" />
+                                    </div>
+                            @endif
+
+                            @if (isset($ad->sections->category->thumb_list))
+                                <div class="flex flex-col">
+                                    <div class="flex-1">
+                                        Sección de categorías
+                                    </div>
+                                    <div class="flex-2">
+                                        <img src="{{ asset('storage/' . $ad->sections->category->thumb_list) }}"
+                                            alt="{{ $ad->name }}" />
+                                    </div>
+                            @endif
+
+                            @if (isset($ad->sections->postbody->thumb_list))
+                                <div class="flex flex-col">
+                                    <div class="flex-1">
+                                        Cuerpo de nota
+                                    </div>
+                                    <div class="flex-2">
+                                        <img src="{{ asset('storage/' . $ad->sections->postbody->thumb_list) }}"
+                                            alt="{{ $ad->name }}" />
+                                    </div>
+                            @endif
+
+                            @if (isset($ad->sections->postlateral->thumb_list))
+                                <div class="flex flex-col">
+                                    <div class="flex-1">
+                                        Barra lateral de vista de nota
+                                    </div>
+                                    <div class="flex-2">
+                                        <img src="{{ asset('storage/' . $ad->sections->postlateral->thumb_list) }}"
+                                            alt="{{ $ad->name }}" />
+                                    </div>
+                            @endif
+
+                        </td>
+                        <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
+
+                            @if ($ad->status == 1)
+                                Activo
                             @else
-                            Deshabilitado
+                                Deshabilitado
                             @endif
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            {{$ad->start}}
+                            {{ $ad->start }}
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
-                            {{$ad->end}}
+                            {{ $ad->end }}
                         </td>
                         <td class="border-x-2 border-wine mx-2 my-3 px-2 font-sans">
 
                             @can('admin.anuncios.destroy')
                                 <!--form action="" class="inline">
-                                                <a href="{{ route('admin.anuncios.update', $ad->id) }}"
-                                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Eiminar') }}</a>
-                                            </form-->
+                                                            <a href="{{ route('admin.anuncios.update', $ad->id) }}"
+                                                                class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">{{ __('Eiminar') }}</a>
+                                                        </form-->
                             @endcan
                             @can('admin.anuncios.edit')
                                 <a href="{{ route('admin.anuncios.edit', $ad->id) }}"
@@ -114,10 +173,10 @@
             })
             $("#btnFilter").on('click', function() {
                 url = "";
-                filter_name     = $("#filter_name")
-                filter_start    = $("#filter_start")
-                filter_end      = $("#filter_end")
-                filter_status   = $("#filter_status")
+                filter_name = $("#filter_name")
+                filter_start = $("#filter_start")
+                filter_end = $("#filter_end")
+                filter_status = $("#filter_status")
 
                 if (filter_name.val() != '') {
                     if (url == '')

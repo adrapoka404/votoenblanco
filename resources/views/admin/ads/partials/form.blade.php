@@ -18,45 +18,6 @@
 </div>
 <div class="flex flex-row">
     <div class="flex-1">
-        {!! Form::label('body', __('Publicidad Vista LG'), ['class' => 'text-2xl font-semibold text-black mb-3 w-full']) !!}
-        <div>
-            @error('body')
-                <span class="text-red-600 text-xs">{{ $message }}</span>
-            @enderror
-        </div>
-    </div>
-    <div class="flex-1">
-        {!! Form::file('body', ['id' => 'file', 'class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Publicidad tamaño LG'), 'accept' => 'image/*']) !!}
-    </div>
-</div>
-<div class="flex flex-row">
-    <div class="flex-1">
-        {!! Form::label('body_2', __('Publicidad Vista MD'), ['class' => 'text-2xl font-semibold text-black mb-3 w-full']) !!}
-        <div>
-            @error('body_2')
-                <span class="text-red-600 text-xs">{{ $message }}</span>
-            @enderror
-        </div>
-    </div>
-    <div class="flex-1">
-        {!! Form::file('body_2', ['id' => 'file_2', 'class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Publicidad tamaño MD'), 'accept' => 'image/*']) !!}
-    </div>
-</div>
-<div class="flex flex-row">
-    <div class="flex-1">
-        {!! Form::label('body_3', __('Publicidad Vista SM'), ['class' => 'text-2xl font-semibold text-black mb-3 w-full']) !!}
-        <div>
-            @error('body_3')
-                <span class="text-red-600 text-xs">{{ $message }}</span>
-            @enderror
-        </div>
-    </div>
-    <div class="flex-1">
-        {!! Form::file('body_3', ['id' => 'file_3', 'class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Publicidad tamaño SM'), 'accept' => 'image/*']) !!}
-    </div>
-</div>
-<div class="flex flex-row">
-    <div class="flex-1">
         {!! Form::label('status', __('Estado'), ['class' => 'text-2xl font-semibold text-black mb-3']) !!}
         <div>
             @error('status')
@@ -125,62 +86,85 @@
         ]) !!}
     </div>
 </div>
-
+<div class="flex flex-col my-5">
+    <div class="flex-1">
+        <span class=" text-blue text-xs">
+            A continuación debe agregar una imagen que será visible en las diferentes secciones del sitio web. 
+            <br>
+            Si no desea que la publicidad sea visible en alguna sección bastará con dejar el campo vacio. 
+            <br>
+            ¡¡¡Fierroo!!!
+        </span>
+    </div>
+</div>
 <div class="flex flex-row">
     <div class="flex-1">
-        {!! Form::label('sections', __('Secciones'), ['class' => 'text-2xl font-semibold text-black mb-3']) !!}
+        {!! Form::label('add[local]', __('Sección local del home'), ['class' => 'text-2xl font-semibold text-black mb-3 w-full']) !!}
         <div>
-            @error('sections')
-                <x-has-error>{{ $message }}</x-has-error>
+            <span class=" text-blue text-xs">Si desea que la publicidad sea visible en la sección local del home. Agregue una imagen de 600px * 600px</span>
+            @error('add.local')
+                <span class="text-red-600 text-xs">{{ $message }}</span>
             @enderror
         </div>
     </div>
     <div class="flex-1">
+        {!! Form::file('add[local]', ['id' => 'file_add_local', 'class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Sección local del home'), 'accept' => 'image/*']) !!}
+    </div>
+</div>
+<div class="flex flex-row">
+    <div class="flex-1">
+        {!! Form::label('add[hlateral]', __('Sección lateral del home'), ['class' => 'text-2xl font-semibold text-black mb-3 w-full']) !!}
         <div>
-            <label for="home_lateral">
-                {!! Form::checkbox('sections[]', 'home_lateral', old('sections') ? in_array('home_lateral', old('sections')) : (isset($ad) ? in_array('home_lateral', $ad->sections) : 0), [
-                    'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
-                    'id' => 'home_lateral',
-                ]) !!}
-                Home - barra lateral
-            </label>
+            <span class=" text-blue text-xs">Si desea que la publicidad sea visible en la sección lateral del home. Agregue una imagen de 400px * 700px</span>
+            @error('add.hlateral')
+                <span class="text-red-600 text-xs">{{ $message }}</span>
+            @enderror
         </div>
+    </div>
+    <div class="flex-1">
+        {!! Form::file('add[hlateral]', ['id' => 'file_add_hlateral', 'class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Sección lateral del home'), 'accept' => 'image/*']) !!}
+    </div>
+</div>
+<div class="flex flex-row">
+    <div class="flex-1">
+        {!! Form::label('add[category]', __('Sección de categorías'), ['class' => 'text-2xl font-semibold text-black mb-3 w-full']) !!}
         <div>
-            <label for="home_local">
-                {!! Form::checkbox('sections[]', 'home_local', old('sections') ? in_array('home_local', old('sections')) : (isset($ad) ? in_array('home_local', $ad->sections) : 0), [
-                    'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
-                    'id' => 'home_local',
-                ]) !!}
-                Home - sección local
-            </label>
+            <span class=" text-blue text-xs">Si desea que la publicidad sea visible en la sección de categorías. Agregue una imagen de 900px * 200px</span>
+            @error('add.category')
+                <span class="text-red-600 text-xs">{{ $message }}</span>
+            @enderror
         </div>
+    </div>
+    <div class="flex-1">
+        {!! Form::file('add[category]', ['id' => 'file_add_category', 'class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Sección de categoría'), 'accept' => 'image/*']) !!}
+    </div>
+</div>
+<div class="flex flex-row">
+    <div class="flex-1">
+        {!! Form::label('add[postbody]', __('Sección cuerpo de nota'), ['class' => 'text-2xl font-semibold text-black mb-3 w-full']) !!}
         <div>
-            <label for="view_category">
-                {!! Form::checkbox('sections[]', 'view_category', old('sections') ? in_array('view_category', old('sections')) : (isset($ad) ? in_array('view_category', $ad->sections) : 0), [
-                    'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
-                    'id' => 'view_category',
-                ]) !!}
-                Vista - Categorías
-            </label>
+            <span class=" text-blue text-xs">Si desea que la publicidad sea visible despues del cuerpo de la nota. Agregue una imagen de 1400px * 400px</span>
+            @error('add.postbody')
+                <span class="text-red-600 text-xs">{{ $message }}</span>
+            @enderror
         </div>
+    </div>
+    <div class="flex-1">
+        {!! Form::file('add[postbody]', ['id' => 'file_add_postbody', 'class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Sección final de nota'), 'accept' => 'image/*']) !!}
+    </div>
+</div>
 
+<div class="flex flex-row">
+    <div class="flex-1">
+        {!! Form::label('add[postlateral]', __('Sección lateral de nota'), ['class' => 'text-2xl font-semibold text-black mb-3 w-full']) !!}
         <div>
-            <label for="view_nota_lateral">
-                {!! Form::checkbox('sections[]', 'view_nota_lateral', old('sections') ? in_array('view_nota_lateral', old('sections')) : (isset($ad) ? in_array('view_nota_lateral', $ad->sections) : 0), [
-                    'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
-                    'id' => 'view_nota_lateral',
-                ]) !!}
-                Vista - Nota - Lateral
-            </label>
+            <span class=" text-blue text-xs">Si desea que la publicidad sea visible en la barra lateral de la nota. Agregue una imagen de 400px * 700px</span>
+            @error('add.postlateral')
+                <span class="text-red-600 text-xs">{{ $message }}</span>
+            @enderror
         </div>
-        <div>
-            <label for="view_nota_fin">
-                {!! Form::checkbox('sections[]', 'view_nota_fin', old('sections') ? in_array('view_nota_fin', old('sections')) : (isset($ad) ? in_array('view_nota_fin', $ad->sections) : 0), [
-                    'class' => 'bg-gray-dark border-wine text-wine focus:ring-wine mr-2',
-                    'id' => 'view_nota_fin',
-                ]) !!}
-                Home - Nota -Fin
-            </label>
-        </div>
+    </div>
+    <div class="flex-1">
+        {!! Form::file('add[postlateral]', ['id' => 'file_add_postlateral', 'class' => 'border-2 border-wine focus:border-wine rounded-md mt-1 block mx-auto', 'placeholder' => __('Sección lateral de nota'), 'accept' => 'image/*']) !!}
     </div>
 </div>

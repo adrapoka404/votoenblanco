@@ -14,11 +14,11 @@ class Videogaleria extends Component
         $vgalerias      = VideoGallery::orderBy('id', 'desc')->offset(1)->limit(4)->get();
 
         $home_lateral    = null;
-        $ads = Ad::where('status', 1)->get();
+        $ads = Ad::where('status', 1)->orderBy('orden', 'asc')->get();
 
-        foreach($ads as $ad) {
-            $sections = unserialize($ad->sections);
-                if(in_array('home_lateral', $sections))
+        foreach($ads as &$ad) {
+            $ad->sections = json_decode($ad->sections);
+                if(isset($ad->sections->hlateral))
                 $home_lateral[] = $ad;
         }
 
