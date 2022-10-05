@@ -9,7 +9,7 @@
                         {{ substr($destacada->title, 0, 75) . '...' }}
                     @endif
                 </div>
-                <div class="w-full h-80 bg-gray pb-2 bg-cover bg-no-repeat "
+                <div class="w-full h-80 bg-gray pb-2 bg-contain bg-no-repeat "
                     style="background-image: url('{{ asset('storage/' . $destacada->image_principal) }}')">
 
                 </div>
@@ -88,7 +88,7 @@
 
                         @foreach ($locales as $local)
                             @if ($local != null)
-                                <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
+                                <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
                                     style="background-image: url({{ asset('storage/' . $local->image_principal) }})">
                                     <div
                                         class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
@@ -115,7 +115,7 @@
                         <div class="grid grid-cols-2">
                             <div>
                                 <a href="{{ route('notas.editores', $editor->user->slug) }}">
-                                    <img class=" h-52 rounded-full object-cover object-center mb-4 "
+                                    <img class=" h-52 rounded-full object-contain bg-no-repeat object-center mb-4 "
                                         src="{{ $editor->user->profile_photo_url }}"
                                         alt="{{ $editor->user->name }}" />
                                 </a>
@@ -144,7 +144,7 @@
                 <div class=" grid md:grid-cols-2 items-center mx-auto   ">
                     @foreach ($nacionales as $nacional)
                         @if ($nacional != null)
-                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
+                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
                                 style="background-image: url({{ asset('storage/' . $nacional->image_principal) }})">
                                 <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
                                     <a class="mr-5 my-auto cursor-pointer "
@@ -169,7 +169,7 @@
 
                     @foreach ($deportes as $deporte)
                         @if ($deporte != null)
-                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right"
+                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
                                 style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
                                 <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
                                     <a class="mr-5 my-auto cursor-pointer"

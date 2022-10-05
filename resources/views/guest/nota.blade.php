@@ -46,27 +46,30 @@
                 <div class="ml-5 h-96 bg-black text-white text-center">
                     <div id="carouselNotaPanelLateral" class="carousel slide relative" data-bs-ride="carousel">
                         <div class="carousel-inner relative w-full overflow-hidden">
-                            @if(empty($ads_lateral))
-                            <div class="bg-black">Publicidad</div>
+                            @if (empty($ads_lateral))
+                                <div class="bg-black">Publicidad</div>
                             @else
-                            @foreach ($ads_lateral as $indx => $al)
-                                <div
-                                    class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
-                                    <img src="{{ asset('storage/' . $al->sections->postlateral->origin) }}" class="block w-full h-96" alt="{{ $al->name }}" />
-                                </div>
-                            @endforeach
+                                @foreach ($ads_lateral as $indx => $al)
+                                    <div
+                                        class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                        <img src="{{ asset('storage/' . $al->sections->postlateral->origin) }}"
+                                            class="block w-full h-96" alt="{{ $al->name }}" />
+                                    </div>
+                                @endforeach
                             @endif
                         </div>
                         <button
                             class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
                             type="button" data-bs-target="#carouselNotaPanelLateral" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                            <span class="carousel-control-prev-icon inline-block bg-no-repeat"
+                                aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
                         <button
                             class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
                             type="button" data-bs-target="#carouselNotaPanelLateral" data-bs-slide="next">
-                            <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                            <span class="carousel-control-next-icon inline-block bg-no-repeat"
+                                aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
@@ -74,32 +77,33 @@
             </div>
         </div>
         <div class="bg-black  my-auto h-96 text-white text-center mb-10">
-                    <div id="carouselPanelLocal" class="carousel slide relative" data-bs-ride="carousel">
-                        <div class="carousel-inner relative w-full overflow-hidden">
-                            @if(empty($ads_fin))
-                            <div class="bg-black">Publicidad</div>
-                            @else
-                            @foreach ($ads_fin as $indx => $af)
-                                <div
-                                    class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
-                                    <img src="{{ asset('storage/' . $af->sections->postbody->origin) }}" class="block w-full h-96" alt="{{ $af->name }}" />
-                                </div>
-                            @endforeach
-                            @endif
-                        </div>
-                        <button
-                            class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
-                            type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button
-                            class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
-                            type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="next">
-                            <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
+            <div id="carouselPanelLocal" class="carousel slide relative" data-bs-ride="carousel">
+                <div class="carousel-inner relative w-full overflow-hidden">
+                    @if (empty($ads_fin))
+                        <div class="bg-black">Publicidad</div>
+                    @else
+                        @foreach ($ads_fin as $indx => $af)
+                            <div
+                                class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                <img src="{{ asset('storage/' . $af->sections->postbody->origin) }}"
+                                    class="block w-full h-96" alt="{{ $af->name }}" />
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <button
+                    class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                    type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                    class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                    type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="next">
+                    <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
         <div class="py-10">
             <x-title-dark>Comentarios</x-title-dark>
@@ -146,16 +150,16 @@
                     <div class="cursor-pointer" id="">
                         <img src="{{ asset('img/compartir.png') }}" alt="" id="comparte"
                             class="inline w-20 h-20 cursor-pointer">
-                        <label for="comparte" class=" ml-5 font-bold text-3xl cursor-pointer" id='comparteLabel'>Comparte</label>
-                        <div class="fb-share-button w-full" 
-                        data-href="{{route('notas.show', $post->slug)}}" 
-                        data-layout="button_count" 
-                        data-size="small">
-                        <a id='actionShared' target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{route('notas.show', $post->slug)}}&amp;src=sdkpreparse"
-                         class="fb-xfbml-parse-ignore">
-                        </a>
+                        <label for="comparte" class=" ml-5 font-bold text-3xl cursor-pointer"
+                            id='comparteLabel'>Comparte</label>
+                        <div class="fb-share-button w-full" data-href="{{ route('notas.show', $post->slug) }}"
+                            data-layout="button_count" data-size="small">
+                            <a id='actionShared' target="_blank"
+                                href="https://www.facebook.com/sharer/sharer.php?u={{ route('notas.show', $post->slug) }}&amp;src=sdkpreparse"
+                                class="fb-xfbml-parse-ignore">
+                            </a>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -262,15 +266,16 @@
         @csrf
     </div>
 </x-guest-layout>
-<div class="fb-share-button" 
-data-href="{{url('notas.show', 'adx')}}" 
-data-layout="button_count">
+<div class="fb-share-button" data-href="{{ url('notas.show', 'adx') }}" data-layout="button_count">
 </div>
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
-var js, fjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) return;
-js = d.createElement(s); js.id = id;
-js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
