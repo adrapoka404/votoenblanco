@@ -10,35 +10,37 @@ use Illuminate\Support\Facades\Storage;
 
 class ServicesController extends Controller
 {
-    public function related(Request $request){
+    public function related(Request $request)
+    {
         $posts_response = [];
-        $posts_response['Notas'] = Post::where('status', 4)->where('title', 'like', '%'.$request->search .'%')->get();
-        
-        $categories = Category::where('nombre', 'like', '%'.$request->search.'%')->get();
+        $posts_response['Notas'] = Post::where('status', 4)->where('title', 'like', '%' . $request->search . '%')->get();
 
-        foreach($categories as $category){
+        $categories = Category::where('nombre', 'like', '%' . $request->search . '%')->get();
+
+        foreach ($categories as $category) {
             $postByCategory = Postcategory::where('category_id', $category->id)->get();
 
-            foreach($postByCategory as $pbc)
-                $posts_response[$category->nombre][] = Post::where('status', 4)->where('id',$pbc->post_id)->first();
+            foreach ($postByCategory as $pbc)
+                $posts_response[$category->nombre][] = Post::where('status', 4)->where('id', $pbc->post_id)->first();
         }
 
         return $posts_response;
     }
 
-    public function posts(Request $request){
-        
-        $posts_response=[];
-        $posts = Post::where('status', 4)->where('title', 'like', '%'.$request->search .'%')->get();
-        foreach($posts as $post)   
+    public function posts(Request $request)
+    {
+
+        $posts_response = [];
+        $posts = Post::where('status', 4)->where('title', 'like', '%' . $request->search . '%')->get();
+        foreach ($posts as $post)
             $posts_response[$post->id] = $post;
 
-        $categories = Category::where('nombre', 'like', '%'.$request->search.'%');
+        $categories = Category::where('nombre', 'like', '%' . $request->search . '%');
 
-        foreach($categories as $category){
+        foreach ($categories as $category) {
             $postByCategory = Postcategory::where('category_id', $category->id);
 
-            foreach($postByCategory as $pbc)
+            foreach ($postByCategory as $pbc)
                 $posts_response[$pbc->id] = $pbc;
         }
 
@@ -46,11 +48,12 @@ class ServicesController extends Controller
         return $posts_response;
     }
 
-    public function data(Request $request){
+    public function data(Request $request)
+    {
         $data_images    = [];
         $directory      = 'public';
 
-        $url_images     = isset($request->directory) ? $request->directory : $directory.'/posts/' . date('Y_m');
+        $url_images     = isset($request->directory) ? $request->directory : $directory . '/posts/' . date('Y_m');
         $carpetas       = Storage::directories($directory, true);
         $images         = Storage::allFiles($url_images);
         /*collect(Storage::allFiles($url_images))
@@ -64,29 +67,30 @@ class ServicesController extends Controller
                                 return $file->getBaseName();
                             });
 */
-    
-        foreach($carpetas as $i => $iam){
-            if($iam == 'public/profile-photos')
+
+        foreach ($carpetas as $i => $iam) {
+            if ($iam == 'public/profile-photos')
                 $profiles = $i;
-                if($iam == 'public/categories')
+            if ($iam == 'public/categories')
                 $categories = $i;
         }
-        
-        unset($carpetas[$profiles]);
-        unset($carpetas[$categories]);
 
-        foreach($images as &$image){
-            $i = str_replace('public/','', $image);
-            $data_images[] = ['img_to'=> asset('storage/'.$i), 'img' => $i];
+        //unset($carpetas[$profiles]);
+        //unset($carpetas[$categories]);
+
+        foreach ($images as &$image) {
+            $i = str_replace('public/', '', $image);
+            $data_images[] = ['img_to' => asset('storage/' . $i), 'img' => $i];
         }
-        return ["success"=>true, "directories" => $carpetas, "images" => $data_images, 'in' => $url_images];
+        return ["success" => true, "directories" => $carpetas, "images" => $data_images, 'in' => $url_images];
     }
 
-    public function imagen_upload(Request $request){
+    public function imagen_upload(Request $request)
+    {
         $this->validate(
             $request,
             [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ],
             [
                 "image.required"    => "El archivo de imagen es requerido",
@@ -95,32 +99,41 @@ class ServicesController extends Controller
                 "image.max"         => "La imagen no debe superar los 2MB",
             ]
         );
-        
-        $aqui = Storage::put($request->uploadIn,$request->file('image'));
+
+        $aqui = Storage::put($request->uploadIn, $request->file('image'));
         //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
-        $aqui = str_replace('public/','', $aqui);
-        $esta = '/home/imvdeme1/testvb/storage/app/public/'.$aqui;
-        $vaPara = '/home/imvdeme1/public_html/testvb/storage/'.$aqui;
-        copy($esta, $vaPara);
-        
+        $aqui = str_replace('public/', '', $aqui);
+        $esta = storage_path(). '/app/public/' . $aqui;
+        $vaPara = '';
+        if (env('APP_URL') != 'http://votoenblanco.test') {
 
-        
-        return ["success"=>true, 'to' => asset('storage/'.$aqui), 'img' => $aqui, 'esta' => $esta, 'vaPara' => $vaPara];
+            $esta = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
+            $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
+            copy($esta, $vaPara);
+        }
+
+
+
+
+        return ["success" => true, 'to' => asset('storage/' . $aqui), 'img' => $aqui, 'esta' => $esta, 'vaPara' => $vaPara];
     }
 
-    public function sub_data($directory){
-        $carpetas = Storage::directories('public/'.$directory);
+    public function sub_data($directory)
+    {
+        $carpetas = Storage::directories('public/' . $directory);
         return $carpetas;
-        return ["success"=>true];
+        return ["success" => true];
     }
 
-    public function data_imgs($directory){
+    public function data_imgs($directory)
+    {
         $carpetas = Storage::directories('public');
         return $carpetas;
-        return ["success"=>true];
+        return ["success" => true];
     }
 
-    public function popup_images(){
+    public function popup_images()
+    {
         return view('admin.services.popup');
     }
 }

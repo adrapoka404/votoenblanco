@@ -202,7 +202,7 @@
         <span class="text-red-600 text-xs">{{ $message }}</span>
     @enderror
 </div>
-@if($editor)
+@if ($editor)
     <div class="pb-3 my-2">
         {!! Form::label('posted', __('Publicar nota en votoenblanco.com.mx'), [
             'class' => 'text-2xl font-semibold text-black mb-3',
@@ -259,11 +259,7 @@
         </div>
     </div>
 @else
-    {!! Form::hidden(
-        'featured',
-        old('featured') ? old('featured') : (isset($post) ? $post->featured : 0),
-        [],
-    ) !!}
+    {!! Form::hidden('featured', old('featured') ? old('featured') : (isset($post) ? $post->featured : 0), []) !!}
 @endif
 <div class="pb-3 grid grid-cols-2  ">
     <div>
@@ -348,6 +344,7 @@
 
 @section('jqueryui')
     <script>
+        
         CKEDITOR.replace('body');
         var categorySelect = $(".categoryold").length
         var relatedSelect = $(".relatedold").length

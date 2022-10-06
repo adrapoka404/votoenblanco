@@ -58,9 +58,9 @@ class NotasController extends Controller
         }
 
         if ($editor)
-            $posts      = $query->orderBy('title', 'asc')->paginate(15);
+            $posts      = $query->orderBy('created_at', 'desc')->paginate(15);
         else
-            $posts      = $query->where('user_create', Auth::user()->id)->orderBy('title', 'asc')->paginate(15);
+            $posts      = $query->where('user_create', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(15);
 
         $statuses   = PostStatus::all();
 
@@ -238,7 +238,7 @@ class NotasController extends Controller
             if ($role->name == 'Coordinación de Contenido Editorial')
                 $editor = true;
         }
-
+return $post;
         return view('admin.posts.edit', compact('categories', 'post', 'editor'));
     }
 
@@ -251,7 +251,6 @@ class NotasController extends Controller
      */
     public function update(StorePostRequest $request, $id)
     {
-
         $post = Post::where('slug', $id)->first();
 
         $post->user_edit            = Auth::user()->id;
