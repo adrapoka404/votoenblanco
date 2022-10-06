@@ -238,7 +238,7 @@ class NotasController extends Controller
             if ($role->name == 'Coordinación de Contenido Editorial')
                 $editor = true;
         }
-return $post;
+        
         return view('admin.posts.edit', compact('categories', 'post', 'editor'));
     }
 
