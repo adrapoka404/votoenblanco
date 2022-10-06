@@ -19,6 +19,7 @@
         'class' => 'border-1 border-wine focus:border-wine focus:ring-wine rounded-md my-3 w-full block',
         'placeholder' => __('Cuerpo de la nota'),
     ]) !!}
+    
     @error('body')
         <span class="text-red-600 text-xs">{{ $message }}</span>
     @enderror
@@ -346,6 +347,7 @@
     <script>
         
         CKEDITOR.replace('body');
+        CKEDITOR.config.allowedContent = true;
         var categorySelect = $(".categoryold").length
         var relatedSelect = $(".relatedold").length
 
