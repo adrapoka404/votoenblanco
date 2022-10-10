@@ -35,8 +35,7 @@ use Spatie\Permission\Models\Permission;
 | contains the "web" middleware group. Now create something great!
 |
 */
-echo "La IP:" . $_SERVER['REMOTE_ADDR'];
-die;    
+ 
 if($_SERVER['REMOTE_ADDR'] == '189.242.78.206'){
     echo "Soy yo";
     die;
