@@ -35,6 +35,8 @@ use Spatie\Permission\Models\Permission;
 | contains the "web" middleware group. Now create something great!
 |
 */
+echo "La IP:" . $_SERVER['REMOTE_ADDR'];
+die;
 if($_SERVER['REMOTE_ADDR'] == '127.0.0.1'){
     Route::get('/', [WebviewController::class, 'mantenimiento'])->name('mantenimiento');
 }else {
