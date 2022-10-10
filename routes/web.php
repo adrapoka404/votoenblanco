@@ -35,8 +35,9 @@ use Spatie\Permission\Models\Permission;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
+if($_SERVER['REMOTE_ADDR'] == '127.0.0.1'){
+    Route::get('/', [WebviewController::class, 'mantenimiento'])->name('mantenimiento');
+}else {
 Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 Route::get('guest', function () {
     return view('welcome');
@@ -193,3 +194,7 @@ Route::get('migracion_csv', [MigracionController::class, 'read_csv'])->name('mig
 //probando ogin con FB
 Route::get('auth/facebook', [SocialController::class, 'redirectFacebook']);
 Route::get('auth/facebook/callback', [SocialController::class, 'callbackFacebook']);
+
+//crontab para publicar en fb
+Route::get('crontab_fb', [ServicesController::class, 'crontab_fb'])->name('crontab_fb');
+}

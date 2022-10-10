@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Postcategory;
+use App\Models\PostDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -103,7 +104,7 @@ class ServicesController extends Controller
         $aqui = Storage::put($request->uploadIn, $request->file('image'));
         //$copy = Storage::copy($aqui, env('URI_STORAGE_PUB').$aqui);
         $aqui = str_replace('public/', '', $aqui);
-        $esta = storage_path(). '/app/public/' . $aqui;
+        $esta = storage_path() . '/app/public/' . $aqui;
         $vaPara = '';
         if (env('APP_URL') != 'http://votoenblanco.test') {
 
@@ -135,5 +136,25 @@ class ServicesController extends Controller
     public function popup_images()
     {
         return view('admin.services.popup');
+    }
+
+    public function crontab_fb()
+    {
+        $programados = [];
+        $posts = Post::where('status', 3)->get();
+
+        foreach ($posts as &$post) {
+            $post->details = PostDetails::where('post_id', $post->id)->first();
+
+            if ($post->details->posted_now == 0) {
+                echo "se publica a las " . $post->details->posted . $post->details->posted_time;
+                if ($post->details->redfb == 1)
+                    echo "Publicar en puto FB";
+
+                if ($post->details->redtw == 1)
+                    echo "Publicar en puto TW";
+            }
+        }
+        return "ñ.ñ";
     }
 }

@@ -1,0 +1,1 @@
+<img src="{{asset('img/mantenimiento.gif')}}" alt="En manteniemiento" />

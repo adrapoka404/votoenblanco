@@ -121,11 +121,11 @@ class NotasController extends Controller
                 
         SEOMeta::setTitle($post->title);
         SEOMeta::setDescription($post->description);
-        SEOMeta::setCanonical(route('notas.show', $post->id));
+        SEOMeta::setCanonical(route('notas.show', $post->slug));
 
         OpenGraph::setDescription($post->description);
         OpenGraph::setTitle($post->title);
-        OpenGraph::setUrl(route('notas.show', $post->id));
+        OpenGraph::setUrl(route('notas.show', $post->slug));
         OpenGraph::addProperty('type', 'articles');
         OpenGraph::addImage(asset('storage/' . $post->image_principal));
 
@@ -140,11 +140,11 @@ class NotasController extends Controller
 
         SEOTools::setTitle($post->title);
         SEOTools::setDescription($post->description);
-        SEOTools::opengraph()->setUrl('https://websolutionstuff.com/');
-        SEOTools::setCanonical('https://websolutionstuff.com');
+        //SEOTools::opengraph()->setUrl('https://websolutionstuff.com/');
+        SEOTools::setCanonical(env('APP_URL'));
         SEOTools::opengraph()->addProperty('type', 'articles');
-        SEOTools::twitter()->setSite('@websolutionstuff');
-        SEOTools::jsonLd()->addImage('https://websolutionstuff.com/frontTheme/assets/images/logo.png');
+        SEOTools::twitter()->setSite('@votoenblanco');
+        SEOTools::jsonLd()->addImage(asset('storage/' . $post->image_principal));
 
         $ads_lateral     = null;
         $ads_fin     = null;

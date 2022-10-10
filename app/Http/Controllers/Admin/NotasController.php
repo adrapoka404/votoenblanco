@@ -251,7 +251,8 @@ class NotasController extends Controller
      */
     public function update(StorePostRequest $request, $id)
     {
-        $post = Post::where('slug', $id)->first();
+        
+        $post = Post::where('slug', 'like', '%'.$id.'%')->first();
 
         $post->user_edit            = Auth::user()->id;
         $post->title                = $request->title;

@@ -97,7 +97,7 @@ class WebviewController extends Controller
         }
         
         foreach($categorias as $category) {
-            $postCat = Postcategory::where('category_id', $category->id)->orderBy('created_at', 'desc')->limit(2)->get();
+            $postCat = Postcategory::where('category_id', $category->id)->orderBy('created_at', 'desc')->limit(6)->get();
             
             if( strtolower  ($category->nombre) == 'deportes') {
                 foreach($postCat as $post)
@@ -115,7 +115,7 @@ class WebviewController extends Controller
             }
 
         }   
-        
+        //return $locales;
         $editors = Editor::where('status', 1)->orderBy('specialty', 'asc')->get();
 
         foreach ($editors as &$editor)
@@ -140,5 +140,9 @@ class WebviewController extends Controller
         $diario->save();
 
         return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors','home_local'));
+    }
+
+    public function mantenimiento(){
+        return view('mantenimiento');
     }
 }
