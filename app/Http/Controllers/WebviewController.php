@@ -96,9 +96,17 @@ class WebviewController extends Controller
             $desta->redactor = User::find($desta->user_create);
         }
         
+
         foreach($categorias as $category) {
-            $postCat = Postcategory::where('category_id', $category->id)->orderBy('created_at', 'desc')->limit(6)->get();
-            
+            //$postCat = Postcategory::where('category_id', $category->id)->orderBy('created_at', 'desc')->limit()->get();
+            $postCat = Postcategory::select('posts.*', 'postcategories.*')
+        ->join('posts', 'posts.id', '=', 'postcategories.post_id')
+        ->where('posts.status', '=', '4')
+        ->where('postcategories.category_id', '=', $category->id)
+        ->orderBy('postcategories.created_at', 'desc')
+        ->limit(2)
+        ->get();
+
             if( strtolower  ($category->nombre) == 'deportes') {
                 foreach($postCat as $post)
                     $deportes[] = Post::where('status', 4)->where('id',$post->post_id)->first();
@@ -115,7 +123,7 @@ class WebviewController extends Controller
             }
 
         }   
-        //return $locales;
+        
         $editors = Editor::where('status', 1)->orderBy('specialty', 'asc')->get();
 
         foreach ($editors as &$editor)
