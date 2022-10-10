@@ -36,10 +36,14 @@ use Spatie\Permission\Models\Permission;
 |
 */
 echo "La IP:" . $_SERVER['REMOTE_ADDR'];
-die;
-if($_SERVER['REMOTE_ADDR'] == '127.0.0.1'){
+die;    
+if($_SERVER['REMOTE_ADDR'] == '189.242.78.206'){
+    echo "Soy yo";
+    die;
     Route::get('/', [WebviewController::class, 'mantenimiento'])->name('mantenimiento');
 }else {
+    echo "Cualquir otro";
+    die;
 Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 Route::get('guest', function () {
     return view('welcome');
