@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/imvdeme1/public_html/prod_votoenblanco
+    - export DEPLOYPATH=/home/imvdeme1/public_html/testvb
     - /bin/cp -R public/css/ $DEPLOYPATH
     - /bin/cp -R public/ckeditor/ $DEPLOYPATH
     - /bin/cp -R public/vendor/ $DEPLOYPATH

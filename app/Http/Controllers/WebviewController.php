@@ -23,107 +23,115 @@ use Artesaos\SEOTools\Facades\SEOTools;
 
 class WebviewController extends Controller
 {
-    public function vagabundario(){
+    public function vagabundario()
+    {
         return "ADX";
     }
 
-    public function entrevistas(){
+    public function entrevistas()
+    {
         $category = Category::where('nombre', 'entrevistas')->first();
         $categories = Category::where('patern_id', $category->id)->orderBy('nombre', 'asc')->get();
 
         return view('guest/entrevistas', compact('categories'));
     }
 
-    public function reportajes(){
+    public function reportajes()
+    {
 
         $category = Category::where('nombre', 'reportajes')->first();
         $categories = Category::where('patern_id', $category->id)->orderBy('nombre', 'asc')->get();
-        
+
         return view('guest/reportajes', compact('categories'));
     }
 
-    public function noticias(){
+    public function noticias()
+    {
         $category = Category::where('nombre', 'noticias')->first();
         $categories = Category::where('patern_id', $category->id)->orderBy('nombre', 'asc')->get();
         $categorias =  [];
-        
-        foreach($categories as $category) {
-            $postByCate = Postcategory::where('category_id', $category->id)->offset(0)->limit(2)->orderBy('created_at','desc')->get();
-            
-            foreach($postByCate as $pbc){
-                $tpost = Post::where('status', 4)->where('id', $pbc->post_id)->first();  
-                if($tpost)
-                    $categorias[$pbc->post_id] = Post::where('status', 4)->where('id',$pbc->post_id)->first();  
+
+        foreach ($categories as $category) {
+            $postByCate = Postcategory::where('category_id', $category->id)->offset(0)->limit(2)->orderBy('created_at', 'desc')->get();
+
+            foreach ($postByCate as $pbc) {
+                $tpost = Post::where('status', 4)->where('id', $pbc->post_id)->first();
+                if ($tpost)
+                    $categorias[$pbc->post_id] = Post::where('status', 4)->where('id', $pbc->post_id)->first();
             }
         }
-        foreach($categorias as &$cat){
+        foreach ($categorias as &$cat) {
             $cat->user = User::find($cat->user_create);
         }
-        
+
         return view('guest/noticias', compact('categorias'));
     }
 
-    public function aboutus(){
+    public function aboutus()
+    {
         return view('guest/aboutus');
     }
 
-    public function privacy(){
+    public function privacy()
+    {
         return view('guest/privacy');
     }
 
-    public function team(){
+    public function team()
+    {
         return view('guest/team');
     }
 
-    public function terms(){
+    public function terms()
+    {
         return view('guest/terms');
     }
 
-    public function welcome() {
-        
+    public function welcome()
+    {
+
         $locales      = [];
         $nacionales   = [];
         $deportes     = [];
 
         $destacada      = Post::where('featured', 1)->where('status', 4)->orderBy('created_at', 'desc')->first();
         $destacadas     = Post::where('featured', 1)->where('status', 4)->orderBy('id', 'desc')->offset(1)->limit(4)->get();
-        
-        $categorias     = Category::where('orden', 1)->whereIn('nombre', ['Deportes','Local','Nacional'])->get();
-        
+
+        $categorias     = Category::where('orden', 1)->whereIn('nombre', ['Deportes', 'Local', 'Nacional'])->get();
+
         $destacada->redactor = User::find($destacada->user_create);
 
-        foreach($destacadas as &$desta){
+        foreach ($destacadas as &$desta) {
             $desta->redactor = User::find($desta->user_create);
         }
-        
 
-        foreach($categorias as $category) {
+
+        foreach ($categorias as $category) {
             //$postCat = Postcategory::where('category_id', $category->id)->orderBy('created_at', 'desc')->limit()->get();
             $postCat = Postcategory::select('posts.*', 'postcategories.*')
-        ->join('posts', 'posts.id', '=', 'postcategories.post_id')
-        ->where('posts.status', '=', '4')
-        ->where('postcategories.category_id', '=', $category->id)
-        ->orderBy('postcategories.created_at', 'desc')
-        ->limit(2)
-        ->get();
+                ->join('posts', 'posts.id', '=', 'postcategories.post_id')
+                ->where('posts.status', '=', '4')
+                ->where('postcategories.category_id', '=', $category->id)
+                ->orderBy('postcategories.created_at', 'desc')
+                ->limit(2)
+                ->get();
 
-            if( strtolower  ($category->nombre) == 'deportes') {
-                foreach($postCat as $post)
-                    $deportes[] = Post::where('status', 4)->where('id',$post->post_id)->first();
+            if (strtolower($category->nombre) == 'deportes') {
+                foreach ($postCat as $post)
+                    $deportes[] = Post::where('status', 4)->where('id', $post->post_id)->first();
             }
 
-            if( strtolower  ($category->nombre) == 'local') {
-                foreach($postCat as $post)
-                    $locales[] = Post::where('status', 4)->where('id',$post->post_id)->first();
+            if (strtolower($category->nombre) == 'local') {
+                foreach ($postCat as $post)
+                    $locales[] = Post::where('status', 4)->where('id', $post->post_id)->first();
             }
 
-            if( strtolower  ($category->nombre) == 'nacional') {
-                foreach($postCat as $post)
-                    $nacionales[] = Post::where('status', 4)->where('id',$post->post_id)->first();
+            if (strtolower($category->nombre) == 'nacional') {
+                foreach ($postCat as $post)
+                    $nacionales[] = Post::where('status', 4)->where('id', $post->post_id)->first();
             }
+        }
 
-        }   
-        
         $editors = Editor::where('status', 1)->orderBy('specialty', 'asc')->get();
 
         foreach ($editors as &$editor)
@@ -131,26 +139,27 @@ class WebviewController extends Controller
 
         $home_local     = null;
         $ads = Ad::where('status', 1)->orderBy('orden', 'asc')->get();
-        
-        foreach($ads as &$ad) {
+
+        foreach ($ads as &$ad) {
             $ad->sections = json_decode($ad->sections);
-            if($ad->sections->local)
+            if ($ad->sections->local)
                 $home_local[] = $ad;
         }
-        
+
         $headers = apache_request_headers();
-           
+
         $diario = new DailyStatistic();
-        
+
         $diario->url    = url()->current();
         $diario->reference = serialize($headers);
 
         $diario->save();
 
-        return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors','home_local'));
+        return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors', 'home_local'));
     }
 
-    public function mantenimiento(){
+    public function mantenimiento()
+    {
         return view('mantenimiento');
     }
 }
