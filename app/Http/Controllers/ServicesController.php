@@ -8,6 +8,7 @@ use App\Models\Postcategory;
 use App\Models\PostDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ServicesController extends Controller
 {
@@ -111,10 +112,13 @@ class ServicesController extends Controller
             $esta = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
             $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
             copy($esta, $vaPara);
+
+            if (File::exists($vaPara))
+                File::chmod($vaPara, 0755);
         }
 
-
-
+        if (File::exists($esta))
+            File::chmod($esta, 0755);
 
         return ["success" => true, 'to' => asset('storage/' . $aqui), 'img' => $aqui, 'esta' => $esta, 'vaPara' => $vaPara];
     }

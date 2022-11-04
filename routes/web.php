@@ -19,6 +19,7 @@ use App\Http\Controllers\SocialController;
 use App\Http\Controllers\SUDO\AsignPermissionsController;
 use App\Http\Controllers\SUDO\PermissionsController;
 use App\Http\Controllers\SUDO\RolesController;
+use App\Http\Controllers\TesteandoController;
 use App\Http\Controllers\WebviewController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,7 @@ if($_SERVER['REMOTE_ADDR'] != '189.242.78.206'){
 }else {
     */
 Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
+
 Route::get('guest', function () {
     return view('welcome');
 });
@@ -200,3 +202,5 @@ Route::get('auth/facebook/callback', [SocialController::class, 'callbackFacebook
 //crontab para publicar en fb
 Route::get('crontab_fb', [ServicesController::class, 'crontab_fb'])->name('crontab_fb');
 //}
+
+Route::get('/testfb', [TesteandoController::class, 'testfb'])->name('testfb');

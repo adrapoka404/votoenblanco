@@ -1,14 +1,14 @@
 <x-guest-layout>
     <div class="">
+        <div class="md:mx-10 lg:mx-10 text-red-800 text-3xl font-bold w-full md:w-1/2 text-center">
+            @if (strlen($destacada->title) > 75)
+                {{ $destacada->title }}
+            @else
+                {{ substr($destacada->title, 0, 75) . '...' }}
+            @endif
+        </div>
         <div class="md:mx-10 lg:mx-10 lg:grid lg:grid-cols-3 my-10 ">
             <div class=" text-center lg:grid w-full lg:pl-10">
-                <div class="text-red-800 text-3xl font-bold mb-5 w-full">
-                    @if (strlen($destacada->title) > 75)
-                        {{ $destacada->title }}
-                    @else
-                        {{ substr($destacada->title, 0, 75) . '...' }}
-                    @endif
-                </div>
                 <div class="w-full h-80 bg-gray pb-2 bg-contain bg-no-repeat "
                     style="background-image: url('{{ asset('storage/' . $destacada->image_principal) }}')">
 

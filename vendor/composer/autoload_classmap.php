@@ -82,6 +82,7 @@ return array(
     'App\\Models\\Config' => $baseDir . '/app/Models/Config.php',
     'App\\Models\\DailyStatistic' => $baseDir . '/app/Models/DailyStatistic.php',
     'App\\Models\\Editor' => $baseDir . '/app/Models/Editor.php',
+    'App\\Models\\Fb' => $baseDir . '/app/Models/Fb.php',
     'App\\Models\\Membership' => $baseDir . '/app/Models/Membership.php',
     'App\\Models\\Post' => $baseDir . '/app/Models/Post.php',
     'App\\Models\\PostComent' => $baseDir . '/app/Models/PostComent.php',

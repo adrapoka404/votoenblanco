@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
 use App\Models\Editor;
+use App\Models\Fb;
 use App\Models\Post;
 use App\Models\Postcategory;
 use App\Models\PostDetails;
@@ -108,7 +109,6 @@ class NotasController extends Controller
     public function store(StorePostRequest $request)
     {
 
-        //return $request;
         //$nurl = Storage::put('public/posts/'.date('Y_m'),$request->file('image_principal'));
 
         //Es creador de contenido?
@@ -187,6 +187,15 @@ class NotasController extends Controller
                 $postRelated->save();
             }
         }
+
+        if($request->post_now && $request->redfb && $request->post_now == 1 && $request->redfb == 1){
+            $post_fb = new Fb();
+
+            $post_fb->post_fb($post);
+
+            die('ñ_ñ');
+        }
+
 
         return redirect()->route('admin.notas.create')->with('info', __('Post creado con éxito'));
     }

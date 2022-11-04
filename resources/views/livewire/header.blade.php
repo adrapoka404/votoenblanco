@@ -183,6 +183,7 @@
         </div>
     </div>
 </div>
+@if(request()->route()->getName() == 'welcome')
 <div class="grid sm:grid-rows-3 lg:grid-cols-3 lg:grid-rows-1 uppercase text-2xl text-white items-center bg-black my-2">
     <div class="uppercase text-white text-center font-sans text-lg mx-2 h-full">
         <style>
@@ -251,11 +252,12 @@
         </div>
     </div>
 </div>
+@endif
 @section('jquery')
     <script>
         var theurl = "{{ request()->path() }}";
         $(document).ready(function() {
-            console.log('llega el jquery');
+            
             mueveReloj()
             date = new Date();
 
