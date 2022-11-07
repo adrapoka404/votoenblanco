@@ -36,13 +36,13 @@ use Spatie\Permission\Models\Permission;
 | contains the "web" middleware group. Now create something great!
 |
 */
- 
+ /*
 if($_SERVER['REMOTE_ADDR'] != '189.242.5.154'){
     Route::get('/', [WebviewController::class, 'mantenimiento'])->name('mantenimiento');
 }else {
     
 Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
-
+*/
 Route::get('guest', function () {
     return view('welcome');
 });
@@ -69,6 +69,13 @@ Route::get('clear-permisions', function(){
     app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 });
 */
+
+Route::get('storage-link', function(){
+    Artisan::call('storage:link');
+});
+
+
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $roles = Auth::user()->roles()->get();
     
@@ -205,4 +212,4 @@ Route::get('crontab_fb', [ServicesController::class, 'crontab_fb'])->name('cront
 
 Route::get('/testfb', [TesteandoController::class, 'testfb'])->name('testfb');
 
-}
+//} cierre de condicional si se limita a una ip
