@@ -43,9 +43,7 @@ if($_SERVER['REMOTE_ADDR'] != '189.242.5.154'){
     
 Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 */
-Route::get('guest', function () {
-    return view('welcome');
-});
+Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 /*
     $targetFolder = storage_path().'/app/public';
     $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
@@ -56,9 +54,10 @@ Route::get('guest', function () {
     echo 'Symlink process successfully completed';
     */ //echo $targetFolder; 
 /*
-Route::get('storage-link', function("{
+Route::get('storage-link', function(){
     Artisan::call('storage:link');
 });
+
 
 
 Route::get('clear-views', function(){
@@ -69,11 +68,6 @@ Route::get('clear-permisions', function(){
     app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 });
 */
-
-Route::get('storage-link', function(){
-    Artisan::call('storage:link');
-});
-
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
