@@ -36,11 +36,11 @@ use Spatie\Permission\Models\Permission;
 | contains the "web" middleware group. Now create something great!
 |
 */
- /*
-if($_SERVER['REMOTE_ADDR'] != '189.242.78.206'){
+ 
+if($_SERVER['REMOTE_ADDR'] != '189.242.5.154'){
     Route::get('/', [WebviewController::class, 'mantenimiento'])->name('mantenimiento');
 }else {
-    */
+    
 Route::get('/', [WebviewController::class, 'welcome'])->name('welcome');
 
 Route::get('guest', function () {
@@ -201,6 +201,8 @@ Route::get('auth/facebook/callback', [SocialController::class, 'callbackFacebook
 
 //crontab para publicar en fb
 Route::get('crontab_fb', [ServicesController::class, 'crontab_fb'])->name('crontab_fb');
-//}
+
 
 Route::get('/testfb', [TesteandoController::class, 'testfb'])->name('testfb');
+
+}
