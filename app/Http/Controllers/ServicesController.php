@@ -107,16 +107,7 @@ class ServicesController extends Controller
         $aqui = str_replace('public/', '', $aqui);
         $esta = storage_path() . '/app/public/' . $aqui;
         $vaPara = '';
-        if (env('APP_URL') != 'http://votoenblanco.test') {
-
-            $esta = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-            $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-            copy($esta, $vaPara);
-
-            if (File::exists($vaPara))
-                File::chmod($vaPara, 0755);
-        }
-
+        
         if (File::exists($esta))
             File::chmod($esta, 0755);
 

@@ -56,7 +56,7 @@ class AdsController extends Controller
         
         $in         = 'public/ads';
         $thumbnails = storage_path().'/app/public/';
-        $app        = env('APP_URL');
+        
         $adds       = [];
         //return $request;
         //verificar si existe ruta para os thumbs
@@ -67,11 +67,7 @@ class AdsController extends Controller
 
             $aqui = Storage::put($in, $request->file('add.local'));
             $aqui   = str_replace('public/', '', $aqui);
-            if ($app != 'http://votoenblanco.test') {
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
+            
             //crear vista para admin-add-list y admin-add-edi            
             $local = $request->file('add.local');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_50x50.'.$local->extension();
@@ -92,12 +88,7 @@ class AdsController extends Controller
 
             $aqui = Storage::put($in, $request->file('add.hlateral'));
             $aqui   = str_replace('public/', '', $aqui);
-
-            if ($app != 'http://votoenblanco.test') {
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
+            
             //crear vista para admin-add-list y admin-add-edi            
             $hlateral = $request->file('add.hlateral');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_40x70.'.$hlateral->extension();
@@ -120,11 +111,6 @@ class AdsController extends Controller
             $aqui = Storage::put($in, $request->file('add.category'));
             $aqui   = str_replace('public/', '', $aqui);
 
-            if ($app != 'http://votoenblanco.test') {
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
             //crear vista para admin-add-list y admin-add-edi            
             $category = $request->file('add.category');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_150x50.'.$category->extension();
@@ -146,11 +132,6 @@ class AdsController extends Controller
             $aqui = Storage::put($in, $request->file('add.postbody'));
             $aqui   = str_replace('public/', '', $aqui);
 
-            if ($app != 'http://votoenblanco.test') {
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
             //crear vista para admin-add-list y admin-add-edi            
             $postbody = $request->file('add.postbody');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_100x50.'.$postbody->extension();
@@ -172,11 +153,6 @@ class AdsController extends Controller
             $aqui = Storage::put($in, $request->file('add.postlateral'));
             $aqui   = str_replace('public/', '', $aqui);
             
-            if ($app != 'http://votoenblanco.test') {
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
             //crear vista para admin-add-list y admin-add-edi            
             $postlateral = $request->file('add.postlateral');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_50x50.'.$postlateral->extension();
@@ -245,7 +221,6 @@ class AdsController extends Controller
 
         $in         = 'public/ads';
         $thumbnails = storage_path().'/app/public/';
-        $app        = env('APP_URL');
         $adds       = [];
         //return $request;
         //verificar si existe ruta para os thumbs
@@ -257,11 +232,6 @@ class AdsController extends Controller
             $aqui = Storage::put($in, $request->file('add.local'));
             $aqui   = str_replace('public/', '', $aqui);
 
-            if ($app != 'http://votoenblanco.test') {    
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
             //crear vista para admin-add-list y admin-add-edi            
             $local = $request->file('add.local');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_50x50.'.$local->extension();
@@ -282,11 +252,7 @@ class AdsController extends Controller
 
             $aqui = Storage::put($in, $request->file('add.hlateral'));
             $aqui   = str_replace('public/', '', $aqui);
-            if ($app != 'http://votoenblanco.test') {
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
+            
             //crear vista para admin-add-list y admin-add-edi            
             $hlateral = $request->file('add.hlateral');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_40x70.'.$hlateral->extension();
@@ -308,12 +274,6 @@ class AdsController extends Controller
 
             $aqui   = Storage::put($in, $request->file('add.category'));
             $aqui   = str_replace('public/', '', $aqui);
-
-            if ($app != 'http://votoenblanco.test') {
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
             //crear vista para admin-add-list y admin-add-edi            
             $category = $request->file('add.category');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_150x50.'.$category->extension();
@@ -335,11 +295,6 @@ class AdsController extends Controller
             $aqui = Storage::put($in, $request->file('add.postbody'));
             $aqui   = str_replace('public/', '', $aqui);
 
-            if ($app != 'http://votoenblanco.test') {    
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
             //crear vista para admin-add-list y admin-add-edi            
             $postbody = $request->file('add.postbody');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_100x50.'.$postbody->extension();
@@ -360,11 +315,6 @@ class AdsController extends Controller
 
             $aqui = Storage::put($in, $request->file('add.postlateral'));
             $aqui   = str_replace('public/', '', $aqui);
-            if ($app != 'http://votoenblanco.test') {
-                $esta   = '/home/imvdeme1/testvb/storage/app/public/' . $aqui;
-                $vaPara = '/home/imvdeme1/public_html/testvb/storage/' . $aqui;
-                copy($esta, $vaPara);
-            }
             //crear vista para admin-add-list y admin-add-edi            
             $postlateral = $request->file('add.postlateral');
             $url_thumb_list = 'ads/thumbnails/'.time().'_thumbnail_50x50.'.$postlateral->extension();
