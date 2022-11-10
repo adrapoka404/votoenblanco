@@ -68,7 +68,11 @@ Route::get('clear-permisions', function(){
     app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 });
 */
-
+Route::get('update-site', function(){
+    Artisan::call('key:generate');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $roles = Auth::user()->roles()->get();
