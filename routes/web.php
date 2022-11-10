@@ -68,6 +68,11 @@ Route::get('clear-permisions', function(){
     app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 });
 */
+
+Route::get('storage-link', function(){
+    Artisan::call('storage:link');
+});
+
 Route::get('update-site', function(){
     Artisan::call('key:generate');
     Artisan::call('config:clear');
