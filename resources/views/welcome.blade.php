@@ -59,27 +59,30 @@
                     <div class=" w-full h-full bg-black text-white text-center">
                         <div id="carouselPanelLocal" class="carousel slide relative" data-bs-ride="carousel">
                             <div class="carousel-inner relative w-full overflow-hidden">
-                                @if(empty($home_local))
-                                <div class="bg-black">Publicidad</div>
+                                @if (empty($home_local))
+                                    <div class="bg-black">Publicidad</div>
                                 @else
-                                @foreach ($home_local as $indx => $hl)
-                                    <div
-                                        class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
-                                        <img src="{{ asset('storage/' . $hl->sections->local->origin) }}" class="block w-full" alt="{{ $hl->name }}" />
-                                    </div>
-                                @endforeach
+                                    @foreach ($home_local as $indx => $hl)
+                                        <div
+                                            class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                            <img src="{{ asset('storage/' . $hl->sections->local->origin) }}"
+                                                class="block w-full" alt="{{ $hl->name }}" />
+                                        </div>
+                                    @endforeach
                                 @endif
                             </div>
                             <button
                                 class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
                                 type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                                <span class="carousel-control-prev-icon inline-block bg-no-repeat"
+                                    aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
                             <button
                                 class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
                                 type="button" data-bs-target="#carouselPanelLocal" data-bs-slide="next">
-                                <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                                <span class="carousel-control-next-icon inline-block bg-no-repeat"
+                                    aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
@@ -141,49 +144,93 @@
             <x-slot name="title">Nacional</x-slot>
             <x-slot name="description"></x-slot>
             <x-slot name="content">
-                <div class=" grid md:grid-cols-2 items-center mx-auto   ">
-                    @foreach ($nacionales as $nacional)
-                        @if ($nacional != null)
-                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
-                                style="background-image: url({{ asset('storage/' . $nacional->image_principal) }})">
-                                <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                    <a class="mr-5 my-auto cursor-pointer "
-                                        href="{{ route('notas.show', $nacional->slug) }}">
-                                        {{ $nacional->title }}
-                                    </a>
+                <div id="carouselPanelNacional" class="carousel slide relative" data-bs-ride="carousel">
+                    <div class="carousel-inner relative w-full overflow-hidden">
+                        @foreach ($nacionales as $indx => $nacional)
+                            @if ($nacional != null)
+                                @if ($indx == 0 || $indx == 3)
+                                    <div
+                                        class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                        <div class="grid md:grid-cols-3">
+                                @endif
+                                <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
+                                    style="background-image: url({{ asset('storage/' . $nacional->image_principal) }})">
+                                    <div
+                                        class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
+                                        <a class="mr-5 my-auto cursor-pointer "
+                                            href="{{ route('notas.show', $nacional->slug) }}">
+                                            {{ $nacional->title }}
+                                        </a>
+                                    </div>
                                 </div>
+                                @if ($indx == 2 || $indx == 5)
                             </div>
-                        @endif
-                    @endforeach
-
-                </div>
-            </x-slot>
-        </x-jet-action-section>
-
-
-        <x-jet-action-section>
-            <x-slot name="title">Deportes</x-slot>
-            <x-slot name="description"></x-slot>
-            <x-slot name="content">
-                <div class=" grid md:grid-cols-2 items-center mx-auto   ">
-
-                    @foreach ($deportes as $deporte)
-                        @if ($deporte != null)
-                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
-                                style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
-                                <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                    <a class="mr-5 my-auto cursor-pointer"
-                                        href="{{ route('notas.show', $deporte->slug) }}">
-                                        {{ $deporte->title }}
-                                    </a>
                                 </div>
-                            </div>
-                        @endif
-                    @endforeach
-
+                                @endif
+                            @endif
+                        @endforeach
+                    </div>
+                    <button
+                        class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                        type="button" data-bs-target="#carouselPanelNacional" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button
+                        class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                        type="button" data-bs-target="#carouselPanelNacional" data-bs-slide="next">
+                        <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-            </x-slot>
-        </x-jet-action-section>
+    </x-slot>
+    </x-jet-action-section>
+
+
+    <x-jet-action-section>
+        <x-slot name="title">Deportes</x-slot>
+        <x-slot name="description"></x-slot>
+        <x-slot name="content">
+            <div id="carouselPanelDeportes" class="carousel slide relative" data-bs-ride="carousel">
+                <div class="carousel-inner relative w-full overflow-hidden">
+                @foreach ($deportes as $indx => $deporte)
+                    @if ($deporte != null)
+                                @if ($indx == 0 || $indx == 3)
+                                    <div
+                                        class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                        <div class="grid md:grid-cols-3">
+                                @endif
+                        <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
+                            style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
+                            <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
+                                <a class="mr-5 my-auto cursor-pointer"
+                                    href="{{ route('notas.show', $deporte->slug) }}">
+                                    {{ $deporte->title }}
+                                </a>
+                            </div>
+                        </div>
+                        @if ($indx == 2 || $indx == 5)
+                            </div>
+                                </div>
+                                @endif
+                    @endif
+                @endforeach
+            </div>
+            <button
+                class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                type="button" data-bs-target="#carouselPanelNacional" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+                class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                type="button" data-bs-target="#carouselPanelNacional" data-bs-slide="next">
+                <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        </x-slot>
+    </x-jet-action-section>
 
 
     </div>

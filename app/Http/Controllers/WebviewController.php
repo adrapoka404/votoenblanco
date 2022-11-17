@@ -108,12 +108,14 @@ class WebviewController extends Controller
 
         foreach ($categorias as $category) {
             //$postCat = Postcategory::where('category_id', $category->id)->orderBy('created_at', 'desc')->limit()->get();
+            $limit = strtolower($category->nombre) == 'local' ? 4 : 6;
+
             $postCat = Postcategory::select('posts.*', 'postcategories.*')
                 ->join('posts', 'posts.id', '=', 'postcategories.post_id')
                 ->where('posts.status', '=', '4')
                 ->where('postcategories.category_id', '=', $category->id)
                 ->orderBy('postcategories.created_at', 'desc')
-                ->limit(2)
+                ->limit($limit)
                 ->get();
 
             if (strtolower($category->nombre) == 'deportes') {

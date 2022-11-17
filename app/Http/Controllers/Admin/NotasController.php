@@ -122,9 +122,12 @@ class NotasController extends Controller
 
         $post = new Post();
 
+        $slug = strtolower(str_replace(' ', '-', $request->title));
+        $slug = strtolower(str_replace('?', '-', $slug));
+
         $post->user_create          = Auth::user()->id;
         $post->title                = $request->title;
-        $post->slug                 = strtolower(str_replace(' ', '-', $request->title));
+        $post->slug                 = $slug;
         $post->description          = $request->description;
         $post->featured             = isset($request->featured) ? 1 : 0;
         $post->social_text          = $request->social_text;
@@ -206,7 +209,7 @@ class NotasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, Post $post)
     {
         return $request;
         return view('admin.posts.preview');
@@ -263,9 +266,11 @@ class NotasController extends Controller
         
         $post = Post::where('slug', 'like', '%'.$id.'%')->first();
 
+        $slug = strtolower(str_replace(' ', '-', $request->title));
+        $slug = strtolower(str_replace('?', '-', $slug));
         $post->user_edit            = Auth::user()->id;
         $post->title                = $request->title;
-        $post->slug                 = strtolower(str_replace(' ', '-', $request->title));
+        $post->slug                 = $slug;
         $post->description          = $request->description;
         $post->featured             = isset($request->featured) ? 1 : 0;
         $post->social_text          = $request->social_text;

@@ -61,7 +61,7 @@
                         <x-slot name="alt">{{ $post->title }}</x-slot>
                         <x-slot name="date">{{ $post->created_at }}</x-slot>
                         <x-slot name="user">{{ $post->user->name }}</x-slot>
-                        <x-slot name="userto">{{ route('notas.editores', $post->user->slug) }}</x-slot>
+                        <x-slot name="userto">{{ route('notas.editores', $post->user) }}</x-slot>
                         <x-slot name="sumary">{{ $post->description }}</x-slot>
                         <x-slot name="where">{{ route('notas.show', $post) }}</x-slot>
 

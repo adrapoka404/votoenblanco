@@ -52,7 +52,6 @@ class NotasController extends Controller
      */
     public function show($id, Request $request)
     {
-        
         $post = Post::where('slug', $id)->first();
         $headers = apache_request_headers();
         

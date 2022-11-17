@@ -78,10 +78,11 @@ Route::get('update-site', function(){
     Artisan::call('config:clear');
     Artisan::call('config:cache');
 });
-*/
+
 Route::get('storage-link', function(){
     Artisan::call('storage:link');
 });
+*/
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $roles = Auth::user()->roles()->get();
     
@@ -200,13 +201,13 @@ Route::get('routes', function () {
 });
 
 //borrar cache de permisos
-Route::get('clear-cache-permisos', function () {
-    app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-    exit('ñ_ñ');
-});
+//Route::get('clear-cache-permisos', function () {
+  //  app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+   // exit('ñ_ñ');
+//});
 
-Route::resource('migracion', MigracionController::class)->names('migracion');
-Route::get('migracion_csv', [MigracionController::class, 'read_csv'])->name('migracion_csv');
+//Route::resource('migracion', MigracionController::class)->names('migracion');
+//Route::get('migracion_csv', [MigracionController::class, 'read_csv'])->name('migracion_csv');
 
 //probando ogin con FB
 Route::get('auth/facebook', [SocialController::class, 'redirectFacebook']);
