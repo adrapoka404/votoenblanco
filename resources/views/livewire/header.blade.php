@@ -256,6 +256,7 @@
 @section('jquery')
     <script>
         var theurl = "{{ request()->path() }}";
+        $("#search").hide();
         $(document).ready(function() {
             
             mueveReloj()
