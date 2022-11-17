@@ -357,4 +357,12 @@ class NotasController extends Controller
 
         return ['success'=> true, 'msg' => '¡Exito! Gracias por darnos tu opinion'];
      }
+
+     public function antiguos($cat, $slug){
+        $hay = Post::where('slug', $slug)->first();
+        if(!empty($hay))
+            return redirect()->route('notas.show', $hay);
+        else
+            return redirect()->route('welcome');
+     }
 }

@@ -23,6 +23,76 @@ class MigracionController extends Controller
      */
     public function index()
     {
+        ini_set('max_execution_time', 86400); // Extender a 1 dia
+        $name_file      = "unir_ids_enero_2021.txt";
+        $st_date_start  = strtotime('2021-01-01');
+        $st_date_end    = strtotime('2021-01-31');
+        $daystrtotime   = 86400;
+        $existen        = 0;
+        $app            = env('APP_URL');
+
+        $days       = [];
+        
+        for ($dat = $st_date_start; $dat <= $st_date_end; $dat += $daystrtotime)
+            $days[] = date('Y-m-d', $dat);
+
+        if ($app == 'http://votoenblanco.test')
+            $file = fopen("C:/xampp/htdocs/votoenblanco/storage/logs/" . $name_file, "w");
+        else
+            $file = fopen("/home/imvdeme1/public_html/prod_votoenblanco/storage/logs/" . $name_file, "w");
+
+        foreach ($days as $day) {
+            fwrite($file, "Comenzamos con " . $day . PHP_EOL);
+            fwrite($file, "Siendo las " . date('Y:m:d H:m:s') . PHP_EOL);
+            $posts = DB::connection('mysql_wp')
+                ->table('wp_posts')
+                ->where('post_type', 'post')
+                ->where('post_status', 'publish')
+                ->where('post_date', 'like', $day . '%')
+                ->orderBy('id', 'ASC')
+                ->get();
+            fwrite($file, "Se obtienen " . $posts->count() . PHP_EOL);
+            $existen += $posts->count();
+            foreach ($posts as &$post_wp) {
+                fwrite($file, "---------------------------------------- START -----------------------------------" . PHP_EOL);
+                fwrite($file, "Se inicia con la extraccion de elementos del post:  " . $post_wp->post_title . PHP_EOL);
+
+                fwrite($file, "Inicia la creacion del post en la nueva plataforma siendo las " . date('Y-m-d H:m:s') . PHP_EOL);
+
+                $metas        = DB::connection('mysql_wp')->table('wp_postmeta')->where('post_id', $post_wp->ID)->get();
+                foreach ($metas as $meta) {
+                    if ($meta->meta_key == '_aioseop_opengraph_settings')
+                        $post_wp->_aioseop_opengraph_settings = unserialize($meta->meta_value);
+
+                    if ($meta->meta_key == '_wpas_mess')
+                        $post_wp->_wpas_mess = $meta->meta_value;
+                }
+
+                $seos          = DB::connection('mysql_wp')->table('wp_aioseo_posts')->where('post_id', $post_wp->ID)->get();
+                echo "<pre>";
+                print_r($seos);
+                echo "<pre>";
+                //Verificamos si hay una sola categoria y si se omite su creacion
+                    $post_exist = Post::where('slug', $post_wp->post_name)->first();
+                    echo " ligar <br> ";
+                    echo "<pre>";
+                    print_r($post_exist);
+                    echo "</pre>";
+                    echo "Con <br>";
+                    echo "<pre>";
+                    print_r($post_wp);
+                    echo "</pre>";
+                die;
+            }
+            fwrite($file, "Concluye el proceso de migracion del dia " . $day . " siendo las " .  date('Y-m-d H:m:s') . PHP_EOL);
+        }
+        
+        fwrite($file, "Concluye el proceso de migracion siendo las " . date('Y-m-d H:m:s') . PHP_EOL);
+        fclose($file);
+        exit('ñ_ñ');
+    }
+     public function index_old()
+    {
 
         ini_set('max_execution_time', 86400); // Extender a 1 dia
         $name_file      = "migracion_septiembre_27_al_02_oct.txt";
@@ -80,7 +150,7 @@ class MigracionController extends Controller
         if ($app == 'http://votoenblanco.test')
             $file = fopen("C:/xampp/htdocs/votoenblanco/storage/logs/" . $name_file, "w");
         else
-            $file = fopen("/home/imvdeme1/public_html/testvb/storage/logs/" . $name_file, "w");
+            $file = fopen("/home/imvdeme1/public_html/prod_votoenblanco/storage/logs/" . $name_file, "w");
 
 
         foreach ($days as $day) {
@@ -93,7 +163,6 @@ class MigracionController extends Controller
                 ->where('post_date', 'like', $day . '%')
                 ->orderBy('id', 'ASC')
                 ->get();
-            //return $posts;
             fwrite($file, "Se obtienen " . $posts->count() . PHP_EOL);
             $existen += $posts->count();
             foreach ($posts as &$post_wp) {
@@ -277,6 +346,7 @@ class MigracionController extends Controller
                     unset($relateds[$post_wp->post_name]);
                     fwrite($file, "Se omite la nota por categoria" . PHP_EOL);
                 }
+                
             }
             fwrite($file, "Concluye el proceso de migracion del dia " . $day . " siendo las " .  date('Y-m-d H:m:s') . PHP_EOL);
         }
@@ -328,7 +398,7 @@ class MigracionController extends Controller
                     continue;
                 } else {
 
-                    $vistas = $data[1];
+                    //$vistas = $data[1];
                     $buscar = mb_convert_encoding($data[2], 'UTF-8', 'UTF-8');
                     $buscar = str_replace('https://votoenblanco.com.mx/', '', $buscar);
                     $buscar = str_replace('http://votoenblanco.com.mx/', '', $buscar);
@@ -338,11 +408,19 @@ class MigracionController extends Controller
                         $slug = $buscar[1];
                     
                     $post = Post::where('slug', $slug)->first();
-                    
+                    if ($post != null) {
+                        echo "Modificar post con id " . $post->id ."<br>";
+
+                        echo "con " . $data[2] . "<br>";
+                        //$post->wp_url = $data[2];
+                        //$post->save();
+                    }
+                    /*
                     if ($post != null) {
                         $post->views += $vistas;
                         $post->save();
                     }
+                    */
                 }
                 $hay++;
             }

@@ -91,10 +91,13 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+
+
 Route::resource('notas', NotasController::class)
 ->only(['index','show','editores','categorias','reaction', 'share', 'save', 'nosave','coments'])
     ->names('notas');
-
+    
+    Route::get('/{category}/{slug}', [NotasController::class, 'antiguos'])->name('notas');
 
 Route::resource('editores', EditoresController::class)
     ->only(['show'])
@@ -207,7 +210,7 @@ Route::get('routes', function () {
 //});
 
 //Route::resource('migracion', MigracionController::class)->names('migracion');
-//Route::get('migracion_csv', [MigracionController::class, 'read_csv'])->name('migracion_csv');
+Route::get('migracion_csv', [MigracionController::class, 'read_csv'])->name('migracion_csv');
 
 //probando ogin con FB
 Route::get('auth/facebook', [SocialController::class, 'redirectFacebook']);
