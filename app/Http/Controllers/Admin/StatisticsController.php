@@ -24,7 +24,7 @@ class StatisticsController extends Controller
         $masleido   = Editor::where('status', 1)->orderBy('vistas', 'desc')->first();
         $masleido->user = User::find($masleido->user_id);
         
-        $masshare   = Post::where('status', 4)->orderBy('shareds', 'desc')->first();
+        $masshare   = Post::where('status', 4)->where('shareds', '>', 0)->orderBy('shareds', 'desc')->first();
         
         $posts      = Post::where('status', 4)->get();
         

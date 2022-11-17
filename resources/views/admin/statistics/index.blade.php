@@ -15,6 +15,7 @@
                     <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas leidas</a>
                 </div>
             </div>
+            @if (!empty($masslike))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     Mas super likeada
@@ -26,6 +27,9 @@
                     <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas super likeadas</a>
                 </div>
             </div>
+                
+            @endif
+            @if (!empty($maslike))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     Mas likeada
@@ -37,6 +41,8 @@
                     <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas likeadas</a>
                 </div>
             </div>
+            @endif
+            @if(!empty($masnlike))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     Mas no likeada
@@ -48,7 +54,8 @@
                     <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas no likeadas</a>
                 </div>
             </div>
-            
+            @endif
+            @if(!empty($masshare))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     Mas compartida
@@ -60,7 +67,7 @@
                     <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas compartidas</a>
                 </div>
             </div>
-
+            @endif
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
                     El mas leido
