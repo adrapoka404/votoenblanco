@@ -97,7 +97,12 @@
                                         class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
                                         <a class="mr-5 my-auto cursor-pointer"
                                             href="{{ route('notas.show', $local->slug) }}">
+                                            @if (strlen($local->title) > 75)
                                             {{ $local->title }}
+                                        @else
+                                            {{ substr($local->title, 0, 75) . '...' }}
+                                        @endif
+                                        
                                         </a>
                                     </div>
                                 </div>
@@ -159,7 +164,11 @@
                                         class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
                                         <a class="mr-5 my-auto cursor-pointer "
                                             href="{{ route('notas.show', $nacional->slug) }}">
+                                            @if (strlen($nacional->title) > 75)
                                             {{ $nacional->title }}
+                                        @nacional
+                                            {{ substr($nacional->title, 0, 75) . '...' }}
+                                        @endif
                                         </a>
                                     </div>
                                 </div>
@@ -205,7 +214,11 @@
                             <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
                                 <a class="mr-5 my-auto cursor-pointer"
                                     href="{{ route('notas.show', $deporte->slug) }}">
+                                    @if (strlen($deporte->title) > 75)
                                     {{ $deporte->title }}
+                                @else
+                                    {{ substr($deporte->title, 0, 75) . '...' }}
+                                @endif
                                 </a>
                             </div>
                         </div>
