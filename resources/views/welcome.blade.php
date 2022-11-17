@@ -2,9 +2,9 @@
     <div class="">
         <div class="md:mx-10 lg:mx-10 text-red-800 text-3xl font-bold w-full md:w-1/2 text-center">
             @if (strlen($destacada->title) > 75)
-                {{ $destacada->title }}
+            {{ substr($destacada->title, 0, 75) . '...' }}
             @else
-                {{ substr($destacada->title, 0, 75) . '...' }}
+            {{ $destacada->title }}
             @endif
         </div>
         <div class="md:mx-10 lg:mx-10 lg:grid lg:grid-cols-3 my-10 ">
@@ -97,12 +97,12 @@
                                         class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
                                         <a class="mr-5 my-auto cursor-pointer"
                                             href="{{ route('notas.show', $local->slug) }}">
-                                            @if (strlen($local->title) > 75)
-                                            {{ $local->title }}
-                                        @else
-                                            {{ substr($local->title, 0, 75) . '...' }}
-                                        @endif
-                                        
+                                            @if (strlen($local->title) < 50)
+                                                {{ $local->title }}
+                                            @else
+                                                {{ substr($local->title, 0, 50) . '...' }}
+                                            @endif
+
                                         </a>
                                     </div>
                                 </div>
@@ -164,34 +164,34 @@
                                         class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
                                         <a class="mr-5 my-auto cursor-pointer "
                                             href="{{ route('notas.show', $nacional->slug) }}">
-                                            @if (strlen($nacional->title) > 75)
-                                            {{ $nacional->title }}
-                                        @nacional
-                                            {{ substr($nacional->title, 0, 75) . '...' }}
-                                        @endif
+                                            @if (strlen($nacional->title) < 50)
+                                                {{ $nacional->title }}
+                                            @else
+                                                {{ substr($nacional->title, 0, 50) . '...' }}
+                                            @endif
                                         </a>
                                     </div>
                                 </div>
                                 @if ($indx == 2 || $indx == 5)
-                            </div>
-                                </div>
-                                @endif
-                            @endif
-                        @endforeach
                     </div>
-                    <button
-                        class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
-                        type="button" data-bs-target="#carouselPanelNacional" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button
-                        class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
-                        type="button" data-bs-target="#carouselPanelNacional" data-bs-slide="next">
-                        <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
+                @endif
+                @endif
+                @endforeach
+    </div>
+    <button
+        class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+        type="button" data-bs-target="#carouselPanelNacional" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+        class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+        type="button" data-bs-target="#carouselPanelNacional" data-bs-slide="next">
+        <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+    </div>
     </x-slot>
     </x-jet-action-section>
 
@@ -202,32 +202,33 @@
         <x-slot name="content">
             <div id="carouselPanelDeportes" class="carousel slide relative" data-bs-ride="carousel">
                 <div class="carousel-inner relative w-full overflow-hidden">
-                @foreach ($deportes as $indx => $deporte)
-                    @if ($deporte != null)
-                                @if ($indx == 0 || $indx == 3)
-                                    <div
-                                        class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
-                                        <div class="grid md:grid-cols-3">
-                                @endif
-                        <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
-                            style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
-                            <div class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
-                                <a class="mr-5 my-auto cursor-pointer"
-                                    href="{{ route('notas.show', $deporte->slug) }}">
-                                    @if (strlen($deporte->title) > 75)
-                                    {{ $deporte->title }}
-                                @else
-                                    {{ substr($deporte->title, 0, 75) . '...' }}
-                                @endif
-                                </a>
-                            </div>
-                        </div>
-                        @if ($indx == 2 || $indx == 5)
-                            </div>
+                    @foreach ($deportes as $indx => $deporte)
+                        @if ($deporte != null)
+                            @if ($indx == 0 || $indx == 3)
+                                <div
+                                    class="carousel-item @if ($indx == 0) active @endif relative float-left w-full">
+                                    <div class="grid md:grid-cols-3">
+                            @endif
+                            <div class="w-64 h-64 py-5 my-5 mx-auto bg-center text-right bg-contain bg-no-repeat"
+                                style="background-image: url({{ asset('storage/' . $deporte->image_principal) }})">
+                                <div
+                                    class="bg-black text-white w-full h-16 mt-44 bottom-1 opacity-75 font-extralight ">
+                                    <a class="mr-5 my-auto cursor-pointer"
+                                        href="{{ route('notas.show', $deporte->slug) }}">
+                                        @if (strlen($deporte->title) < 50)
+                                            {{ $deporte->title }}
+                                        @else
+                                            {{ substr($deporte->title, 0, 50) . '...' }}
+                                        @endif
+                                    </a>
                                 </div>
-                                @endif
-                    @endif
-                @endforeach
+                            </div>
+                            @if ($indx == 2 || $indx == 5)
+                </div>
+            </div>
+            @endif
+            @endif
+            @endforeach
             </div>
             <button
                 class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
@@ -241,7 +242,7 @@
                 <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
-        </div>
+            </div>
         </x-slot>
     </x-jet-action-section>
 
