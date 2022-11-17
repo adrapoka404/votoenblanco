@@ -96,7 +96,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::resource('notas', NotasController::class)
 ->only(['index','show','editores','categorias','reaction', 'share', 'save', 'nosave','coments'])
     ->names('notas');
-    
+    Route::get('services/search', [ServicesController::class, 'posts'])->name('services.posts');
     Route::get('/{category}/{slug}', [NotasController::class, 'antiguos'])->name('notas');
 
 Route::resource('editores', EditoresController::class)
@@ -119,7 +119,6 @@ Route::get('notas.admin', [NotasController::class, 'admin'])->name('notas.admin'
 
 //Rutas de servicios para autocompletes
 Route::get('services/related', [ServicesController::class, 'related'])->name('services.related');
-Route::get('services/search', [ServicesController::class, 'posts'])->name('services.posts');
 Route::get('services/data', [ServicesController::class, 'data'])->name('services.data');
 Route::get('services/popup_images', [ServicesController::class, 'popup_images'])->name('services.popup_images');
 

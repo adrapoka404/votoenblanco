@@ -256,9 +256,34 @@
 @section('jquery')
     <script>
         var theurl = "{{ request()->path() }}";
-        $("#search").hide();
+        $("#search").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "{{ route('services.posts') }}",
+                        type: 'GET',
+                        dataType: 'JSON',
+                        delay: 250,
+                        data: {
+                            search: request.term
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.title,
+                                    value: item.id,
+                                    slug: item.slug
+                                }
+                            }))
+                        }
+                    })
+                },
+                select: function(event, ui) {
+                    window.location.href = "{{ route('notas.show', '') }}" + '/' + ui.item.slug;
+                }
+            })
+            $("#search").hide();
         $(document).ready(function() {
-            
             mueveReloj()
             date = new Date();
 
@@ -343,32 +368,7 @@
                 reaction("NoLike")
             })
 
-            $("#search").autocomplete({
-                source: function(request, response) {
-                    $.ajax({
-                        url: "{{ route('services.posts') }}",
-                        type: 'GET',
-                        dataType: 'JSON',
-                        delay: 250,
-                        data: {
-                            search: request.term
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            response($.map(data, function(item) {
-                                return {
-                                    label: item.title,
-                                    value: item.id,
-                                    slug: item.slug
-                                }
-                            }))
-                        }
-                    })
-                },
-                select: function(event, ui) {
-                    window.location.href = "{{ route('notas.show', '') }}" + '/' + ui.item.slug;
-                }
-            })
+            
         })
 
         function mueveReloj() {
