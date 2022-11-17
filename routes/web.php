@@ -97,7 +97,6 @@ Route::resource('notas', NotasController::class)
 ->only(['index','show','editores','categorias','reaction', 'share', 'save', 'nosave','coments'])
     ->names('notas');
     Route::get('services/search', [ServicesController::class, 'posts'])->name('services.posts');
-    Route::get('/{category}/{slug}', [NotasController::class, 'antiguos'])->name('notas');
 
 Route::resource('editores', EditoresController::class)
     ->only(['show'])
@@ -220,5 +219,5 @@ Route::get('crontab_fb', [ServicesController::class, 'crontab_fb'])->name('cront
 
 
 Route::get('/testfb', [TesteandoController::class, 'testfb'])->name('testfb');
-
+Route::get('/{category}/{slug}', [NotasController::class, 'antiguos'])->name('notas');
 //} cierre de condicional si se limita a una ip
