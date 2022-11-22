@@ -267,7 +267,8 @@ class NotasController extends Controller
         $post = Post::where('slug', 'like', '%'.$id.'%')->first();
 
         $slug = strtolower(str_replace(' ', '-', $request->title));
-        $slug = strtolower(str_replace('?', '-', $slug));
+        $slug = strtolower(str_replace('?', '', $slug));
+        $slug = strtolower(str_replace('#', '', $slug));
         $post->user_edit            = Auth::user()->id;
         $post->title                = $request->title;
         $post->slug                 = $slug;
