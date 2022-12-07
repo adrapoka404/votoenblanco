@@ -2,9 +2,9 @@
     <div class="">
         <div class="md:mx-10 lg:mx-10 text-red-800 text-3xl font-bold w-full md:w-1/2 text-center">
             @if (strlen($destacada->title) > 75)
-            {{ substr($destacada->title, 0, 75) . '...' }}
+                {{ substr($destacada->title, 0, 75) . '...' }}
             @else
-            {{ $destacada->title }}
+                {{ $destacada->title }}
             @endif
         </div>
         <div class="md:mx-10 lg:mx-10 lg:grid lg:grid-cols-3 my-10 ">

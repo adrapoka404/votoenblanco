@@ -16,22 +16,22 @@
     {!! Form::label('url', __('URL'), ['class' => 'text-2xl font-semibold text-black mb-3']) !!}
     {!! Form::text('url', old('url') ? old('url') : (isset($vgallery) ? $vgallery->url : ''), [
         'class' => 'border-1 border-wine focus:border-wine focus:ring-wine rounded-md my-3 w-2/3 block',
-        'placeholder' => __('URL de video'),
+        'placeholder' => __('https://www.youtube.com/embed/xPBfBicWHak'),
     ]) !!}
-    
+    <x-help-form>{{__("Verifique que la url sea obtenida en la opción de 'compartir->incorporar' de YT")}}</x-help-form>
     @error('url')
         <x-has-error>{{ $message }}</x-has-error>
     @enderror
 </div>
 <div class="pb-3">
-    {!! Form::label('description', __('Descripción del video'), ['class' => 'text-2xl font-semibold text-black mb-3']) !!}
+    {!! Form::label('description', __('iFrame del video'), ['class' => 'text-2xl font-semibold text-black mb-3']) !!}
     {!! Form::textarea(
         'description',
         old('description') ? old('description') : (isset($vgallery) ? $vgallery->description : ''),
         [
             'class' => 'border-1 border-wine focus:border-wine focus:ring-wine rounded-md my-3 w-full block',
-            'placeholder' => __('Descripción de video'),
-            'rows' => '2',
+            'placeholder' => __("<iframe width='208'  src='https://www.youtube.com/embed/xPBfBicWHak' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"),
+            'rows' => '5',
             'id' => 'textDescription',
         ],
     ) !!}
