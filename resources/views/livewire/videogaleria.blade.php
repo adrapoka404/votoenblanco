@@ -6,7 +6,7 @@
             <div id="carouselVideoGaleria" class="carousel slide relative" data-bs-ride="carousel">
                 <div class="carousel-inner relative w-full overflow-hidden">
                     <div class="carousel-item active relative float-left w-full">
-                    <iframe height="400" width="100%" src="{{ $vgaleria->url }}" title="{{$vgaleria->title}}" frameborder="0"
+                    <iframe height="600" width="100%" src="{{ $vgaleria->url }}" title="{{$vgaleria->title}}" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                     </div>
