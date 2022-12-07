@@ -125,6 +125,7 @@ class StatisticsController extends Controller
              ->select(DB::raw('post_id, count(post_id) as reactions'))
              ->where('reaction', '=', 1)
              ->groupBy('post_id')
+             ->orderBy('reactions', 'desc')
              ->get();
 
 
@@ -142,6 +143,7 @@ class StatisticsController extends Controller
         ->select(DB::raw('post_id, count(post_id) as reactions'))
         ->where('reaction', '=', 2)
         ->groupBy('post_id')
+        ->orderBy('reactions', 'desc')
         ->get();
 
 
@@ -159,6 +161,7 @@ class StatisticsController extends Controller
         ->select(DB::raw('post_id, count(post_id) as reactions'))
         ->where('reaction', '=', 3)
         ->groupBy('post_id')
+        ->orderBy('reactions', 'desc')
         ->get();
 
 
