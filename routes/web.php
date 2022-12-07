@@ -161,8 +161,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Rutas para admin estadisticas
     Route::resource('adminstatistics', StatisticsController::class)->names('admin.estadisticas');
-    Route::get('adminstatisticsmasleidas/{start}/{end}', [StatisticsController::class, 'masleidas'])->name('admin.estadisticas.masleidas');
-
+    Route::get('adminstatisticsmasleidas', [StatisticsController::class, 'masleidas'])->name('admin.estadisticas.masleidas');
+    Route::get('adminstatisticsmasleidasexport', [StatisticsController::class, 'masleidasexport'])->name('admin.estadisticas.masleidasexport');
+    Route::get('adminstatisticslosmasleidos', [StatisticsController::class, 'masleidos'])->name('admin.estadisticas.losmasleidos');
+    Route::get('adminstatisticslosmasleidosexport', [StatisticsController::class, 'masleidosexport'])->name('admin.estadisticas.losmasleidosexport');
+    Route::get('adminstatisticsmasslikeadas', [StatisticsController::class, 'masslikeadas'])->name('admin.estadisticas.masslikeadas');
+    Route::get('adminstatisticsmaslikeadas', [StatisticsController::class, 'maslikeadas'])->name('admin.estadisticas.maslikeadas');
+    Route::get('adminstatisticsmasnlikeadas', [StatisticsController::class, 'masnlikeadas'])->name('admin.estadisticas.masnlikeadas');
+    Route::get('adminstatisticshistory/{post_id}', [StatisticsController::class, 'history'])->name('admin.estadisticas.historico');
+    Route::get('adminstatisticshistoryread/{post_id}', [StatisticsController::class, 'history_read'])->name('admin.estadisticas.historicoledas');
     // Rutas para admin estadisticas
     Route::resource('videogalleries', VideogalleriesController::class)->names('admin.videogalerias');
 

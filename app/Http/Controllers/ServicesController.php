@@ -108,6 +108,9 @@ class ServicesController extends Controller
         $esta = storage_path() . '/app/public/' . $aqui;
         $vaPara = '';
         
+        if(File::exists(asset('storage/' . $aqui)))
+            File::chmod(asset('storage/' . $aqui), 0755);
+
         if (File::exists($esta))
             File::chmod($esta, 0755);
 
