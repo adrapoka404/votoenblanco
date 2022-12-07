@@ -17,6 +17,7 @@
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masleida->image_principal) }})"></div>
                 <div class="w-full">
                     <a href="{{route('admin.estadisticas.masleidas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas leidas</a>
+                    <a href="{{ route('notas.show', $masleida->slug) }}" target="_blank" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Ver nota</a>
                 </div>
             </div>
             @if (!empty($masslike))
@@ -29,6 +30,7 @@
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masslike->image_principal) }})"></div>
                 <div class="w-full">
                     <a href="{{route('admin.estadisticas.masslikeadas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas super likeadas</a>
+                    <a href="{{ route('notas.show', $masslike->slug) }}" target="_blank" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Ver nota</a>
                 </div>
             </div>
                 
@@ -43,6 +45,7 @@
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$maslike->image_principal) }})"></div>
                 <div class="w-full">
                     <a href="{{route('admin.estadisticas.maslikeadas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas likeadas</a>
+                    <a href="{{ route('notas.show', $maslike->slug) }}" target="_blank" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Ver nota</a>
                 </div>
             </div>
             @endif
@@ -56,6 +59,7 @@
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masnlike->image_principal) }})"></div>
                 <div class="w-full">
                     <a href="{{route('admin.estadisticas.masnlikeadas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas no likeadas</a>
+                    <a href="{{ route('notas.show', $masnlike->slug) }}" target="_blank" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Ver nota</a>
                 </div>
             </div>
             @endif

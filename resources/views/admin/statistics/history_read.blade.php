@@ -10,6 +10,9 @@
                 <div>({{$h->created_at}}) </div>    
             @endforeach
             <div>
+                <a href="{{ $back }}"
+                class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto"
+                >{{__('Volver a lista')}}</a>
                 <a href="{{ route('admin.estadisticas.index') }}"
                 class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto"
                 >{{__('Volver a estadisticas')}}</a>

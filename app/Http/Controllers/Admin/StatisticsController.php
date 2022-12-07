@@ -191,17 +191,23 @@ class StatisticsController extends Controller
      }
 
     public function history($post_id){
+        $headers = apache_request_headers();
+        
         $history = PostReaction::where('post_id', $post_id)->orderBy('created_at', 'desc')->get();
         $post = Post::find($post_id);
+        $back = $headers['Referer'];
 
-        return view('admin.statistics.history', compact('history','post'));
+        return view('admin.statistics.history', compact('history','post', 'back'));
     }
 
     public function history_read($post_id){
+        $headers = apache_request_headers();
+        
         $history = DailyStatistic::where('post_id', $post_id)->orderBy('created_at', 'desc')->get();
         $post = Post::find($post_id);
+        $back = $headers['Referer'];
 
-        return view('admin.statistics.history_read', compact('history','post'));
+        return view('admin.statistics.history_read', compact('history','post', 'back'));
     }
     /**
      * Show the form for creating a new resource.
