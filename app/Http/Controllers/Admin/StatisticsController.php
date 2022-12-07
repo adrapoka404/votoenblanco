@@ -45,7 +45,7 @@ class StatisticsController extends Controller
              ->select(DB::raw('post_id, count(post_id) as reactions'))
              ->where('reaction', '=', 1)
              ->groupBy('post_id')
-             ->orderBy('created_at', 'desc')
+             ->orderBy('reactions', 'desc')
              ->get();
 
         $masslike = Post::find($masslikeadas[0]->post_id);
@@ -55,7 +55,7 @@ class StatisticsController extends Controller
              ->select(DB::raw('post_id, count(post_id) as reactions'))
              ->where('reaction', '=', 2)
              ->groupBy('post_id')
-             ->orderBy('created_at', 'desc')
+             ->orderBy('reactions', 'desc')
              ->get();
 
         $maslike = Post::find($maslikeadas[0]->post_id);
@@ -66,7 +66,7 @@ class StatisticsController extends Controller
              ->select(DB::raw('post_id, count(post_id) as reactions'))
              ->where('reaction', '=', 3)
              ->groupBy('post_id')
-             ->orderBy('created_at', 'desc')
+             ->orderBy('reactions', 'desc')
              ->get();
 
 
