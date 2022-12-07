@@ -3,6 +3,10 @@
     </x-slot>
     <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
         <x-info />
+        <div>
+            <canvas id="myChart"></canvas>
+          </div>
+          
         <div class="grid grid-cols-2">
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
@@ -12,7 +16,7 @@
                 <div class=" font-light text-sm">{{ $masleida->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masleida->image_principal) }})"></div>
                 <div class="w-full">
-                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas leidas</a>
+                    <a href="{{route('admin.estadisticas.masleidas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas leidas</a>
                 </div>
             </div>
             @if (!empty($masslike))
@@ -24,7 +28,7 @@
                 <div class=" font-light text-sm">{{ $masslike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masslike->image_principal) }})"></div>
                 <div class="w-full">
-                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas super likeadas</a>
+                    <a href="{{route('admin.estadisticas.masslikeadas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas super likeadas</a>
                 </div>
             </div>
                 
@@ -38,7 +42,7 @@
                 <div class=" font-light text-sm">{{ $maslike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$maslike->image_principal) }})"></div>
                 <div class="w-full">
-                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas likeadas</a>
+                    <a href="{{route('admin.estadisticas.maslikeadas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas likeadas</a>
                 </div>
             </div>
             @endif
@@ -51,7 +55,7 @@
                 <div class=" font-light text-sm">{{ $masnlike->title }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ asset('storage/'.$masnlike->image_principal) }})"></div>
                 <div class="w-full">
-                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas no likeadas</a>
+                    <a href="{{route('admin.estadisticas.masnlikeadas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas no likeadas</a>
                 </div>
             </div>
             @endif
@@ -76,10 +80,43 @@
                 <div class=" font-light text-sm">{{ $masleido->user->name }}</div>
                 <div class=" w-32 h-32 bg-contain bg-no-repeat mx-auto " style="background-image: url({{ $masleido->user->profile_photo_url }})"></div>
                 <div class="w-full">
-                    <a href="#" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Los mas leidos</a>
+                    <a href="{{route('admin.estadisticas.losmasleidos')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Los mas leidos</a>
                 </div>
             </div>
             
         </div>
     </div>
+
 </x-app-layout>
+@section('jqueryui')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+<script type="text/javascript">
+  
+      var labels = {'uno','dos','tres'}
+      var users =  {'10','20','30'}
+  
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'My First dataset',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: users,
+        }]
+      };
+  
+      const config = {
+        type: 'line',
+        data: data,
+        options: {}
+      };
+  
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+  
+</script>
+@endsection

@@ -207,7 +207,7 @@ return [
         //FBSocualite
         'Socialite'     => Laravel\Socialite\Facades\Socialite::class,
         //Resezice image
-        'Image'         => Intervention\Image\Facades\Image::class
+        'Image'         => Intervention\Image\Facades\Image::class,
     ])->toArray(),
 
 ];
