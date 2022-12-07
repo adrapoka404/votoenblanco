@@ -12,7 +12,7 @@
                     </div>
                     @foreach ($vgalerias as $indx => $vg)
                         <div class="carousel-item relative float-left w-full">
-                            <iframe height="400" width="100%" src="{{ $vg->url }}" title="{{$vg->title}}" frameborder="0"
+                            <iframe height="600" width="100%" src="{{ $vg->url }}" title="{{$vg->title}}" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
                     </div>
