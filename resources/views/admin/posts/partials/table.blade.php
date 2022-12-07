@@ -105,6 +105,10 @@
                                     class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
                                     {{ __('Editar') }}
                                 </a>
+                                <a href="{{route('admin.estadisticas.historicoledas', $post->id)}}"
+                                    class=" bg-file text-white bg-gray-dark rounded-full m-2 py-1 px-2 inline">
+                                    {{ __('+') }}
+                                </a>
                             @endcan
                         </td>
                     </tr>
