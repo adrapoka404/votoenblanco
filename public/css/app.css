@@ -4296,6 +4296,10 @@ textarea.form-control.is-invalid {
   margin-top: auto;
   margin-bottom: auto;
 }
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -4311,10 +4315,6 @@ textarea.form-control.is-invalid {
 .my-16 {
   margin-top: 4rem;
   margin-bottom: 4rem;
-}
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 .ml-3 {
   margin-left: 0.75rem;
@@ -4565,6 +4565,9 @@ textarea.form-control.is-invalid {
 .w-32 {
   width: 8rem;
 }
+.w-1\/3 {
+  width: 33.333333%;
+}
 .w-96 {
   width: 24rem;
 }
@@ -4577,14 +4580,11 @@ textarea.form-control.is-invalid {
 .w-2\/3 {
   width: 66.666667%;
 }
-.w-4\/5 {
-  width: 80%;
-}
-.w-1\/3 {
-  width: 33.333333%;
-}
 .w-1\/4 {
   width: 25%;
+}
+.w-4\/5 {
+  width: 80%;
 }
 .w-44 {
   width: 11rem;
@@ -4983,6 +4983,10 @@ textarea.form-control.is-invalid {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
+.bg-gray-dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(203 203 203 / var(--tw-bg-opacity));
+}
 .bg-red-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(252 165 165 / var(--tw-bg-opacity));
@@ -4994,10 +4998,6 @@ textarea.form-control.is-invalid {
 .bg-orange {
   --tw-bg-opacity: 1;
   background-color: rgb(255 120 73 / var(--tw-bg-opacity));
-}
-.bg-gray-dark {
-  --tw-bg-opacity: 1;
-  background-color: rgb(203 203 203 / var(--tw-bg-opacity));
 }
 .bg-red-800 {
   --tw-bg-opacity: 1;
@@ -5207,14 +5207,14 @@ textarea.form-control.is-invalid {
 .pl-4 {
   padding-left: 1rem;
 }
-.pl-20 {
-  padding-left: 5rem;
-}
 .pt-3 {
   padding-top: 0.75rem;
 }
 .pb-0 {
   padding-bottom: 0px;
+}
+.pl-20 {
+  padding-left: 5rem;
 }
 .pb-2 {
   padding-bottom: 0.5rem;
@@ -5997,10 +5997,6 @@ textarea.form-control.is-invalid {
     display: grid;
   }
 
-  .md\:w-52 {
-    width: 13rem;
-  }
-
   .md\:w-1\/2 {
     width: 50%;
   }
@@ -6136,12 +6132,6 @@ textarea.form-control.is-invalid {
 
   .lg\:pl-10 {
     padding-left: 2.5rem;
-  }
-}
-@media (min-width: 1280px) {
-
-  .xl\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
