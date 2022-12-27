@@ -278,7 +278,7 @@ class StatisticsController extends Controller
 
     public function data_masleidas()
     {
-        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(10);
+        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(3);
         
         $fecha_actual = date("Y-m-d");
         $history=[];
