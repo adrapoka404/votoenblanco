@@ -10,10 +10,10 @@
               class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Ver historico') }}</a>
         </div>
         <div id="chart_div"></div>
-        <div class="flex my-5">
-            <div id="chartFroms" class=" w-1/3"></div>
-            <div id="chartReferers" class=" w-1/3"></div>
-            <div id="chartAgents" class=" w-1/3"></div>
+        <div class="flex flex-col my-5">
+            <div id="chartFroms" ></div>
+            <div id="chartReferers" ></div>
+            <div id="chartAgents" ></div>
         </div>
         <div class="text-white opacity-0">
             @foreach ($posts as $post)
@@ -51,7 +51,7 @@
                     vAxis: {
                         format: 'short'
                     },
-                    height: 400,
+                    height: 500,
                     colors: ['#981c3e']
                 };
 
@@ -105,18 +105,21 @@
                 var chart = new google.visualization.PieChart(document.getElementById('chartFroms'));
                 chart.draw(dataFroms, {
                     title: 'Sitios de procedencia',
+                    height: 500,
                     is3D: true
                 });
 
                 var chart = new google.visualization.PieChart(document.getElementById('chartReferers'));
                 chart.draw(dataReferer, {
                     title: 'Ruta de procedencia',
+                    height: 500,
                     is3D: true
                 });
 
                 var chart = new google.visualization.PieChart(document.getElementById('chartAgents'));
                 chart.draw(dataAgents, {
                     title: 'Explorador de procedencia',
+                    height: 500,
                     is3D: true
                 });
             }
