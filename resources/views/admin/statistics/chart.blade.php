@@ -9,11 +9,19 @@
                 <a href="{{route('admin.estadisticas.historicoleidas', 0)}}"
               class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Ver historico') }}</a>
         </div>
-        <div id="chart_div"></div>
+        <div id="chart_div" class=" animate-pulse">
+            subiendo cambios...
+        </div>
         <div class="flex flex-col my-5">
-            <div id="chartFroms" ></div>
-            <div id="chartReferers" ></div>
-            <div id="chartAgents" ></div>
+            <div id="chartFroms" class=" animate-pulse">
+                subiendo cambios...
+            </div>
+            <div id="chartReferers" class=" animate-pulse">
+                subiendo cambios...
+            </div>
+            <div id="chartAgents" class=" animate-pulse">
+                subiendo cambios...
+            </div>
         </div>
         <div class="text-white opacity-0">
             @foreach ($posts as $post)
@@ -29,7 +37,7 @@
             google.charts.load('current', {
                 'packages': ['bar']
             });
-            google.charts.setOnLoadCallback(drawChart);
+            //google.charts.setOnLoadCallback(drawChart);
 
             function drawChart() { //981c3e
 
@@ -75,7 +83,7 @@
             google.charts.load("current", {
                 packages: ["corechart"]
             });
-            google.charts.setOnLoadCallback(drawChart);
+            //google.charts.setOnLoadCallback(drawChart);
 
             function drawChart() {
                 var dataFroms = google.visualization.arrayToDataTable([
