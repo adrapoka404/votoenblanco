@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Ad;
 use App\Models\Category;
 use App\Models\DailyStatistic;
+use App\Models\Diaries;
 use App\Models\Editor;
+use App\Models\GeneralDiaries;
 use App\Models\Post;
 use App\Models\Postcategory;
+use App\Models\Referer;
 use App\Models\User;
 use App\Models\VideoGallery;
 use Illuminate\Http\Request;
@@ -148,14 +151,8 @@ class WebviewController extends Controller
                 $home_local[] = $ad;
         }
 
-        $headers = apache_request_headers();
-
-        $diario = new DailyStatistic();
-
-        $diario->url    = url()->current();
-        $diario->reference = serialize($headers);
-
-        $diario->save();
+        $diario = new Diaries();
+        $diario->diary(apache_request_headers(), null, null);
 
         return view('welcome', compact('destacada', 'destacadas', 'locales', 'nacionales', 'deportes', 'editors', 'home_local'));
     }

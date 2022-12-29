@@ -8,6 +8,7 @@ use App\Models\Ad;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\DailyStatistic;
+use App\Models\Diaries;
 use App\Models\Editor;
 use App\Models\Post;
 use App\Models\Postcategory;
@@ -158,13 +159,8 @@ class NotasController extends Controller
                 $ads_fin[] = $ad;
         }
         
-        $diario = new DailyStatistic();
-        
-        $diario->post_id = $post->id;
-        $diario->url    = url()->current();
-        $diario->reference = serialize($headers);
-
-        $diario->save();
+        $diario = new Diaries();
+        $diario->diary(apache_request_headers(), $post, null);
 
         return view('guest.nota', compact('post', 'ads_lateral', 'ads_fin')); 
     }
@@ -234,15 +230,8 @@ class NotasController extends Controller
                 $ads_category[] = $ad;
         }
         
-        $headers = apache_request_headers();
-           
-           $diario = new DailyStatistic();
-           
-           $diario->category_id = $category->id;
-           $diario->url    = url()->current();
-           $diario->reference = serialize($headers);
-   
-           $diario->save();
+        $diario = new Diaries();
+        $diario->diary(apache_request_headers(), null, $category);
 
         return view('guest.notas', compact('category', 'posts', 'who', 'ads_category')); 
     }
