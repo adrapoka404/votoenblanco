@@ -9,18 +9,18 @@
                 <a href="{{route('admin.estadisticas.historicoleidas', 0)}}"
               class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Ver historico') }}</a>
         </div>
-        <div id="chart_div" class=" animate-pulse">
-            subiendo cambios...
+        <div id="chart_div" >
+            <span class=" animate-pulse"> subiendo cambios...</span>
         </div>
         <div class="flex flex-col my-5">
-            <div id="chartFroms" class=" animate-pulse">
-                subiendo cambios...
+            <div id="chartFroms" >
+                <span class=" animate-pulse"> subiendo cambios...</span>
             </div>
-            <div id="chartReferers" class=" animate-pulse">
-                subiendo cambios...
+            <div id="chartReferers" 
+                <span class=" animate-pulse"> subiendo cambios...</span>
             </div>
-            <div id="chartAgents" class=" animate-pulse">
-                subiendo cambios...
+            <div id="chartAgents">
+                <span class=" animate-pulse"> subiendo cambios...</span>
             </div>
         </div>
         <div class="text-white opacity-0">
@@ -34,12 +34,13 @@
     </div>
     @section('jqueryui')
         <script type="text/javascript">
+            $(document).ready(function(){
             google.charts.load('current', {
                 'packages': ['bar']
             });
-            //google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(drawChartBar);
 
-            function drawChart() { //981c3e
+            function drawChartBar() { //981c3e
 
                 var data = google.visualization.arrayToDataTable([
                     ['Notas', 'Cant. vistas', {
@@ -77,13 +78,12 @@
                     }
                 }
             }
-        </script>
-
-        <script type="text/javascript">
+        
+        
             google.charts.load("current", {
                 packages: ["corechart"]
             });
-            //google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(drawChart);
 
             function drawChart() {
                 var dataFroms = google.visualization.arrayToDataTable([
@@ -131,6 +131,7 @@
                     is3D: true
                 });
             }
+        })
         </script>
     @endsection
 </x-app-layout>

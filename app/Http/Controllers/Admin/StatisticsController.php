@@ -74,10 +74,11 @@ class StatisticsController extends Controller
     public function masleidas()
     {
         $references = [];
+        
         $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(10);
-
+return $posts;
         foreach ($posts as $post) {
-            $estadistocas = DailyStatistic::where('post_id', $post->id)->get();
+            $estadistocas = PostView::where('post_id', $post->id)->get();
             foreach ($estadistocas as $est)
                 $references[] = unserialize($est->reference);
         }
