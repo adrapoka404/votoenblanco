@@ -79,10 +79,11 @@ class StatisticsController extends Controller
 
         foreach ($posts as $post) {
             $estadistocas = PostView::where('post_id', $post->id)->get();
+        return $estadistocas;
             foreach ($estadistocas as $est)
                 $references[] = unserialize($est->reference);
         }
-        return $references;
+        
         $mores_visit = [];
         $froms = [];
         $referers = [];
