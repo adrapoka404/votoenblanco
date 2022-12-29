@@ -27,10 +27,13 @@ class StatisticsController extends Controller
      */
     public function index()
     {
-        $masleida   = Post::where('status', 4)->orderBy('views', 'desc')->first();
+        $masleidas   = Post::where('status', 4)->orderBy('views', 'desc')->offset(0)->limit(10)->get();
+        
 
-        $masleido   = Editor::where('status', 1)->orderBy('vistas', 'desc')->first();
-        $masleido->user = User::find($masleido->user_id);
+        $masleidos   = Editor::where('status', 1)->orderBy('vistas', 'desc')->get();
+
+        foreach($masleidos as &$masleido)
+            $masleido->user = User::find($masleido->user_id);
 
         $masshare   = Post::where('status', 4)->where('shareds', '>', 0)->orderBy('shareds', 'desc')->first();
 
@@ -44,66 +47,28 @@ class StatisticsController extends Controller
         $maslike    = [];
         $masnlike   = [];
 
-        $masslikeadas = DB::table('post_reactions')
-            ->select(DB::raw('post_id, count(post_id) as reactions'))
+        $massuperlikeadas = DB::table('post_reactions')
+            ->select(DB::raw('(select title from posts where id = post_id) as post, count(post_id) as reactions'))
             ->where('reaction', '=', 1)
             ->groupBy('post_id')
             ->orderBy('reactions', 'desc')
             ->get();
 
-        $masslike = Post::find($masslikeadas[0]->post_id);
-        $masslike->slikes = $masslikeadas[0]->reactions;
-
+       
         $maslikeadas = DB::table('post_reactions')
-            ->select(DB::raw('post_id, count(post_id) as reactions'))
+            ->select(DB::raw('(select title from posts where id = post_id) as post, count(post_id) as reactions'))
             ->where('reaction', '=', 2)
             ->groupBy('post_id')
             ->orderBy('reactions', 'desc')
             ->get();
 
-        $maslike = Post::find($maslikeadas[0]->post_id);
-        $maslike->likes = $maslikeadas[0]->reactions;
-
-
-        $masnlikeadas = DB::table('post_reactions')
-            ->select(DB::raw('post_id, count(post_id) as reactions'))
+        $masnolikeadas = DB::table('post_reactions')
+            ->select(DB::raw('(select title from posts where id = post_id) as post, count(post_id) as reactions'))
             ->where('reaction', '=', 3)
             ->groupBy('post_id')
             ->orderBy('reactions', 'desc')
             ->get();
-
-
-        $masnlike = Post::find($masnlikeadas[0]->post_id);
-        $masnlike->nlikes = $masnlikeadas[0]->reactions;
-
-        /*
-        foreach($posts as $post){
-            $slikes = PostReaction::where('post_id', $post->id)->where('reaction', 1)->orderBy('id', 'asc')->get();
-            
-            if(isset($slikes) && $slikes->count() > $intSLike){
-                $post->slikes = $slikes->count();
-                $masslike = $post;
-            }
-
-            $likes = PostReaction::where('post_id', $post->id)->where('reaction', 2)->orderBy('id', 'asc')->get();
-            
-            if(isset($likes) && $likes->count() > $intLike){
-                $post->likes = $likes->count();
-                $maslike = $post;
-            }    
-                    
-
-            $nlikes = PostReaction::where('post_id', $post->id)->where('reaction', 3)->orderBy('id', 'asc')->get();
-            
-            if(isset($nlikes) && $nlikes->count() > $intNLike)  {
-                $post->nlikes = $nlikes->count();
-                $masnlike = $post;
-            }  
-                
-
-        }
-        */
-        return view('admin.statistics.index', compact('masleida', 'masleido', 'masshare', 'masslike', 'maslike', 'masnlike'));
+        return view('admin.statistics.index', compact('masleidas', 'masleidos', 'masshare', 'massuperlikeadas', 'maslikeadas', 'masnolikeadas'));
     }
 
     public function masleidas()
