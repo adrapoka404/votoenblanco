@@ -16,7 +16,7 @@
             <div id="chartFroms" >
                 <span class=" animate-pulse"> subiendo cambios...</span>
             </div>
-            <div id="chartReferers" 
+            <div id="chartReferers" >
                 <span class=" animate-pulse"> subiendo cambios...</span>
             </div>
             <div id="chartAgents">

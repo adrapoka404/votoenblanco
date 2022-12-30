@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DailyStatistic;
 use App\Models\Editor;
 use App\Models\Post;
+use App\Models\PostDiary;
 use App\Models\PostReaction;
 use App\Models\PostView;
 use App\Models\User;
@@ -76,40 +77,30 @@ class StatisticsController extends Controller
         $references = [];
         
         $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(10);
-
-        foreach ($posts as $post) {
-            $estadistocas = PostView::where('post_id', $post->id)->get();
-        return $estadistocas;
-            foreach ($estadistocas as $est)
-                $references[] = unserialize($est->reference);
-        }
         
-        $mores_visit = [];
-        $froms = [];
-        $referers = [];
-        $agents = [];
-
-        foreach ($references as $refs) {
-            if (isset($refs['Referer'])) {
-                if (array_key_exists($refs['Referer'], $referers))
-                    $referers[$refs['Referer']] += 1;
+        $mores_visit    = [];
+        $froms          = [];
+        $referers       = [];
+        $agents         = [];
+        
+        foreach ($posts as $post) 
+            $estadisticas = PostDiary::where('post_id', $post->id)->get();
+        
+        foreach ($estadisticas as $estadistica) {
+                if (array_key_exists($estadistica->referer, $referers))
+                    $referers[$estadistica->referer] += 1;
                 else
-                    $referers[$refs['Referer']] = 1;
-            }
+                    $referers[$estadistica->referer] = 1;
 
-            if (isset($refs['From'])) {
-                if (array_key_exists($refs['From'], $froms))
-                    $froms[$refs['From']] += 1;
+                if (array_key_exists($estadistica->from, $froms))
+                    $estadistica->from += 1;
                 else
-                    $froms[$refs['From']] = 1;
-            }
+                    $estadistica->from = 1;
 
-            if (isset($refs['User-Agent'])) {
-                if (array_key_exists($refs['User-Agent'], $agents))
-                    $agents[$refs['User-Agent']] += 1;
+                if (array_key_exists($estadistica->agent, $agents))
+                    $agents[$estadistica->agent] += 1;
                 else
-                    $agents[$refs['User-Agent']] = 1;
-            }
+                    $agents[$estadistica->agent] = 1;
         }
 
         return view('admin.statistics.chart', compact('posts', 'froms', 'referers', 'agents'));

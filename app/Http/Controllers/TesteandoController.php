@@ -39,7 +39,7 @@ class TesteandoController extends Controller
 
             $diario->delete();
         }
-        return "ñ_ñ";        
+        exit();      
     }
 }
 

@@ -187,16 +187,8 @@ class NotasController extends Controller
         $elEditor->vistas = $elEditor->vistas + 1;
         $elEditor->save();
 
-           // return $posts;
-           $headers = apache_request_headers();
-
-           $diario = new DailyStatistic();
-           
-           $diario->user_id = $elEditor->id;
-           $diario->url    = url()->current();
-           $diario->reference = serialize($headers);
-   
-           $diario->save();
+        $diario = new Diaries();
+        $diario->diary(apache_request_headers(), null, null);
 
         return view('guest.notas', compact('editor','posts','who')); 
     }
