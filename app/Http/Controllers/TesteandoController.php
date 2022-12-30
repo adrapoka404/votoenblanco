@@ -22,7 +22,7 @@ class TesteandoController extends Controller
     }
 
     public function daily_to_diary(){
-        $diarios= DailyStatistic::orderBy('id', 'asc')->offset(0)->limit(10000)->get();
+        $diarios= DailyStatistic::orderBy('id', 'asc')->offset(0)->limit(10)->get();
         foreach($diarios as $diario){
             $headers = unserialize($diario->reference);
             $diary = new Diaries();
