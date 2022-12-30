@@ -229,4 +229,6 @@ Route::get('crontab_fb', [ServicesController::class, 'crontab_fb'])->name('cront
 
 Route::get('/testfb', [TesteandoController::class, 'testfb'])->name('testfb');
 Route::get('/{category}/{slug}', [NotasController::class, 'antiguos'])->name('notas');
+
+Route::get('/depurarndo_daily', [TesteandoController::class, 'daily_to_diary'])->name('depurarndo_daily');
 //} cierre de condicional si se limita a una ip

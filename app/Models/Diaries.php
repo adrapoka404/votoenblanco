@@ -11,14 +11,17 @@ class Diaries extends Model
 {
     use HasFactory;
 
-    private $referer    = null;
-    private $from       = null;
-    private $agent      = null;
-    private $url        = null;
-    private $post       = null;
-    private $category   = null;
+    private $referer        = null;
+    private $from           = null;
+    private $agent          = null;
+    private $url            = null;
+    private $post           = null;
+    private $exist          = null;
+    
+    private $updated_at     = null;
 
-    public function diary($headers, $post, $category){
+
+    public function diary($headers, $post, $category, $exist = null){
         if(isset($headers['Referer']))
             $this->referer = $headers['Referer'];
 
@@ -30,7 +33,14 @@ class Diaries extends Model
 
         $this->post         = $post;
         $this->category     = $category;
+
         $this->url          = url()->current();
+
+        
+        if($exist != null){
+            $this->url          = $exist->url;
+            $this->exist        = $exist;
+        }
 
         if($post == null && $category == null)
             $this->general();
@@ -51,6 +61,11 @@ class Diaries extends Model
         $diario->referer    = $this->referer;
         $diario->from       = $this->from;
         $diario->agent      = $this->agent;
+        
+        if($this->exist != null) {
+            $diario->created_at = $this->exist->created_at;
+            $diario->updated_at = $this->exist->updated_at;
+        }
 
         $diario->save();
 
@@ -67,6 +82,11 @@ class Diaries extends Model
         $diario->referer    = $this->referer;
         $diario->from       = $this->from;
         $diario->agent      = $this->agent;
+        
+        if($this->exist != null) {
+            $diario->created_at = $this->exist->created_at;
+            $diario->updated_at = $this->exist->updated_at;
+        }
 
         $diario->save();
 
@@ -83,7 +103,12 @@ class Diaries extends Model
         $diario->referer        = $this->referer;
         $diario->from           = $this->from;
         $diario->agent          = $this->agent;
-
+        
+        if($this->exist != null) {
+            $diario->created_at = $this->exist->created_at;
+            $diario->updated_at = $this->exist->updated_at;
+        }
+        
         $diario->save();
 
         $this->references();
@@ -99,6 +124,12 @@ class Diaries extends Model
         }
             
         $reference->conteo += 1;
+        
+        if($this->exist != null) {
+            $reference->created_at = $this->exist->created_at;
+            $reference->updated_at = $this->exist->updated_at;
+        }
+
         $reference->save();
 
         $from = From::where('from', $this->from)->first();
@@ -109,6 +140,12 @@ class Diaries extends Model
         }
             
         $from->conteo += 1;
+
+        if($this->exist != null) {
+            $from->created_at = $this->exist->created_at;
+            $from->updated_at = $this->exist->updated_at;
+        }
+        
         $from->save();
 
 
@@ -121,6 +158,12 @@ class Diaries extends Model
         }
             
         $agent->conteo += 1;
+        
+        if($this->exist != null) {
+            $agent->created_at = $this->exist->created_at;
+            $agent->updated_at = $this->exist->updated_at;
+        }
+
         $agent->save();
 
         return;
