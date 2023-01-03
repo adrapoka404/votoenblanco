@@ -19,7 +19,7 @@
                     Cargando datos del servidor... el proceso puede tardar algunos minutos
                 </div>
             </div>
-            <div>
+            <div id="links">
                 {{$posts->links()}}
             </div>
             
@@ -41,9 +41,10 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(datasset) {
-                        //console.log(datasset);
+                        console.log(datasset);
+
                         var data = new google.visualization.DataTable();
-                        data.addColumn('string', 'Ultimos 30 dias');
+                        data.addColumn('string', 'Ultimos 5 dias');
                         $.each(datasset['culumns'], function(i,v){
                             data.addColumn('number', v);    
                         })

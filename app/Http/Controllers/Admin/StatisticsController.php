@@ -225,7 +225,7 @@ class StatisticsController extends Controller
         $fecha_actual = date("Y-m-d");
         $history=[];
         foreach($posts as $post){
-            for($i=30; $i>=0; $i--){
+            for($i=5; $i>=0; $i--){
                 $nDay = date("Y-m-d",strtotime($fecha_actual."- $i days"));  
 
                 $estads = DB::table('post_diaries')
