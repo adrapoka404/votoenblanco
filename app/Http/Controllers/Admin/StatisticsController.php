@@ -208,36 +208,19 @@ class StatisticsController extends Controller
 
     public function history_read($post_id=null)
     {
-        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(5);
         
-        $fecha_actual = date("Y-m-d");
-        $history=[];
-        /*
-        foreach($posts as $post){
-            for($i=30; $i>=0; $i--){
-                $nDay = date("Y-m-d",strtotime($fecha_actual."- $i days"));  
-
-                $estads = DB::table('daily_statistics')
-                ->select(DB::raw("count(*) as visitas"))
-                ->where('post_id', '=', $post->id)
-                ->where('created_at', 'LIKE',$nDay."%")
-                ->first();
-                
-                 $history[$post->id]['datasset'][$nDay] = $estads->visitas;
-            }    
-            $history[$post->id]['title'] = $post->title;
-        }
-*/
+        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(10);
+        
         $headers = apache_request_headers();
 
         $back = $headers['Referer'];
-
-        return view('admin.statistics.history_read', compact('back', 'history'));
+        
+        return view('admin.statistics.history_read', compact('back', 'posts'));
     }
 
     public function data_masleidas()
     {
-        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(3);
+        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(10);
         
         $fecha_actual = date("Y-m-d");
         $history=[];
@@ -245,7 +228,7 @@ class StatisticsController extends Controller
             for($i=30; $i>=0; $i--){
                 $nDay = date("Y-m-d",strtotime($fecha_actual."- $i days"));  
 
-                $estads = DB::table('daily_statistics')
+                $estads = DB::table('post_diaries')
                 ->select(DB::raw("count(*) as visitas"))
                 ->where('post_id', '=', $post->id)
                 ->where('created_at', 'LIKE',$nDay."%")

@@ -78,11 +78,11 @@ Route::get('update-site', function(){
     Artisan::call('config:clear');
     Artisan::call('config:cache');
 });
-
+*/
 Route::get('storage-link', function(){
     Artisan::call('storage:link');
 });
-*/
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $roles = Auth::user()->roles()->get();
     

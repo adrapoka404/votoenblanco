@@ -7,9 +7,9 @@
 
             <div>
                 <a href="{{ $back }}"
-                    class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Volver a lista') }}</a>
+                    class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Volver') }}</a>
                 <a href="{{ route('admin.estadisticas.index') }}"
-                    class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Volver a estadisticas') }}</a>
+                    class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Ir a estadísticas') }}</a>
             </div>
 
             <div id="line_top_x" class="my-5">
@@ -18,8 +18,11 @@
 
                     Cargando datos del servidor... el proceso puede tardar algunos minutos
                 </div>
-
             </div>
+            <div>
+                {{$posts->links()}}
+            </div>
+            
         </div>
     </div>
     @section('jqueryui')
