@@ -80,7 +80,7 @@
 
                         $.each(datasset, function(i, v) {
                             var date = new Date(v[0])
-                            var val = v[1]
+                            var val = parseInt(v[1])
                             data.addRows([[date, val]])
                         })
 
