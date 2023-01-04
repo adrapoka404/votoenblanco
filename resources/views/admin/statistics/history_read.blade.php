@@ -37,13 +37,7 @@
     @section('jqueryui')
         <script type="text/javascript">
             $(document).ready(function() {
-
-                $("#line_top_x").html(
-                    `<div class="text-center text-wine animate-pulse">
-                        Cargando datos del servidor... el proceso puede tardar algunos minutos
-                    </div> `
-                )
-
+                cargando()
                 google.charts.load('current', {
                     'packages': ['corechart']
                 });
@@ -57,6 +51,13 @@
 
             })
 
+            function cargando(){
+                $("#line_top_x").html(
+                    `<div class="text-center text-wine animate-pulse">
+                        Cargando datos del servidor... el proceso puede tardar algunos minutos
+                    </div> `
+                )
+            }
             function drawChart() {
                 $.ajax({
                     url: "{{ route('admin.estadisticas.datamasleidas') }}",
@@ -67,12 +68,10 @@
                         '_token': "{{ csrf_token() }}"
                     },
                     dataType: 'json',
+                    beforeSend: function(){
+                        cargando()
+                    },
                     success: function(datasset) {
-
-                        $.each(datasset, function(i, v) {
-                                            console.log("'" + v[0] + "' - " + v[1]);
-                                        })
-
                         var data = new google.visualization.DataTable()
                         
                         data.addColumn('date', 'Fecha')
@@ -85,7 +84,8 @@
                         })
 
                         var options = {
-                            title: 'Historico de las más leidas',
+                            title: $("#post_id  option:selected").text() + ' (' +  $("#date_range  option:selected").text() + ')' ,
+                            legend: { position: 'none' },
                             vAxis: {
                                 minValue: 0
                             },
