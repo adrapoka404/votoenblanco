@@ -8,6 +8,7 @@ use App\Models\DailyStatistic;
 use App\Models\Diaries;
 use App\Models\Fb;
 use App\Models\Post;
+use App\Models\PostDiary;
 use Illuminate\Http\Request;
 
 class TesteandoController extends Controller
@@ -41,6 +42,20 @@ class TesteandoController extends Controller
         }
         exit();      
     }
+/*
+    public function crontab_daily(){
+        
+        $hoy = date("Y-m-d");
+        $hoy = "2023-01-04";
+        $ayer = date("Y-m-d",strtotime($hoy."- 1 days"));
+        
+        $diarios = PostDiary::where('created_at', "LIKE", "$ayer%")->get();
+
+        foreach($diarios as $diario){
+
+        }
+    }
+    */
 }
 
 

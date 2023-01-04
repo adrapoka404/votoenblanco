@@ -9,65 +9,92 @@
                 <a href="{{ $back }}"
                     class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Volver') }}</a>
                 <a href="{{ route('admin.estadisticas.index') }}"
-                    class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Ir a estadísticas') }}</a>
+                    class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Menú de estadísticas') }}</a>
+            </div>
+            <div class="mx-auto my-3">
+                <select name="post_id" id="post_id">
+                    @foreach ($posts as $post)
+                        <option value="{{ $post->id }}">{{ $post->title }}</option>
+                    @endforeach
+                </select>
+
+            </div>
+            <div class="mx-auto my-3">
+                <select name="date_range" id="date_range">
+                    @foreach ($dates as $i => $date)
+                        <option value="{{ $i }}">{{ $date }}</option>
+                    @endforeach
+                </select>
+
             </div>
 
             <div id="line_top_x" class="my-5">
 
-                <div class="text-center text-wine animate-pulse">
-
-                    Cargando datos del servidor... el proceso puede tardar algunos minutos
-                </div>
             </div>
-            <div id="links">
-                {{$posts->links()}}
-            </div>
-            
+            @csrf
         </div>
     </div>
     @section('jqueryui')
         <script type="text/javascript">
             $(document).ready(function() {
+
+                $("#line_top_x").html(
+                    `<div class="text-center text-wine animate-pulse">
+                        Cargando datos del servidor... el proceso puede tardar algunos minutos
+                    </div> `
+                )
+
                 google.charts.load('current', {
-                    'packages': ['line']
+                    'packages': ['corechart']
                 });
+
                 google.charts.setOnLoadCallback(drawChart);
+
+                $("#post_id, #date_range").on('change', function() {
+                    actual = $(this).text();
+                    google.charts.setOnLoadCallback(drawChart);
+                })
+
             })
 
             function drawChart() {
-
                 $.ajax({
                     url: "{{ route('admin.estadisticas.datamasleidas') }}",
-                    type: 'GET',
+                    type: 'POST',
+                    data: {
+                        'range': $("#date_range").val(),
+                        'post_id': $("#post_id").val(),
+                        '_token': "{{ csrf_token() }}"
+                    },
                     dataType: 'json',
                     success: function(datasset) {
-                        console.log(datasset);
 
-                        var data = new google.visualization.DataTable();
-                        data.addColumn('string', 'Ultimos 5 dias');
-                        $.each(datasset['culumns'], function(i,v){
-                            data.addColumn('number', v);    
-                        })
-                       
-                        $.each(datasset['seteados'], function(i, v){
-                            data.addRow(v);
+                        $.each(datasset, function(i, v) {
+                                            console.log("'" + v[0] + "' - " + v[1]);
+                                        })
+
+                        var data = new google.visualization.DataTable()
+                        
+                        data.addColumn('date', 'Fecha')
+                        data.addColumn('number', $("#post_id  option:selected").text())
+
+                        $.each(datasset, function(i, v) {
+                            var date = new Date(v[0])
+                            var val = v[1]
+                            data.addRows([[date, val]])
                         })
 
                         var options = {
-                            chart: {
-                                title: 'Historico de las más leidas',
-                                subtitle: 'Comportamiento de las 10 notas más leidas en los ultimos 30 dias'
+                            title: 'Historico de las más leidas',
+                            vAxis: {
+                                minValue: 0
                             },
                             width: 900,
                             height: 500,
-                            vAxis: {
-                                format: 'short'
-                            }
                         };
 
-                        var chart = new google.charts.Line(document.getElementById('line_top_x'));
-
-                        chart.draw(data, google.charts.Line.convertOptions(options));
+                        var chart = new google.visualization.AreaChart(document.getElementById('line_top_x'));
+                        chart.draw(data, options);
                     }
                 })
 

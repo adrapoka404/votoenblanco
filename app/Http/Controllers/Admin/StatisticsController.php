@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Charts\masleidas;
 use App\Charts\MasLeidasChart;
 use App\Http\Controllers\Controller;
-use App\Models\DailyStatistic;
 use App\Models\Editor;
 use App\Models\Post;
 use App\Models\PostDiary;
@@ -13,6 +12,7 @@ use App\Models\PostReaction;
 use App\Models\PostView;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
@@ -208,54 +208,36 @@ class StatisticsController extends Controller
 
     public function history_read($post_id=null)
     {
-        
-        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(10);
-        
         $headers = apache_request_headers();
 
         $back = $headers['Referer'];
+        $dates = ["1 week" => "Una semana", "2 week" => "Dos semanas", "1 month" => "Un mes", "3 month" => "Tres meses"];
+        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->limit(10)->get();
         
-        return view('admin.statistics.history_read', compact('back', 'posts'));
+        return view('admin.statistics.history_read', compact('back', 'dates', 'posts'));
     }
 
-    public function data_masleidas()
+    public function data_masleidas(Request $request)
     {
-        $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(10);
-        
+
         $fecha_actual = date("Y-m-d");
-        $history=[];
-        foreach($posts as $post){
-            for($i=5; $i>=0; $i--){
-                $nDay = date("Y-m-d",strtotime($fecha_actual."- $i days"));  
-
-                $estads = DB::table('post_diaries')
-                ->select(DB::raw("count(*) as visitas"))
-                ->where('post_id', '=', $post->id)
-                ->where('created_at', 'LIKE',$nDay."%")
-                ->first();
-                
-                 $history['datasset'][$post->id][$nDay] = $estads->visitas;
-            }    
-            $history['culumns'][$post->id] = $post->title;
-        }
-
-        $seteados = [];
-
-        foreach($history['datasset'] as $post => $hs){
-            foreach($hs as $d => $h)
-            $seteados[$d][] = $history['datasset'][$post][$d];
-        }
-
-        $newDatasset = [];
-
-        foreach($seteados as $date => $set){
-            array_unshift($set, $date);
-            $newDatasset[] = $set;
-        }
+        $rango = date("Y-m-d",strtotime($fecha_actual."- $request->range")); 
+        $fechaEmision = Carbon::parse($fecha_actual);
+        $fechaExpiracion = Carbon::parse($rango);
         
-        $history['seteados'] = $newDatasset;
+        $diasDiferencia = $fechaExpiracion->diffInDays($fechaEmision);
+        $history = [];
+        for($i = 0; $i<=$diasDiferencia; $i++) {
+            
+            $nFecha = date("Y-m-d",strtotime($fecha_actual."- $i day")); 
+            $query = "select count(*) as cuantos from `post_diaries` where `post_id` = $request->post_id and `created_at` LIKE '$nFecha%'";
+            $diario = DB::select(DB::raw($query));// DB::select($query, []);
 
-        return $history;
+            array_unshift($history, [strval($nFecha), $diario[0]->cuantos]);
+        }
+
+        return $history;        
+        
     }
     /**
      * Show the form for creating a new resource.
