@@ -18,6 +18,15 @@
                     <a href="{{route('admin.estadisticas.masleidas')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Mas leidas</a>
                 </div>
             </div>
+            <div class="p-2 border-2 border-wine m-2">
+              <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
+                  Sitios de procedencia
+              </div>
+              <div id="donutchartSitiosDeProcedencia" ></div>
+              <div class="w-full">
+                  <a href="{{route('admin.estadisticas.referentes')}}" class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">Detalles</a>
+              </div>
+          </div>
             @if (!empty($massuperlikeadas))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
@@ -152,7 +161,7 @@
 
     function drawChartMasNoLikeadas() {
       var data = google.visualization.arrayToDataTable([
-        ['Nota', 'Me emperras'],
+        ['Nota', 'Me molesta'],
         @foreach ($masnolikeadas as $masnolikeada)
             ['{{ $masnolikeada->post }}', {{ $masnolikeada->reactions }}],
         @endforeach
@@ -163,6 +172,22 @@
       };
 
       var chart = new google.visualization.PieChart(document.getElementById('donutchartMasNoLikeadas'));
+      chart.draw(data, options);
+    }
+
+    function drawChartMasNoLikeadas() {
+      var data = google.visualization.arrayToDataTable([
+        ['Referente', 'Referentes'],
+        @foreach ($referentes as $referente => $conteo)
+            ['{{ $referente }}', {{ $conteo }}],
+        @endforeach
+      ]);
+      
+      var options = {
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchartSitiosDeProcedencia'));
       chart.draw(data, options);
     }
   </script>

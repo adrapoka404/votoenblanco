@@ -10,7 +10,9 @@ use App\Models\Post;
 use App\Models\PostDiary;
 use App\Models\PostReaction;
 use App\Models\PostView;
+use App\Models\Referer;
 use App\Models\User;
+use App\View\Components\coment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +20,7 @@ use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use League\Csv\Writer;
 use Illuminate\Support\Facades\DB;
+use League\CommonMark\Reference\Reference;
 
 class StatisticsController extends Controller
 {
@@ -69,7 +72,11 @@ class StatisticsController extends Controller
             ->groupBy('post_id')
             ->orderBy('reactions', 'desc')
             ->get();
-        return view('admin.statistics.index', compact('masleidas', 'masleidos', 'masshare', 'massuperlikeadas', 'maslikeadas', 'masnolikeadas'));
+
+        $referentes = new Referer();
+        $referentes = $referentes->depurar();
+        
+        return view('admin.statistics.index', compact('masleidas', 'masleidos', 'masshare', 'massuperlikeadas', 'maslikeadas', 'masnolikeadas', 'referentes'));
     }
 
     public function masleidas()
@@ -239,69 +246,13 @@ class StatisticsController extends Controller
         return $history;        
         
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function referentes(){
+        $refers = new Referer();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $referentes = $refers->detail();
+        $nulos = $refers->nulos();
+        
+        return view('admin.statistics.references', compact('referentes', 'nulos'));
     }
 }

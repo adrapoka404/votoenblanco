@@ -162,6 +162,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Rutas para admin estadisticas
     Route::resource('adminstatistics', StatisticsController::class)->names('admin.estadisticas');
     Route::get('adminstatisticsmasleidas', [StatisticsController::class, 'masleidas'])->name('admin.estadisticas.masleidas');
+    Route::get('adminstatisticsreferences', [StatisticsController::class, 'referentes'])->name('admin.estadisticas.referentes');
     Route::post('adminstatisticsdatamasleidas', [StatisticsController::class, 'data_masleidas'])->name('admin.estadisticas.datamasleidas');
     Route::get('adminstatisticsmasleidasexport', [StatisticsController::class, 'masleidasexport'])->name('admin.estadisticas.masleidasexport');
     Route::get('adminstatisticslosmasleidos', [StatisticsController::class, 'masleidos'])->name('admin.estadisticas.losmasleidos');
