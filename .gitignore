@@ -1,6 +1,7 @@
 /public/hot
 /public/storage
 /public/index.php
+/public/.htaccess
 /storage/*.key
 /storage
 /vendor
