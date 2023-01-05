@@ -48,7 +48,6 @@
         @endforeach
           var options = {
             title: 'Referentes de la página',
-            legend: 'none',
             pieSliceText: 'label',
             slices: {  
                     0 : {offset: 0.3},//FB pc
