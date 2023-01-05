@@ -53,7 +53,7 @@
             @if(!empty($masnolikeadas))
             <div class="p-2 border-2 border-wine m-2">
                 <div class="bg-wine my-2 font-semibold text-center text-white text-xl p-3">
-                    Mas me emperra
+                    Mas me molesta
                 </div>
                 <div id="donutchartMasNoLikeadas" ></div>
                 <div class="w-full">
@@ -94,6 +94,7 @@
     google.charts.setOnLoadCallback(drawChartMasSuperLikeadas);
     google.charts.setOnLoadCallback(drawChartMasLikeadas);
     google.charts.setOnLoadCallback(drawChartMasNoLikeadas);
+    google.charts.setOnLoadCallback(drawChartSitiosDeProcedencia);
 
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
@@ -175,7 +176,7 @@
       chart.draw(data, options);
     }
 
-    function drawChartMasNoLikeadas() {
+    function drawChartSitiosDeProcedencia() {
       var data = google.visualization.arrayToDataTable([
         ['Referente', 'Referentes'],
         @foreach ($referentes as $referente => $conteo)
