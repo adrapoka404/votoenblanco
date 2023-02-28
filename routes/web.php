@@ -173,6 +173,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('adminstatisticsmasnlikeadas', [StatisticsController::class, 'masnlikeadas'])->name('admin.estadisticas.masnlikeadas');
     Route::get('adminstatisticshistory/{post_id}', [StatisticsController::class, 'history'])->name('admin.estadisticas.historico');
     Route::get('adminstatisticshistoryread/{post_id}', [StatisticsController::class, 'history_read'])->name('admin.estadisticas.historicoleidas');
+    Route::get('adminstatisticstesteando', [StatisticsController::class, 'testeando'])->name('admin.estadisticas.testeando');
+    Route::post('adminstatisticsmasvistas', [StatisticsController::class, 'masvistas'])->name('admin.estadisticas.masvistas');
     // Rutas para admin estadisticas
     Route::resource('videogalleries', VideogalleriesController::class)->names('admin.videogalerias');
 

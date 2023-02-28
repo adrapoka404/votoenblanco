@@ -279,9 +279,12 @@
                     })
                 },
                 select: function(event, ui) {
+                    event.preventDefault();
+                    $("#search").val(ui.item.label)
                     window.location.href = "{{ route('notas.show', '') }}" + '/' + ui.item.slug;
+                    
                 }
-            })
+            }).
             $("#search").hide();
         $(document).ready(function() {
             mueveReloj()
