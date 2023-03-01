@@ -82,6 +82,7 @@ class StatisticsController extends Controller
 
     public function masleidas()
     {
+       /*
         $references = [];
 
         $posts = Post::where('views', '>', 0)->orderBy('views', 'desc')->paginate(10);
@@ -112,6 +113,13 @@ class StatisticsController extends Controller
         }
 
         return view('admin.statistics.chart', compact('posts', 'froms', 'referers', 'agents'));
+        */
+
+        $headers    = apache_request_headers();
+        $back       = (isset($headers['Referer']) ? $headers['Referer'] :route('admin.estadisticas.index'));
+        $dates      = ["1 week" => "Una semana", "2 week" => "Dos semanas", "1 month" => "Un mes", "3 month" => "Tres meses"];
+        $limits     = [10 => 'Top 10', 15 => "Top 15", 20 => "Top 20", 30 => 'Top 30'];
+        return view('admin.statistics.testeando', compact('back', 'dates', 'limits'));
     }
 
     public function masleidos()
@@ -190,22 +198,25 @@ class StatisticsController extends Controller
         $headers    = apache_request_headers();
         $back       = (isset($headers['Referer']) ? $headers['Referer'] :route('admin.estadisticas.index'));
         $dates      = ["1 week" => "Una semana", "2 week" => "Dos semanas", "1 month" => "Un mes", "3 month" => "Tres meses"];
-        return view('admin.statistics.testeando', compact('back', 'dates'));
+        $limits     = [10 => 'Top 10', 15 => "Top 15", 20 => "Top 20", 30 => 'Top 30'];
+        return view('admin.statistics.testeando', compact('back', 'dates', 'limits'));
     }
 
     public function masvistas(Request $request){
 
         $today = date('Y-m-d');
        
+        $limit = $request->limit;
         if($request->range == 'true' && $request->date != 0)
             $rango = Carbon::parse(date("Y-m-d", strtotime($today . "- $request->date")));
 
         if($request->date && $request->range == 'false')
             $today = $request->date;
 
-        $query = "select post_id, (select title from posts WHERE id = post_id) as post, count(*) as cuantos from `post_diaries` where  `created_at` LIKE '$today%' group by post_id HAVING count(*) > 10 order by cuantos";
+        $query = "select post_id, (select title from posts WHERE id = post_id) as post, count(*) as cuantos from `post_diaries` where  `created_at` LIKE '$today%' group by post_id HAVING count(*) > 10 order by cuantos desc limit $limit";
+        
         if($request->range == 'true' && $request->date != 0)
-            $query = "select post_id, (select title from posts WHERE id = post_id) as post, count(*) as cuantos from `post_diaries` where  `created_at` between date('$rango') AND date('$today') group by post_id HAVING count(*) > 10 order by cuantos";
+            $query = "select post_id, (select title from posts WHERE id = post_id) as post, count(*) as cuantos from `post_diaries` where  `created_at` between date('$rango') AND date('$today') group by post_id HAVING count(*) > 10 order by cuantos desc limit $limit";
         
         $notas = DB::select(DB::raw($query));
 

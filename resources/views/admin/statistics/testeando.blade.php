@@ -11,36 +11,50 @@
                     class="cursor-pointer bg-black px-3 py-1 rounded-full text-white mx-auto">{{ __('Menú de estadísticas') }}</a>
             </div>
             <div class="mx-auto my-3">
+                <div class=" text-sm text-blue my-5 ">En esta sección pordras observar de forma general las estadisticas
+                    para las notas mas vistas. Con
+                    ayuda de los campos de abajo puedes filtrar las busquedas por una fecha especifica o por un rango de
+                    fechas. tambien puedes obtener el top 10,15,20 y 30 de las busquedas que realices.</div>
                 <input type="text" name="datepicker" id="datepicker">
-            </div>
-            <div class="mx-auto my-3">
+
                 <select name="date_range" id="date_range">
                     <option value="0">Selecciona un rango</option>
                     @foreach ($dates as $i => $date)
                         <option value="{{ $i }}">{{ $date }}</option>
                     @endforeach
                 </select>
+                <select name="limit" id="limit">
+                    @foreach ($limits as $i => $limit)
+                        <option value="{{ $i }}">{{ $limit }}</option>
+                    @endforeach
+                </select>
 
             </div>
 
-            <div id="top_x_div" class="my-5 w-full" style="width: 800px; height: 600px;"></div>
+            <div id="top_x_div" class="my-5 w-full" style="width: 100%; height: 600px;"></div>
             @csrf
         </div>
     </div>
     @section('jqueryui')
         <script type="text/javascript">
             $(document).ready(function() {
-
-                crearGrafica(false, false)
-
                 hoy = new Date()
                 d = hoy.getDate()
                 m = hoy.getMonth() + 1
                 y = hoy.getFullYear()
-                $("#datepicker").val(y + '-' + (m < 10 ? '0' + m : m) + '-' + (d < 10 ? '0' + d : d))
 
-                $("#date_range").on('change', function(){
+                date = y + '-' + (m < 10 ? '0' + m : m) + '-' + (d < 10 ? '0' + d : d)
+                $("#datepicker").val(date)
+
+                crearGrafica(date, false)
+
+                $("#date_range").on('change', function() {
                     crearGrafica($(this).val(), true)
+                })
+
+                $("#limit").on('change', function() {
+                    $("#date_range").val(0)
+                    crearGrafica($("#datepicker").val(), false)
                 })
             })
 
@@ -57,32 +71,14 @@
             google.charts.load('current', {
                 'packages': ['bar']
             });
+
             google.charts.setOnLoadCallback(drawStuff);
 
             function drawStuff() {
                 var data = new google.visualization.arrayToDataTable([
-                    ['Nota', 'Visitas'],
+                    ['Nota', 'Visitas', {role:'style'}, {role:'annotation'}],
 
                 ]);
-
-                var options = {
-                    width: 800,
-                    axes: {
-                        x: {
-                            0: {
-                                side: 'top',
-                                label: 'Vistas por nota'
-                            } // Top x-axis.
-                        }
-                    },
-                    bar: {
-                        groupWidth: "90%"
-                    }
-                };
-
-                var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-                // Convert the Classic options to Material options.
-                chart.draw(data, google.charts.Bar.convertOptions(options));
             };
 
             function cargando() {
@@ -90,13 +86,14 @@
             }
 
             function crearGrafica(date, range) {
-                
+
                 $.ajax({
                     url: "{{ route('admin.estadisticas.masvistas') }}",
                     type: 'POST',
                     data: {
                         'date': date,
                         'range': range,
+                        'limit': $("#limit").val(),
                         '_token': "{{ csrf_token() }}"
                     },
                     dataType: 'json',
@@ -108,30 +105,33 @@
                             var data = new google.visualization.DataTable()
 
                             data.addColumn('string', 'Notas')
-                            data.addColumn('number', 'Vistas')
+                            data.addColumn('number', 'Total de vistas')
+                            data.addColumn({role: 'style'})
+                            data.addColumn({role: 'annotation'})
 
                             $.each(datasset, function(i, v) {
 
                                 var nota = v.post
                                 var views = parseInt(v.cuantos)
                                 data.addRows([
-                                    [nota, views]
+                                    [nota, views, '#981c3e', nota]
                                 ])
                             })
 
                             var options = {
-                                width: 800,
+                                width: "100%",
+                                bar: {
+                                    groupWidth: "60%"
+                                },
+                                bars: 'horizontal',
                                 axes: {
                                     x: {
                                         0: {
                                             side: 'top',
-                                            label: 'Vistas por nota'
-                                        } // Top x-axis.
+                                        } 
                                     }
                                 },
-                                bar: {
-                                    groupWidth: "90%"
-                                }
+                                legend: {position: 'none'},
                             };
 
                             var chart = new google.charts.Bar(document.getElementById('top_x_div'));
@@ -139,7 +139,8 @@
                             chart.draw(data, google.charts.Bar.convertOptions(options));
                         } else
                             $("#top_x_div").html(
-                                "<div class=' text-sm text-red-500'>No existen datos para el "+ (range ? 'rango de ' : 'día ') + (date ==
+                                "<div class=' text-sm text-red-500'>No existen datos para el " + (range ?
+                                    'rango de ' : 'día ') + (date ==
                                     false ? 'de hoy' : date) + "</div>")
 
                     }
